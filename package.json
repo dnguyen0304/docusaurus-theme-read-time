@@ -1,0 +1,36 @@
+{
+    "name": "docusaurus-theme-editor",
+    "version": "0.1.0",
+    "description": "Docusaurus live editor UI component.",
+    "main": "lib/index.js",
+    "types": "src/docusaurus-theme-editor.d.ts",
+    "devDependencies": {
+        "@docusaurus/types": "2.0.0-rc.1",
+        "typescript": "^4.7.4"
+    },
+    "peerDependencies": {
+        "react": "^16.8.4 || ^17.0.0",
+        "react-dom": "^16.8.4 || ^17.0.0"
+    },
+    "scripts": {
+        "build": "tsc --build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dnguyen0304/docusaurus-theme-editor.git"
+    },
+    "keywords": [
+        "docusaurus",
+        "plugins",
+        "themes",
+        "markdown",
+        "mdx",
+        "editor"
+    ],
+    "author": "Duy Nguyen <dnguyen0304@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dnguyen0304/docusaurus-theme-editor/issues"
+    },
+    "homepage": "https://github.com/dnguyen0304/docusaurus-theme-editor#readme"
+}
