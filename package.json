@@ -20,7 +20,11 @@
         "url": "git+https://github.com/dnguyen0304/docusaurus-theme-editor.git"
     },
     "keywords": [
+        "react",
         "docusaurus",
+        "static site generator",
+        "documentation",
+        "open source",
         "plugins",
         "themes",
         "markdown",
