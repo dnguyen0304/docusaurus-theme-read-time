@@ -4,6 +4,12 @@
     "description": "Docusaurus live editor UI component.",
     "main": "lib/index.js",
     "types": "src/docusaurus-theme-editor.d.ts",
+    "dependencies": {
+        "@emotion/react": "^11.9.3",
+        "@emotion/styled": "^11.9.3",
+        "@mui/icons-material": "^5.8.4",
+        "@mui/material": "^5.9.1"
+    },
     "devDependencies": {
         "@docusaurus/types": "^2.0.0-rc.1",
         "typescript": "^4.7.4"
