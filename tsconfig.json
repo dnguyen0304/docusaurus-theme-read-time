@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        /* Emit */
+        "target": "es2022",
+        "module": "commonjs",
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "jsx": "react",
+        "rootDir": "src",
+        "outDir": "lib",
+        "declaration": true,
+        "removeComments": true,
+        /* Type Checking */
+        "allowUnreachableCode": false,
+        /* Modules */
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "baseUrl": "."
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/lib/**/*",
+        "**/__tests__/**",
+    ]
+}
