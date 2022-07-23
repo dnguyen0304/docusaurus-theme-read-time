@@ -20,7 +20,8 @@
         "react-dom": "^16.8.4 || ^17.0.0"
     },
     "scripts": {
-        "build": "docusaurus-plugin build"
+        "build": "docusaurus-plugin build",
+        "watch": "docusaurus-plugin watch"
     },
     "repository": {
         "type": "git",
