@@ -12,12 +12,22 @@
         "outDir": "lib",
         "declaration": true,
         "removeComments": true,
+        "sourceMap": true,
         /* Type Checking */
         "allowUnreachableCode": false,
         /* Modules */
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "baseUrl": "."
+        "baseUrl": ".",
+        /* Plugins */
+        "plugins": [
+            {
+                // TODO(dnguyen0304): Consider setting the classnameTransform
+                // option so we can use standard CSS naming conventions instead
+                // of camelCase.
+                "name": "typescript-plugin-css-modules",
+            },
+        ],
     },
     "include": [
         "src/**/*"
