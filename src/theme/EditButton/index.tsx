@@ -3,6 +3,7 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import styles from './styles.module.css';
+import './styles.module.css';
 
 export default function EditButton({ toggleEditMode }) {
     const BUTTON_BACKGROUND_COLOR_EMPHASIS = 'red';
@@ -12,7 +13,7 @@ export default function EditButton({ toggleEditMode }) {
 
     // TODO: Remove unused classes.
     return (
-        <div className={`${styles.floatingActionButton} to-edit-mode edit-button d`}>
+        <div className={`${styles.floatingActionButton} to-edit-mode edit-button`}>
             <Tooltip title='Edit (e)' placement='left-end'>
                 <Fab
                     data-title='Be the change.'
