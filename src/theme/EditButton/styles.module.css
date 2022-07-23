@@ -1,0 +1,10 @@
+.floatingActionButton {
+    display: flex;
+    justify-content: center;
+    /* TODO: Position relative within the notes grid area. */
+    position: fixed;
+    z-index: var(--max-z-index);
+
+    width: 100%;
+    bottom: 1.1rem;
+}
