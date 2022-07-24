@@ -3,7 +3,6 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import styles from './styles.module.css';
-import './styles.module.css';
 
 export default function EditButton({ toggleEditMode }) {
     const BUTTON_BACKGROUND_COLOR_EMPHASIS = 'red';
