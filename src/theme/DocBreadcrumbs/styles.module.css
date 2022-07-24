@@ -1,0 +1,25 @@
+:global main[class*='DocPage-Layout-Main'] > div.padding-top--md {
+    /* While DocPage/Layout/Main includes the table of contents (TOC), changing
+       padding-top doesn't affect the TOC because the TOC's top position is
+       already greater than the padding-top. Therefore, there is no visual
+       difference.
+
+       Set the !important flag to have higher specificity than Infima. */
+    padding-top: initial !important;
+}
+
+:global nav[class*='breadcrumbsWrapper_Container'] > nav[class*='DocBreadcrumbs-styles-module'] {
+    margin-bottom: initial;
+}
+
+.breadcrumbsWrapper_Container {
+    position: sticky;
+    top: var(--ifm-navbar-height);
+
+    background-color: white;
+    padding: 1rem 0;
+}
+
+[data-theme='dark'] .breadcrumbsWrapper_Container {
+    background-color: var(--ifm-background-color);
+}
