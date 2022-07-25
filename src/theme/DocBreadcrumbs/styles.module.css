@@ -18,6 +18,10 @@
 
     background-color: white;
     padding: 1rem 0;
+    /* TODO(dnguyen0304): Extract into a centralized location. */
+    /* Set this to a value greater than 0 so it is higher in the stacking
+    context than code blocks. */
+    z-index: 50;
 }
 
 [data-theme='dark'] .breadcrumbsWrapper_Container {
