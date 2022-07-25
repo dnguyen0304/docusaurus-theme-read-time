@@ -19,8 +19,8 @@
     background-color: white;
     padding: 1rem 0;
     /* TODO(dnguyen0304): Extract into a centralized location. */
-    /* Set this to a value greater than 0 so it is higher in the stacking
-    context than code blocks. */
+    /* Set this to a value greater than 0 so it is higher than code blocks in
+    the stacking context . */
     z-index: 50;
 }
 
