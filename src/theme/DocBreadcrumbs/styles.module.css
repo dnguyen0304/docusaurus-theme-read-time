@@ -12,7 +12,12 @@
     margin-bottom: initial;
 }
 
+/* TODO(dnguyen0304): Fix "Container" being upper-case. */
 .breadcrumbsWrapper_Container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     position: sticky;
     top: var(--ifm-navbar-height);
 
