@@ -4,14 +4,14 @@ import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 
 interface Props {
-    readonly toggleEditMode: () => void;
+    readonly toggleEditorIsOpen: () => void;
 }
 
 // TODO(dnguyen0304): Extract keybindings to a centralized location to
 // facilitate maintenance.
 const KEYBINDING: string = 'e';
 
-export default function EditButton({ toggleEditMode }: Props): JSX.Element {
+export default function EditButton({ toggleEditorIsOpen }: Props): JSX.Element {
     return (
         <Tooltip
             title={`Open editor panel (${KEYBINDING})`}
@@ -23,7 +23,7 @@ export default function EditButton({ toggleEditMode }: Props): JSX.Element {
                 data-intro='Update and fix your docs live.'
                 data-step={1}
                 data-position='top'
-                onClick={toggleEditMode}
+                onClick={toggleEditorIsOpen}
                 variant='contained'
                 startIcon={<EditIcon />}
             >

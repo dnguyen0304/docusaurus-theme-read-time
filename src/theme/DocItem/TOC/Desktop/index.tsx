@@ -11,7 +11,7 @@ export default function DesktopWrapper(props: Props): JSX.Element {
 
     return (
         <>
-            {!context.tocIsHidden && <Desktop {...props} />}
+            {!context.editorIsOpen && <Desktop {...props} />}
         </>
     );
 }

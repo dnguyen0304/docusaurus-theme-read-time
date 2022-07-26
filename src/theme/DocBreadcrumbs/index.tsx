@@ -11,12 +11,12 @@ type Props = WrapperProps<typeof DocBreadcrumbsType>;
 export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const context = useEditButton();
 
-    const toggleEditMode = () => { context.setTocIsHidden(prev => !prev) };
+    const toggleEditorIsOpen = () => { context.setEditorIsOpen(prev => !prev) };
 
     return (
         <nav className={`${styles.breadcrumbsWrapper_container}`}>
             <DocBreadcrumbs {...props} />
-            <EditButton toggleEditMode={toggleEditMode} />
+            <EditButton toggleEditorIsOpen={toggleEditorIsOpen} />
         </nav>
     );
 }
