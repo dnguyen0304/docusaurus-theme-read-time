@@ -1,33 +1,34 @@
 import EditIcon from '@mui/icons-material/Edit';
-import Fab from '@mui/material/Fab';
+import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
-import styles from './styles.module.css';
 
-export default function EditButton({ toggleEditMode }) {
-    const BUTTON_BACKGROUND_COLOR_EMPHASIS = 'red';
-    const GRADIENT_STOP_COLOR_TOP = 'white';
-    const EDIT_BUTTON_HEIGHT_REM = 4.7;
-    const EDIT_BUTTON_WIDTH_REM = EDIT_BUTTON_HEIGHT_REM;
+interface Props {
+    readonly toggleEditMode: () => void;
+}
 
-    // TODO: Remove unused classes.
+// TODO(dnguyen0304): Extract keybindings to a centralized location to
+// facilitate maintenance.
+const KEYBINDING: string = 'e';
+
+export default function EditButton({ toggleEditMode }: Props): JSX.Element {
     return (
-        <div className={`${styles.floatingActionButton} to-edit-mode edit-button`}>
-            <Tooltip title='Edit (e)' placement='left-end'>
-                <Fab
-                    data-title='Be the change.'
-                    data-intro='Update and fix your docs live.'
-                    data-step={1}
-                    data-position='top'
-                    onClick={toggleEditMode}
-                    sx={{
-                        backgroundColor: BUTTON_BACKGROUND_COLOR_EMPHASIS,
-                        height: `${EDIT_BUTTON_HEIGHT_REM}rem`,
-                        width: `${EDIT_BUTTON_WIDTH_REM}rem`,
-                    }}>
-                    <EditIcon sx={{ color: GRADIENT_STOP_COLOR_TOP }} />
-                </Fab>
-            </Tooltip>
-        </div>
+        <Tooltip
+            title={`Open editor panel (${KEYBINDING})`}
+            placement='bottom'
+        >
+            <Button
+                // TODO(dnguyen0304): Add product tour intro step.
+                data-title='Be the change.'
+                data-intro='Update and fix your docs live.'
+                data-step={1}
+                data-position='top'
+                onClick={toggleEditMode}
+                variant='contained'
+                startIcon={<EditIcon />}
+            >
+                Edit
+            </Button>
+        </Tooltip>
     );
 };

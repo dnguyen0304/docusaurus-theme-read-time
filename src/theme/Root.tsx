@@ -1,15 +1,28 @@
 import React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 interface Props {
     readonly children: React.ReactNode;
 }
 
-// TODO(dnguyen0304): Add custom theme.
-// https://mui.com/material-ui/customization/theming/
+const COLOR_ACCENT_GREEN: string = '#64ffda';
+const COLOR_BLUEISH_BLACK: string = '#2e4561';
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: COLOR_ACCENT_GREEN,
+            contrastText: COLOR_BLUEISH_BLACK,
+        },
+    },
+});
+
 export default function Root({ children }: Props): JSX.Element {
     return (
         <>
-            {children}
+            <ThemeProvider theme={theme}>
+                {children}
+            </ThemeProvider>
         </>
     );
 }
