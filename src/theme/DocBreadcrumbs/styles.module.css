@@ -8,12 +8,11 @@
     padding-top: initial !important;
 }
 
-:global nav[class*='breadcrumbsWrapper_Container'] > nav[class*='DocBreadcrumbs-styles-module'] {
+:global nav[class*='breadcrumbsWrapper_container'] > nav[class*='DocBreadcrumbs-styles-module'] {
     margin-bottom: initial;
 }
 
-/* TODO(dnguyen0304): Fix "Container" being upper-case. */
-.breadcrumbsWrapper_Container {
+.breadcrumbsWrapper_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,6 +28,6 @@
     z-index: 50;
 }
 
-[data-theme='dark'] .breadcrumbsWrapper_Container {
+[data-theme='dark'] .breadcrumbsWrapper_container {
     background-color: var(--ifm-background-color);
 }

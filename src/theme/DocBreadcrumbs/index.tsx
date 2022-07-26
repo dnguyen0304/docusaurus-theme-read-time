@@ -9,7 +9,7 @@ type Props = WrapperProps<typeof DocBreadcrumbsType>;
 
 export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     return (
-        <nav className={`${styles.breadcrumbsWrapper_Container}`}>
+        <nav className={`${styles.breadcrumbsWrapper_container}`}>
             <DocBreadcrumbs {...props} />
             <EditButton toggleEditMode={() => { console.log('clicked') }} />
         </nav>
