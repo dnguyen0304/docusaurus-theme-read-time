@@ -7,8 +7,7 @@ interface Props {
     readonly contentState: ContentState,
 }
 
-export default function Line(props: Props): JSX.Element {
-    const { block, contentState } = props;
+export default function Line({ block, contentState }: Props): JSX.Element {
     const lineNumber =
         contentState
             .getBlockMap()
