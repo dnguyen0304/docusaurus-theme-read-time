@@ -9,14 +9,18 @@
     height: 100%;
 }
 
-.editor_containerHandle {
-    width: 15px;
+.editorHandle_container {
+    position: relative;
 
     background-color: var(--ifm-color-emphasis-100);
     transition: background-color 0.2s;
 }
 
-.editor_containerHandle:hover {
+.editorHandle_container:hover {
     background-color: var(--ifm-toc-border-color);
     cursor: col-resize;
+}
+
+.editorHandle_container:hover svg {
+    color: white;
 }
