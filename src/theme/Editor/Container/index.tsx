@@ -8,6 +8,7 @@ interface Props {
 export default function Container({ children }: Props): JSX.Element {
     return (
         <div className={styles.editor_container}>
+            <div className={styles.editor_containerHandle} />
             {children}
         </div>
     )
