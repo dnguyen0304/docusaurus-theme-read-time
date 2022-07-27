@@ -1,0 +1,5 @@
+.editor_container {
+    height: 100%;
+
+    border-left: 1px solid var(--ifm-toc-border-color);
+}

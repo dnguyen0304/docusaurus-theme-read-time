@@ -1,6 +1,7 @@
 import draft from 'draft-js';
 import * as React from 'react';
 // import EditModeButtonGroup from './EditModeButtonGroup';
+import EditorContainer from './Container';
 import EditorLine from './Line';
 
 // const KEY_HANDLED_ACK = 'handled';
@@ -68,7 +69,7 @@ export default function Editor({
     }, []);
 
     return (
-        <div>
+        <EditorContainer>
             <draft.Editor
                 editorState={editorState}
                 blockRendererFn={blockRendererFn}
@@ -80,6 +81,6 @@ export default function Editor({
                 resetMarkdown={resetMarkdown}
                 toggleIsSaving={toggleIsSaving}
                 snackbarService={snackbarService} /> */}
-        </div >
+        </EditorContainer >
     );
 }
