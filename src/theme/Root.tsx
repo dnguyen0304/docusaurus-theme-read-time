@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { EditorProvider } from '../contexts/editor';
+import KeyBindings from '../services/KeyBindings';
 
 interface Props {
     readonly children: React.ReactNode;
@@ -23,6 +24,7 @@ export default function Root({ children }: Props): JSX.Element {
         <>
             <ThemeProvider theme={theme}>
                 <EditorProvider>
+                    <KeyBindings />
                     {children}
                 </EditorProvider>
             </ThemeProvider>
