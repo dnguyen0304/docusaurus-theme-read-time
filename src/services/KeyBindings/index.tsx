@@ -1,7 +1,7 @@
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useEditor } from '../../contexts/editor';
-import { EditButtonKeyBinding } from '../../theme/EditButton';
 import { CloseButtonKeyBinding } from '../../theme/Editor/CloseButton';
+import { EditButtonKeyBinding } from '../../theme/Editor/EditButton';
 
 export default function KeyBindings() {
     const context = useEditor();

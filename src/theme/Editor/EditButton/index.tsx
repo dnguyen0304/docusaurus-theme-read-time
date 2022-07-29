@@ -2,7 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
-import type { KeyBinding } from '../../docusaurus-theme-editor';
+import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
     readonly toggleEditorIsOpen: () => void;
