@@ -13,7 +13,7 @@ const StyledIcon = styled(DragIndicatorIcon)(({ width }: Props) => ({
     width: width,
 
     position: 'sticky',
-    top: 'calc(40vh)',
+    top: 'calc(45vh)',
 
     color: 'var(--ifm-color-emphasis-500)',
     transform: 'scaleY(1.2)',
