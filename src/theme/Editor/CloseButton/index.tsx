@@ -2,14 +2,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
     readonly toggleEditorIsOpen: () => void;
 }
 
-// TODO(dnguyen0304): Extract keybindings to a centralized location to
-// facilitate maintenance.
-const KEYBINDING: string = 'esc';
+export const CloseButtonKeyBinding: KeyBinding = {
+    key: 'escape',
+    friendlyLabel: 'esc',
+};
 
 export default function CloseButton(
     {
@@ -18,7 +20,7 @@ export default function CloseButton(
 ): JSX.Element {
     return (
         <Tooltip
-            title={`Close editor panel (${KEYBINDING})`}
+            title={`Close editor panel (${CloseButtonKeyBinding.friendlyLabel})`}
             placement='bottom'
         >
             <Button

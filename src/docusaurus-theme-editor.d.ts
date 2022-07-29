@@ -6,3 +6,8 @@ declare module '@theme-init/DocBreadcrumbs' {
     }
     export default function DocBreadcrumbs(props: Props): JSX.Element;
 }
+
+export interface KeyBinding {
+    key: string;
+    friendlyLabel: string;
+}

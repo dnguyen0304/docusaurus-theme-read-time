@@ -2,14 +2,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import type { KeyBinding } from '../../docusaurus-theme-editor';
 
 interface Props {
     readonly toggleEditorIsOpen: () => void;
 }
 
-// TODO(dnguyen0304): Extract keybindings to a centralized location to
-// facilitate maintenance.
-const KEYBINDING: string = 'e';
+export const EditButtonKeyBinding: KeyBinding = {
+    key: 'e',
+    friendlyLabel: 'e',
+};
 
 export default function EditButton(
     {
@@ -18,7 +20,7 @@ export default function EditButton(
 ): JSX.Element {
     return (
         <Tooltip
-            title={`Open editor panel (${KEYBINDING})`}
+            title={`Open editor panel (${EditButtonKeyBinding.friendlyLabel})`}
             placement='bottom'
         >
             <Button
