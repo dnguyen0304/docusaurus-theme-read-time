@@ -11,7 +11,11 @@ interface Props {
 // facilitate maintenance.
 const KEYBINDING: string = 'e';
 
-export default function EditButton({ toggleEditorIsOpen }: Props): JSX.Element {
+export default function EditButton(
+    {
+        toggleEditorIsOpen,
+    }: Props
+): JSX.Element {
     return (
         <Tooltip
             title={`Open editor panel (${KEYBINDING})`}
@@ -24,8 +28,8 @@ export default function EditButton({ toggleEditorIsOpen }: Props): JSX.Element {
                 data-step={1}
                 data-position='top'
                 onClick={toggleEditorIsOpen}
-                variant='contained'
                 startIcon={<EditIcon />}
+                variant='contained'
             >
                 Edit
             </Button>

@@ -4,6 +4,7 @@ import type DocBreadcrumbsType from '@theme/DocBreadcrumbs';
 import React from 'react';
 import { useEditor } from '../../contexts/editor';
 import EditButton from '../EditButton';
+import CloseButton from '../Editor/CloseButton';
 import styles from './styles.module.css';
 
 type Props = WrapperProps<typeof DocBreadcrumbsType>;
@@ -16,7 +17,9 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     return (
         <nav className={`${styles.breadcrumbsWrapper_container}`}>
             <DocBreadcrumbs {...props} />
-            <EditButton toggleEditorIsOpen={toggleEditorIsOpen} />
+            {!context.editorIsOpen
+                ? <EditButton toggleEditorIsOpen={toggleEditorIsOpen} />
+                : <CloseButton toggleEditorIsOpen={toggleEditorIsOpen} />}
         </nav>
     );
 }
