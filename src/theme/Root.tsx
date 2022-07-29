@@ -1,5 +1,6 @@
-import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from 'react';
+import { EditorProvider } from '../contexts/editor';
 
 interface Props {
     readonly children: React.ReactNode;
@@ -21,7 +22,9 @@ export default function Root({ children }: Props): JSX.Element {
     return (
         <>
             <ThemeProvider theme={theme}>
-                {children}
+                <EditorProvider>
+                    {children}
+                </EditorProvider>
             </ThemeProvider>
         </>
     );
