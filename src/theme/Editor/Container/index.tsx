@@ -1,25 +1,38 @@
-import { styled } from '@mui/material/styles';
+import { Resizable } from 're-resizable';
 import * as React from 'react';
-import EditorHandle from '../Handle';
+import EditorHandle, { WIDTH_PX } from '../Handle';
 import styles from './styles.module.css';
 
 interface Props {
     children: React.ReactNode;
 }
 
-const HANDLE_WIDTH_PX: number = 15;
-
-const EditorHandleContainer = styled('div')({
-    width: HANDLE_WIDTH_PX,
-});
-
 export default function Container({ children }: Props): JSX.Element {
     return (
-        <div className={styles.editor_container}>
-            <EditorHandleContainer className={styles.editorHandle_container}>
-                <EditorHandle width={HANDLE_WIDTH_PX} />
-            </EditorHandleContainer>
-            {children}
-        </div>
+        // TODO(dnguyen0304): Investigate how to set minWidth and maxWidth.
+        // Unconfirmed: It might be related to the undocumented bounds and
+        // boundByDirection props.
+        <Resizable
+            defaultSize={{ width: 'auto', height: '100%' }}
+            enable={{
+                left: true,
+            }}
+            handleComponent={{
+                left: <EditorHandle />
+            }}
+            // This prop name is misleading. These styles are actually for a
+            // thin wrapper around handleComponent. It is rendered between
+            // handleWrapper and handleComponent.
+            handleStyles={{
+                left: {
+                    width: `${WIDTH_PX}px`,
+                    left: 0,
+                },
+            }}
+        >
+            <div className={styles.editor_container}>
+                {children}
+            </div>
+        </Resizable>
     )
 }

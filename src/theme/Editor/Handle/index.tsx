@@ -7,7 +7,7 @@ interface Props {
     width?: number;
 }
 
-const WIDTH_PX: number = 15;
+export const WIDTH_PX: number = 15;
 
 const StyledIcon = styled(DragIndicatorIcon)(({ width }: Props) => ({
     width: width,
@@ -25,6 +25,8 @@ export default function Handle(
     }: Props
 ): JSX.Element {
     return (
+        // TODO(dnguyen0304): Investigate refactoring to Resizable
+        // handleWrapperClass and handleWrapperStyle.
         <div
             className={styles.editorHandle_container}
             style={{ width: width }}

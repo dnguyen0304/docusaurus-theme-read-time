@@ -1,3 +1,7 @@
+:global main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
+    max-width: 50%;
+}
+
 :global .DraftEditor-root {
     flex-grow: 1;
 }
@@ -7,20 +11,4 @@
     flex-direction: row;
 
     height: 100%;
-}
-
-.editorHandle_container {
-    position: relative;
-
-    background-color: var(--ifm-color-emphasis-100);
-    transition: background-color 0.2s;
-}
-
-.editorHandle_container:hover {
-    background-color: var(--ifm-toc-border-color);
-    cursor: col-resize;
-}
-
-.editorHandle_container:hover svg {
-    color: white;
 }
