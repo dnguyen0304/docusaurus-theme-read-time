@@ -22,7 +22,7 @@ interface Props {
     readonly children: React.ReactNode,
 };
 
-function EditButtonProvider({ children }: Props): JSX.Element {
+function EditorProvider({ children }: Props): JSX.Element {
     const value = useContextValue();
 
     return (
@@ -32,15 +32,15 @@ function EditButtonProvider({ children }: Props): JSX.Element {
     );
 };
 
-function useEditButton(): ContextValue {
+function useEditor(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
-        throw new ReactContextError('EditButtonProvider');
+        throw new ReactContextError('EditorProvider');
     }
     return context;
 }
 
 export {
-    EditButtonProvider,
-    useEditButton,
+    EditorProvider,
+    useEditor,
 };

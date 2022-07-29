@@ -2,14 +2,14 @@ import type { WrapperProps } from '@docusaurus/types';
 import DocBreadcrumbs from '@theme-init/DocBreadcrumbs';
 import type DocBreadcrumbsType from '@theme/DocBreadcrumbs';
 import React from 'react';
-import { useEditButton } from '../../contexts/editButton';
+import { useEditor } from '../../contexts/editor';
 import EditButton from '../EditButton';
 import styles from './styles.module.css';
 
 type Props = WrapperProps<typeof DocBreadcrumbsType>;
 
 export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
-    const context = useEditButton();
+    const context = useEditor();
 
     const toggleEditorIsOpen = () => { context.setEditorIsOpen(prev => !prev) };
 
