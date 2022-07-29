@@ -1,10 +1,13 @@
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import styles from './styles.module.css';
 
 interface Props {
-    width: number;
+    width?: number;
 }
+
+const WIDTH_PX: number = 15;
 
 const StyledIcon = styled(DragIndicatorIcon)(({ width }: Props) => ({
     width: width,
@@ -16,8 +19,17 @@ const StyledIcon = styled(DragIndicatorIcon)(({ width }: Props) => ({
     transform: 'scaleY(1.2)',
 }));
 
-export default function Handle({ width }: Props): JSX.Element {
+export default function Handle(
+    {
+        width = WIDTH_PX
+    }: Props
+): JSX.Element {
     return (
-        <StyledIcon width={width} />
+        <div
+            className={styles.editorHandle_container}
+            style={{ width: width }}
+        >
+            <StyledIcon width={width} />
+        </div>
     );
 }
