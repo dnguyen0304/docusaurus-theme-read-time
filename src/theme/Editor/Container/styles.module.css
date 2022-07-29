@@ -10,5 +10,12 @@
     display: flex;
     flex-direction: row;
 
+    /* Use this position and sizing workaround because Resizable implements the
+       handle as a sibling to the resizable children component. */
+    /* TODO(dnguyen0304): Extract handle width to a centralized location to
+       facilitate maintenance. */
+    position: absolute;
+    left: 15px;
+    width: calc(100% - 15px);
     height: 100%;
 }
