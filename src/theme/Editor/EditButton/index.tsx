@@ -31,6 +31,9 @@ export default function EditButton(
                 data-position='top'
                 onClick={toggleEditorIsOpen}
                 startIcon={<EditIcon />}
+                // See "MUI - Change Button text color in theme" for an
+                // explanation of Button color:
+                // https://stackoverflow.com/a/69879572
                 variant='contained'
             >
                 Edit
