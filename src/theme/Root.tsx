@@ -8,15 +8,14 @@ interface Props {
 }
 
 const COLOR_ACCENT_GREEN: string = '#64ffda';
-// TODO(dnguyen0304): Rename to COLOR_GREY_600.
-const COLOR_BLUEISH_BLACK: string = '#2e4561';
+const COLOR_GREY_600: string = '#2e4561';  // blueish
 const COLOR_GREY_700: string = '#363732';
 
 const theme = createTheme({
     palette: {
         primary: {
             main: COLOR_ACCENT_GREEN,
-            contrastText: COLOR_BLUEISH_BLACK,
+            contrastText: COLOR_GREY_600,
         },
     },
     components: {
