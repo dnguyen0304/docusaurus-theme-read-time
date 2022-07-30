@@ -3,16 +3,16 @@ import * as React from 'react';
 import DiscardButton from './DiscardButton';
 import styles from './styles.module.css';
 // import GetApprovalButton from './GetApprovalButton';
-// import SaveButton from './SaveButton';
+import SaveButton from './SaveButton';
 
 interface Props {
-    // readonly isSaving: boolean;
+    readonly isSaving: boolean;
     readonly closeEditor: () => void;
 }
 
 export default function EditModeButtonGroup(
     {
-        // isSaving,
+        isSaving,
         closeEditor,
         // resetMarkdown,
     }: Props
@@ -24,7 +24,7 @@ export default function EditModeButtonGroup(
                 spacing={2}
             >
                 <DiscardButton onClick={closeEditor} />
-                {/* <SaveButton isSaving={isSaving} /> */}
+                <SaveButton isSaving={isSaving} />
                 {/* <GetApprovalButton
                     toggleEditMode={toggleEditMode}
                     snackbarService={snackbarService} /> */}

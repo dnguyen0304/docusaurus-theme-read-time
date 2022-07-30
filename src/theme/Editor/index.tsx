@@ -25,6 +25,7 @@ export default function Editor({
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
     );
+    const [isSaving, setIsSaving] = React.useState<boolean>(false);
     // const [toggleIsSaving, setToggleIsSaving] = React.useState<boolean>(false);
 
     const closeEditor = () => {
@@ -33,6 +34,17 @@ export default function Editor({
 
     const handleChange = (editorState: draft.EditorState) => {
         setEditorState(editorState);
+
+        // TODO(dnguyen0304): Fix save loading triggering on focus (see handleBeforeInput).
+        // TODO(dnguyen0304): Fix save loading triggering on cursor movement.
+        // TODO(dnguyen0304): Fix save loading triggering constantly.
+        if (editorState.getLastChangeType() !== undefined) {
+            setIsSaving(true);
+            new Promise(resolve => setTimeout(resolve, 750))
+                .then(() => {
+                    setIsSaving(false);
+                });
+        }
     }
 
     // const _onChange = (editorState) => {
@@ -83,7 +95,9 @@ export default function Editor({
                 onChange={handleChange} />
             {/* handleKeyCommand={handleKeyCommand} */}
             {/* keyBindingFn={handleKeyboardEvent} */}
-            <EditModeButtonGroup closeEditor={closeEditor} />
+            <EditModeButtonGroup
+                closeEditor={closeEditor}
+                isSaving={isSaving} />
             {/* toggleEditMode={toggleEditMode} */}
             {/* resetMarkdown={resetMarkdown} */}
             {/* toggleIsSaving={toggleIsSaving} */}
