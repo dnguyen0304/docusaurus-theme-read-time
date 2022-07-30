@@ -1,5 +1,6 @@
 import draft from 'draft-js';
 import * as React from 'react';
+import { useEditor } from '../../contexts/editor';
 import EditorContainer from './Container';
 import EditModeButtonGroup from './EditMode/ButtonGroup';
 import EditorLine from './Line';
@@ -19,10 +20,16 @@ export default function Editor({
     // resetMarkdown,
     // snackbarService,
 }): JSX.Element {
+    const context = useEditor();
+
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
     );
     // const [toggleIsSaving, setToggleIsSaving] = React.useState<boolean>(false);
+
+    const closeEditor = () => {
+        context.setEditorIsOpen(false);
+    };
 
     const handleChange = (editorState: draft.EditorState) => {
         setEditorState(editorState);
@@ -76,7 +83,7 @@ export default function Editor({
                 onChange={handleChange} />
             {/* handleKeyCommand={handleKeyCommand} */}
             {/* keyBindingFn={handleKeyboardEvent} */}
-            <EditModeButtonGroup />
+            <EditModeButtonGroup closeEditor={closeEditor} />
             {/* toggleEditMode={toggleEditMode} */}
             {/* resetMarkdown={resetMarkdown} */}
             {/* toggleIsSaving={toggleIsSaving} */}

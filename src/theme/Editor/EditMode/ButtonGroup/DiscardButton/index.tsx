@@ -48,7 +48,7 @@ export default function DiscardButton({ onClick }: Props): JSX.Element {
         setConfirmationIsOpen(prev => !prev);
     };
 
-    const toggleEditorIsOpen = () => {
+    const closeEditor = () => {
         toggleConfirmation();
         onClick();
     };
@@ -89,7 +89,7 @@ export default function DiscardButton({ onClick }: Props): JSX.Element {
                     >
                         Go Back
                     </Button>
-                    <Button onClick={toggleEditorIsOpen}>
+                    <Button onClick={closeEditor}>
                         Discard
                     </Button>
                 </DialogActions>

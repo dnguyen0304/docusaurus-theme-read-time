@@ -6,14 +6,15 @@ import styles from './styles.module.css';
 // import SaveButton from './SaveButton';
 
 interface Props {
-    readonly toggleEditorIsOpen: () => void;
+    // readonly isSaving: boolean;
+    readonly closeEditor: () => void;
 }
 
 export default function EditModeButtonGroup(
     {
-        toggleEditorIsOpen,
+        // isSaving,
+        closeEditor,
         // resetMarkdown,
-        // toggleIsSaving,
     }: Props
 ): JSX.Element {
     return (
@@ -22,12 +23,9 @@ export default function EditModeButtonGroup(
                 direction='row'
                 spacing={2}
             >
-                <DiscardButton onClick={toggleEditorIsOpen} />
-                {/* <SaveButton
-                    toggleEditMode={toggleEditMode}
-                    toggleIsSaving={toggleIsSaving}
-                    snackbarService={snackbarService} />
-                <GetApprovalButton
+                <DiscardButton onClick={closeEditor} />
+                {/* <SaveButton isSaving={isSaving} /> */}
+                {/* <GetApprovalButton
                     toggleEditMode={toggleEditMode}
                     snackbarService={snackbarService} /> */}
             </Stack>
