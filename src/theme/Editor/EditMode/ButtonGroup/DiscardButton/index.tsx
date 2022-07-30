@@ -6,33 +6,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
-import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
+import Transition from '../../../../components/Transition';
 
 interface Props {
     readonly onClick: () => void;
 }
-
-// Copied from:
-// https://mui.com/material-ui/react-dialog/#transitions
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps
-        & {
-            children: React.ReactElement<any, any>;
-        },
-    ref: React.Ref<unknown>,
-) {
-    return (
-        <Slide
-            ref={ref}
-            direction='up'
-            {...props}
-        />
-    );
-});
 
 const StyledDialog = styled(Dialog)({
     '& .MuiPaper-root': {
