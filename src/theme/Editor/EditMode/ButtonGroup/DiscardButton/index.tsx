@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 
@@ -54,14 +55,19 @@ export default function DiscardButton({ onClick }: Props): JSX.Element {
 
     return (
         <React.Fragment>
-            <IconButton
-                aria-label='discard'
-                // TODO(dnguyen0304): Add red color for theme palette.
-                color='error'
-                onClick={toggleConfirmation}
+            <Tooltip
+                title='Discard'
+                placement='top'
             >
-                <DeleteIcon />
-            </IconButton>
+                <IconButton
+                    aria-label='discard'
+                    // TODO(dnguyen0304): Add red color for theme palette.
+                    color='error'
+                    onClick={toggleConfirmation}
+                >
+                    <DeleteIcon />
+                </IconButton>
+            </Tooltip>
             <StyledDialog
                 TransitionComponent={Transition}
                 onClose={toggleConfirmation}
