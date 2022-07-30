@@ -1,0 +1,9 @@
+.editModeButtonGroup_container {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+
+    height: 5%;
+
+    background-color: red;
+}

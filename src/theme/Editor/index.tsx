@@ -1,7 +1,7 @@
 import draft from 'draft-js';
 import * as React from 'react';
-// import EditModeButtonGroup from './EditModeButtonGroup';
 import EditorContainer from './Container';
+import EditModeButtonGroup from './EditMode/ButtonGroup';
 import EditorLine from './Line';
 
 // const KEY_HANDLED_ACK = 'handled';
@@ -76,11 +76,11 @@ export default function Editor({
                 onChange={handleChange} />
             {/* handleKeyCommand={handleKeyCommand} */}
             {/* keyBindingFn={handleKeyboardEvent} */}
-            {/* <EditModeButtonGroup
-                toggleEditMode={toggleEditMode}
-                resetMarkdown={resetMarkdown}
-                toggleIsSaving={toggleIsSaving}
-                snackbarService={snackbarService} /> */}
+            <EditModeButtonGroup />
+            {/* toggleEditMode={toggleEditMode} */}
+            {/* resetMarkdown={resetMarkdown} */}
+            {/* toggleIsSaving={toggleIsSaving} */}
+            {/* snackbarService={snackbarService} */}
         </EditorContainer >
     );
 }

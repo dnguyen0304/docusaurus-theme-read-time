@@ -8,7 +8,7 @@
 
 .editor_container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     /* Use this position and sizing workaround because Resizable implements the
        handle as a sibling to the resizable children component. */
