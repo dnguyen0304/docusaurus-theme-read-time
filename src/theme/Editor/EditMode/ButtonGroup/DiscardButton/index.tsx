@@ -1,4 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -65,7 +65,7 @@ export default function DiscardButton({ onClick }: Props): JSX.Element {
                     color='error'
                     onClick={toggleConfirmation}
                 >
-                    <DeleteIcon />
+                    <DeleteOutlineRoundedIcon />
                 </IconButton>
             </Tooltip>
             <StyledDialog
