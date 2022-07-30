@@ -3,7 +3,11 @@
     position: sticky;
     bottom: 0;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     height: 5%;
 
-    background-color: red;
+    background-color: lightgrey;
 }

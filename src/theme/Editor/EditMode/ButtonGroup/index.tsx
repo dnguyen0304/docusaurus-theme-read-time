@@ -1,16 +1,20 @@
 import Stack from '@mui/material/Stack';
 import * as React from 'react';
+import DiscardButton from './DiscardButton';
 import styles from './styles.module.css';
-// import DiscardButton from './DiscardButton';
 // import GetApprovalButton from './GetApprovalButton';
 // import SaveButton from './SaveButton';
 
+interface Props {
+    readonly toggleEditorIsOpen: () => void;
+}
+
 export default function EditModeButtonGroup(
     {
-        // toggleEditMode,
+        toggleEditorIsOpen,
         // resetMarkdown,
         // toggleIsSaving,
-    }
+    }: Props
 ): JSX.Element {
     return (
         <div className={styles.editModeButtonGroup_container}>
@@ -18,11 +22,8 @@ export default function EditModeButtonGroup(
                 direction='row'
                 spacing={2}
             >
-                {/* <DiscardButton
-                    toggleEditMode={toggleEditMode}
-                    resetMarkdown={resetMarkdown}
-                    snackbarService={snackbarService} />
-                <SaveButton
+                <DiscardButton onClick={toggleEditorIsOpen} />
+                {/* <SaveButton
                     toggleEditMode={toggleEditMode}
                     toggleIsSaving={toggleIsSaving}
                     snackbarService={snackbarService} />
