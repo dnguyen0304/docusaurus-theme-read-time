@@ -4,10 +4,8 @@
     bottom: 0;
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 
     height: 5%;
-
-    background-color: lightgrey;
 }
