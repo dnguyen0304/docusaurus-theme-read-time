@@ -36,6 +36,8 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
 
     return (
         <React.Fragment>
+            {/* TODO(dnguyen0304): Extract to a centralized location to
+                facilitate maintenance. */}
             <Tooltip
                 title='Discard'
                 placement='top'
