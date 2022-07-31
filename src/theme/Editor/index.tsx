@@ -35,7 +35,7 @@ export default function Editor({
     const handleChange = (editorState: draft.EditorState) => {
         setEditorState(editorState);
 
-        // TODO(dnguyen0304): Fix save loading triggering on focus (see handleBeforeInput).
+        // TODO(dnguyen0304): Fix save loading triggering on blur (see handleBeforeInput).
         // TODO(dnguyen0304): Fix save loading triggering on cursor movement.
         // TODO(dnguyen0304): Fix save loading triggering constantly.
         if (editorState.getLastChangeType() !== undefined) {
@@ -46,20 +46,6 @@ export default function Editor({
                 });
         }
     }
-
-    // const _onChange = (editorState) => {
-    //     onChange(editorState);
-
-    //     // TODO: Fix save loading triggering on focus (see handleBeforeInput).
-    //     // TODO: Fix save loading triggering on cursor movement.
-    //     // TODO: Fix save loading triggering constantly.
-    //     if (editorState.getLastChangeType() !== undefined) {
-    //         setToggleIsSaving(true);
-    //         sleep(SAVE_LOADING_DURATION_MILLISECONDS).then(() => {
-    //             setToggleIsSaving(false)
-    //         });
-    //     }
-    // }
 
     const blockRendererFn = () => ({
         component: EditorLine,
