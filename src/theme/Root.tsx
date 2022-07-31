@@ -26,6 +26,10 @@ const theme = createTheme({
                 textPrimary: {
                     color: COLOR_GREY_700,
                 },
+                outlinedPrimary: {
+                    borderColor: COLOR_GREY_700,
+                    color: COLOR_GREY_700,
+                },
             },
         },
     },

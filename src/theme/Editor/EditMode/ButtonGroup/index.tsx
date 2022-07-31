@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 import * as React from 'react';
 import DiscardButton from './DiscardButton';
-// import ProposeButton from './ProposeButton';
+import ProposeButton from './ProposeButton';
 import SaveButton from './SaveButton';
 import styles from './styles.module.css';
 
@@ -30,7 +30,7 @@ export default function EditModeButtonGroup(
                     isSaving={isSaving}
                     setIsSaving={setIsSaving}
                 />
-                {/* <ProposeButton onSubmit={closeEditor} /> */}
+                <ProposeButton onSubmit={closeEditor} />
             </Stack>
         </div>
     );
