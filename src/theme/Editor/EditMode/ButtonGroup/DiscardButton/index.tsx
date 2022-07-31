@@ -12,7 +12,7 @@ import * as React from 'react';
 import Transition from '../../../../components/Transition';
 
 interface Props {
-    readonly onClick: () => void;
+    readonly onSubmit: () => void;
 }
 
 const StyledDialog = styled(Dialog)({
@@ -21,7 +21,7 @@ const StyledDialog = styled(Dialog)({
     },
 });
 
-export default function DiscardButton({ onClick }: Props): JSX.Element {
+export default function DiscardButton({ onSubmit }: Props): JSX.Element {
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
 
@@ -31,7 +31,7 @@ export default function DiscardButton({ onClick }: Props): JSX.Element {
 
     const closeEditor = () => {
         toggleConfirmation();
-        onClick();
+        onSubmit();
     };
 
     return (
