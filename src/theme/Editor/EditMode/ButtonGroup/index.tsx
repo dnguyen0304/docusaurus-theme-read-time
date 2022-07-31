@@ -1,19 +1,21 @@
 import Stack from '@mui/material/Stack';
 import * as React from 'react';
 import DiscardButton from './DiscardButton';
-import styles from './styles.module.css';
-// import GetApprovalButton from './GetApprovalButton';
+// import ProposeChangesButton from './ProposeChangesButton';
 import SaveButton from './SaveButton';
+import styles from './styles.module.css';
 
 interface Props {
-    readonly isSaving: boolean;
     readonly closeEditor: () => void;
+    readonly isSaving: boolean;
+    readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export default function EditModeButtonGroup(
     {
-        isSaving,
         closeEditor,
+        isSaving,
+        setIsSaving,
         // resetMarkdown,
     }: Props
 ): JSX.Element {
@@ -24,10 +26,11 @@ export default function EditModeButtonGroup(
                 spacing={2}
             >
                 <DiscardButton onClick={closeEditor} />
-                <SaveButton isSaving={isSaving} />
-                {/* <GetApprovalButton
-                    toggleEditMode={toggleEditMode}
-                    snackbarService={snackbarService} /> */}
+                <SaveButton
+                    isSaving={isSaving}
+                    setIsSaving={setIsSaving}
+                />
+                {/* <ProposeChangesButton onClick={closeEditor} /> */}
             </Stack>
         </div>
     );

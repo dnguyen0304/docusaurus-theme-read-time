@@ -97,7 +97,9 @@ export default function Editor({
             {/* keyBindingFn={handleKeyboardEvent} */}
             <EditModeButtonGroup
                 closeEditor={closeEditor}
-                isSaving={isSaving} />
+                isSaving={isSaving}
+                setIsSaving={setIsSaving}
+            />
             {/* toggleEditMode={toggleEditMode} */}
             {/* resetMarkdown={resetMarkdown} */}
             {/* toggleIsSaving={toggleIsSaving} */}
