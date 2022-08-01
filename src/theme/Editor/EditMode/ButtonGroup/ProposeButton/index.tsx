@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useSnackbar } from '../../../../../contexts/snackbar';
 import Transition from '../../../../components/Transition';
 
 interface Props {
@@ -28,6 +29,8 @@ const StyledBox = styled(Box)({
 });
 
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
+    const snackbar = useSnackbar().snackbar;
+
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
     const [description, setDescription] = React.useState<string>('');
@@ -42,6 +45,9 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         // transition animation.
         toggleConfirmation();
         onSubmit();
+        snackbar.sendSuccessAlert(
+            `Successfully proposed changes for "${description}".`
+        );
     };
 
     const handleDescriptionKeyUp = (event: React.KeyboardEvent) => {
