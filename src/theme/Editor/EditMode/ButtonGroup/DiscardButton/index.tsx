@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useSnackbar } from '../../../../../contexts/snackbar';
 import Transition from '../../../../components/Transition';
 
 interface Props {
@@ -22,6 +23,8 @@ const StyledDialog = styled(Dialog)({
 });
 
 export default function DiscardButton({ onSubmit }: Props): JSX.Element {
+    const snackbar = useSnackbar().snackbar;
+
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
 
@@ -32,6 +35,7 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
     const closeEditor = () => {
         toggleConfirmation();
         onSubmit();
+        snackbar.sendSuccessAlert('Successfully discarded changes.');
     };
 
     return (

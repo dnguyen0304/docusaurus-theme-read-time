@@ -1,7 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { EditorProvider } from '../contexts/editor';
+import { SnackbarProvider } from '../contexts/snackbar';
 import KeyBindings from '../services/KeyBindings';
+import Snackbar, { SnackbarType } from '../theme/services/Snackbar';
 
 interface Props {
     readonly children: React.ReactNode;
@@ -36,13 +38,18 @@ const theme = createTheme({
 });
 
 export default function Root({ children }: Props): JSX.Element {
+    const snackbar: SnackbarType = Snackbar();
+
     return (
         <>
             <ThemeProvider theme={theme}>
-                <EditorProvider>
-                    <KeyBindings />
-                    {children}
-                </EditorProvider>
+                <SnackbarProvider snackbar={snackbar}>
+                    {snackbar.create()}
+                    <EditorProvider>
+                        <KeyBindings />
+                        {children}
+                    </EditorProvider>
+                </SnackbarProvider>
             </ThemeProvider>
         </>
     );
