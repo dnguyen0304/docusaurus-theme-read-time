@@ -4,12 +4,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
+import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
 interface Props {
     readonly isSaving: boolean;
     readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
 }
+
+const KeyBinding: KeyBindingType = {
+    key: 'shift+option+s',
+    friendlyLabel: '^⌥S',
+};
 
 export default function SaveButton(
     {
@@ -50,6 +57,11 @@ export default function SaveButton(
         };
     };
 
+    useHotkeys(
+        KeyBinding.key,
+        handleClick,
+    );
+
     React.useEffect(() => {
         return () => {
             clearTimeout(timerId.current);
@@ -58,7 +70,7 @@ export default function SaveButton(
 
     return (
         <Tooltip
-            title='Save'
+            title={`Save (${KeyBinding.friendlyLabel})`}
             placement='top'
         >
             <IconButton
