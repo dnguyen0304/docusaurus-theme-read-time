@@ -9,12 +9,19 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
+import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 
 interface Props {
     readonly onSubmit: () => void;
 }
+
+const KeyBinding: KeyBindingType = {
+    key: 'shift+option+d',
+    friendlyLabel: '^⌥D',
+};
 
 const StyledDialog = styled(Dialog)({
     '& .MuiPaper-root': {
@@ -38,12 +45,17 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
         snackbar.sendSuccessAlert('Successfully discarded changes.');
     };
 
+    useHotkeys(
+        KeyBinding.key,
+        toggleConfirmation,
+    );
+
     return (
         <React.Fragment>
             {/* TODO(dnguyen0304): Extract to a centralized location to
                 facilitate maintenance. */}
             <Tooltip
-                title='Discard'
+                title={`Discard (${KeyBinding.friendlyLabel})`}
                 placement='top'
             >
                 <IconButton
