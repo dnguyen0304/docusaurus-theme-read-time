@@ -3,6 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useSnackbar } from '../../../../../contexts/snackbar';
 
 interface Props {
     readonly isSaving: boolean;
@@ -15,6 +16,8 @@ export default function SaveButton(
         setIsSaving,
     }: Props
 ): JSX.Element {
+    const snackbar = useSnackbar().snackbar;
+
     // TODO(dnguyen0304): Investigate if a real implementation is necessary in
     // addition to background saving.
     const handleClick = () => {
@@ -22,7 +25,8 @@ export default function SaveButton(
         new Promise(resolve => setTimeout(resolve, 750))
             .then(() => {
                 setIsSaving(false);
-            })
+                snackbar.sendSuccessAlert('Successfully saved changes.');
+            });
     };
 
     return (
