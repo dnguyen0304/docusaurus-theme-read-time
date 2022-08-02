@@ -11,12 +11,19 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
+import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 
 interface Props {
     readonly onSubmit: () => void;
 }
+
+const KeyBinding: KeyBindingType = {
+    key: 'command+enter',
+    friendlyLabel: '⌘↩︎',
+};
 
 // TODO(dnguyen0304): Extract to a centralized location to facilitate
 // maintenance.
@@ -56,12 +63,17 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         }
     };
 
+    useHotkeys(
+        KeyBinding.key,
+        toggleConfirmation,
+    );
+
     return (
         <React.Fragment>
             {/* TODO(dnguyen0304): Extract to a centralized location to
                 facilitate maintenance. */}
             <Tooltip
-                title='Propose'
+                title={`Propose (${KeyBinding.friendlyLabel})`}
                 placement='top'
             >
                 <Button
