@@ -41,7 +41,7 @@ export default function SaveButton(
             .then(() => {
                 timerId.current = window.setTimeout(() => {
                     setIsConfirmed(false);
-                }, 1000);
+                }, 1250);
             });
     };
 
