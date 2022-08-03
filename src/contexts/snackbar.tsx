@@ -3,7 +3,7 @@ import { SnackbarType } from '../theme/services/Snackbar';
 import { ReactContextError } from './errors';
 
 interface ContextValue {
-    readonly snackbar: SnackbarType,
+    readonly snackbar: SnackbarType;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
@@ -16,11 +16,16 @@ function useContextValue(snackbar: SnackbarType): ContextValue {
 }
 
 interface Props {
-    readonly snackbar: SnackbarType,
-    readonly children: React.ReactNode,
+    readonly snackbar: SnackbarType;
+    readonly children: React.ReactNode;
 };
 
-function SnackbarProvider({ snackbar, children }: Props): JSX.Element {
+function SnackbarProvider(
+    {
+        snackbar,
+        children,
+    }: Props
+): JSX.Element {
     const value = useContextValue(snackbar);
 
     return (
