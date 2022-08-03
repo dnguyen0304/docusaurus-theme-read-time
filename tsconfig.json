@@ -2,12 +2,12 @@
     "compilerOptions": {
         /* Emit */
         "target": "es2022",
-        "module": "commonjs",
+        "module": "Commonjs",
         "lib": [
             "ESNext",
             "DOM"
         ],
-        "jsx": "react",
+        "jsx": "react-native",
         "rootDir": "src",
         "outDir": "lib",
         "declaration": true,
