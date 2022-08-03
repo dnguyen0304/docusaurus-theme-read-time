@@ -3,8 +3,8 @@ import { ReactContextError } from './errors';
 
 // aliases: table of contents
 interface ContextValue {
-    readonly editorIsOpen: boolean,
-    readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    readonly editorIsOpen: boolean;
+    readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
@@ -19,7 +19,7 @@ function useContextValue(): ContextValue {
 }
 
 interface Props {
-    readonly children: React.ReactNode,
+    readonly children: React.ReactNode;
 };
 
 function EditorProvider({ children }: Props): JSX.Element {
