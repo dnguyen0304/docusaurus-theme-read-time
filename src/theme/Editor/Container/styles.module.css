@@ -10,8 +10,7 @@
 
 .editorResizableContainer {
     /* TODO(dnguyen0304): Investigate why this adds horizontal visual
-       stuttering. The column width is 1 editor handle width (e.g. 15px) wider
-       than it should be. */
+       stuttering. The width is relative to the content. */
     display: flex;
     flex-direction: row-reverse;
 
