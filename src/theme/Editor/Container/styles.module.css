@@ -4,6 +4,8 @@
 
 :global .DraftEditor-root {
     flex-grow: 1;
+
+    overflow: scroll;
 }
 
 .editorResizableContainer {
@@ -12,6 +14,8 @@
        than it should be. */
     display: flex;
     flex-direction: row-reverse;
+
+    top: var(--ifm-navbar-height);
 }
 
 .editor_container {
