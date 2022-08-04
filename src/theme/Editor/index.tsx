@@ -1,7 +1,9 @@
+import { useLocation } from '@docusaurus/router';
 import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
+import { useEditorContent } from '../../contexts/editorContent';
 import { useSnackbar } from '../../contexts/snackbar';
 import EditorContainer from './Container';
 import EditModeButtonGroup from './EditMode/ButtonGroup';
@@ -23,8 +25,10 @@ export default function Editor({
     // onChange,
     // resetMarkdown,
 }): JSX.Element {
-    const context = useEditor();
-    const snackbar = useSnackbar().snackbar;
+    const { setEditorIsOpen } = useEditor();
+    const { editorContent } = useEditorContent();
+    const { pathname } = useLocation();
+    const { snackbar } = useSnackbar();
 
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
@@ -32,7 +36,7 @@ export default function Editor({
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
     const closeEditor = () => {
-        context.setEditorIsOpen(false);
+        setEditorIsOpen(false);
     };
 
     const handleChange = (editorState: draft.EditorState) => {
@@ -76,7 +80,7 @@ export default function Editor({
     React.useEffect(() => {
         setEditorState(
             draft.EditorState.createWithContent(
-                draft.ContentState.createFromText('Hello, World!')));
+                draft.ContentState.createFromText(editorContent[pathname])));
     }, []);
 
     return (
