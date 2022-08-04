@@ -13,12 +13,12 @@ export default function Container({ children }: Props): JSX.Element {
         // Unconfirmed: It might be related to the undocumented bounds and
         // boundByDirection props.
         <Resizable
-            defaultSize={{ width: 'auto', height: '100%' }}
+            className={styles.editorResizableContainer}
             enable={{
                 left: true,
             }}
             handleComponent={{
-                left: <EditorHandle />
+                left: <EditorHandle />,
             }}
             // This prop name is misleading. These styles are actually for a
             // thin wrapper around handleComponent. It is rendered between
