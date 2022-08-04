@@ -2,12 +2,6 @@
     max-width: 50%;
 }
 
-:global .DraftEditor-root {
-    flex-grow: 1;
-
-    overflow: scroll;
-}
-
 .editorResizableContainer {
     /* TODO(dnguyen0304): Investigate why this adds horizontal visual
        stuttering. The width is relative to the content. */
@@ -25,4 +19,8 @@
        facilitate maintenance. */
     width: calc(100% - 15px);
     height: calc(100vh - var(--ifm-navbar-height));
+}
+
+:global .DraftEditor-root {
+    overflow: scroll;
 }
