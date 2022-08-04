@@ -18,7 +18,6 @@ export default function Editor({
     // onChange,
     // toggleEditMode,
     // resetMarkdown,
-    // snackbarService,
 }): JSX.Element {
     const context = useEditor();
 
@@ -26,7 +25,6 @@ export default function Editor({
         () => draft.EditorState.createEmpty(),
     );
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
-    // const [toggleIsSaving, setToggleIsSaving] = React.useState<boolean>(false);
 
     const closeEditor = () => {
         context.setEditorIsOpen(false);
@@ -86,10 +84,7 @@ export default function Editor({
                 isSaving={isSaving}
                 setIsSaving={setIsSaving}
             />
-            {/* toggleEditMode={toggleEditMode} */}
             {/* resetMarkdown={resetMarkdown} */}
-            {/* toggleIsSaving={toggleIsSaving} */}
-            {/* snackbarService={snackbarService} */}
         </EditorContainer >
     );
 }
