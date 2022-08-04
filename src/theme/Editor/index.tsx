@@ -1,25 +1,30 @@
+import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
+import { useSnackbar } from '../../contexts/snackbar';
 import EditorContainer from './Container';
 import EditModeButtonGroup from './EditMode/ButtonGroup';
 import EditorLine from './Line';
 
-// const KEY_HANDLED_ACK = 'handled';
-// const KEY_HANDLED_NACK = 'not-handled';
-// const KEY_COMMAND_ESC = 'escape';
-// const KEYCODE_ESC = 27;
+// TODO(dnguyen0304): Extract to a centralized location to facilitate
+// maintenance.
+type HandleKeyCommandType = (
+    command: string,
+    editorState: EditorState,
+    eventTimeStamp: number,
+) => DraftHandleValue;
 
-// const SAVE_LOADING_DURATION_MILLISECONDS = 750;
+const HANDLER_NAME_ESCAPE: string = 'editor-escape';
+const KEY_CODE_ESCAPE: number = 27;
 
 // TODO: Fix inconsistent padding or margin in edit mode.
 export default function Editor({
-    // editorState,
     // onChange,
-    // toggleEditMode,
     // resetMarkdown,
 }): JSX.Element {
     const context = useEditor();
+    const snackbar = useSnackbar().snackbar;
 
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
@@ -42,28 +47,31 @@ export default function Editor({
                 .then(() => {
                     setIsSaving(false);
                 });
-        }
-    }
+        };
+    };
 
     const blockRendererFn = () => ({
         component: EditorLine,
     });
 
-    // const handleKeyCommand = (keyCommand) => {
-    //     if (keyCommand === KEY_COMMAND_ESC) {
-    //         toggleEditMode();
-    //         snackbarService.sendSuccessAlert('Successfully saved changes.')
-    //         return KEY_HANDLED_ACK;
-    //     }
-    //     return KEY_HANDLED_NACK;
-    // }
+    const handleKeyboardEvent = (
+        keyboardEvent: React.KeyboardEvent<{}>
+    ): string | null => {
+        // TODO(dnguyen0304): Fix deprecated keyCode usage.
+        if (keyboardEvent.keyCode === KEY_CODE_ESCAPE) {
+            return HANDLER_NAME_ESCAPE;
+        }
+        return draft.getDefaultKeyBinding(keyboardEvent);
+    }
 
-    // const handleKeyboardEvent = (keyboardEvent) => {
-    //     if (keyboardEvent.keyCode === KEYCODE_ESC) {
-    //         return KEY_COMMAND_ESC;
-    //     }
-    //     return draft.getDefaultKeyBinding(keyboardEvent);
-    // }
+    const handleKeyCommand: HandleKeyCommandType = (command) => {
+        if (command === HANDLER_NAME_ESCAPE) {
+            closeEditor();
+            snackbar.sendSuccessAlert('Successfully saved changes.');
+            return 'handled';
+        }
+        return 'not-handled';
+    }
 
     React.useEffect(() => {
         setEditorState(
@@ -74,11 +82,12 @@ export default function Editor({
     return (
         <EditorContainer>
             <draft.Editor
-                editorState={editorState}
                 blockRendererFn={blockRendererFn}
-                onChange={handleChange} />
-            {/* handleKeyCommand={handleKeyCommand} */}
-            {/* keyBindingFn={handleKeyboardEvent} */}
+                editorState={editorState}
+                handleKeyCommand={handleKeyCommand}
+                keyBindingFn={handleKeyboardEvent}
+                onChange={handleChange}
+            />
             <EditModeButtonGroup
                 closeEditor={closeEditor}
                 isSaving={isSaving}
