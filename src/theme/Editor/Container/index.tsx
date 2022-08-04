@@ -39,6 +39,8 @@ export default function Container({ children }: Props): JSX.Element {
                     left: 0,
                 },
             }}
+            // TODO(dnguyen0304): Replace placeholder default value.
+            minWidth='275px'
         >
             <div className={styles.editor_container}>
                 {children}
