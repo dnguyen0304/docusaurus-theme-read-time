@@ -7,5 +7,9 @@
     justify-content: flex-end;
     align-items: center;
 
-    height: 5%;
+    height: 10%;
+
+    background-color: var(--ifm-color-emphasis-100);
+    border: solid var(--ifm-color-emphasis-100);
+    border-width: 20px 10px 25px;
 }
