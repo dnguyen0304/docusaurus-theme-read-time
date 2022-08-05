@@ -1,15 +1,21 @@
 import * as React from 'react';
 import { ReactContextError } from './errors';
 
+// TODO(dnguyen0304): Import from docusaurus-plugin-editor.
+interface EditorContent {
+    [key: string]: string;
+}
+
 interface ContextValue {
-    readonly editorContent: string;
-    readonly setEditorContent: React.Dispatch<React.SetStateAction<string>>;
+    readonly editorContent: EditorContent;
+    readonly setEditorContent: React.Dispatch<React.SetStateAction<EditorContent>>;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
-function useContextValue(content: string): ContextValue {
-    const [editorContent, setEditorContent] = React.useState<string>(content);
+function useContextValue(content: EditorContent): ContextValue {
+    const [editorContent, setEditorContent] =
+        React.useState<EditorContent>(content);
 
     return React.useMemo(
         () => ({ editorContent, setEditorContent }),
@@ -18,7 +24,7 @@ function useContextValue(content: string): ContextValue {
 }
 
 interface Props {
-    readonly content: string;
+    readonly content: EditorContent;
     readonly children: React.ReactNode;
 };
 
