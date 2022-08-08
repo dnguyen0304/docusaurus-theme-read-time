@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { EditorProvider } from '../contexts/editor';
+import { GithubProvider } from '../contexts/github';
 import { SnackbarProvider } from '../contexts/snackbar';
 import KeyBindings from '../services/KeyBindings';
 import Snackbar, { SnackbarType } from '../theme/services/Snackbar';
@@ -45,10 +46,12 @@ export default function Root({ children }: Props): JSX.Element {
             <ThemeProvider theme={theme}>
                 <SnackbarProvider snackbar={snackbar}>
                     {snackbar.create()}
-                    <EditorProvider>
-                        <KeyBindings />
-                        {children}
-                    </EditorProvider>
+                    <GithubProvider>
+                        <EditorProvider>
+                            <KeyBindings />
+                            {children}
+                        </EditorProvider>
+                    </GithubProvider>
                 </SnackbarProvider>
             </ThemeProvider>
         </>
