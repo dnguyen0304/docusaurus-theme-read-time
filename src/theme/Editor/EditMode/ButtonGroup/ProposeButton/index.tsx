@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import URI from 'urijs';
+import { GITHUB_AUTHORIZATION_CALLBACK_PATH } from '../../../../../constants';
 import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
@@ -42,7 +43,6 @@ const StyledBox = styled(Box)({
 const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
 const GITHUB_AUTHORIZATION_CODE_URL: string = 'https://github.com/login/oauth/authorize';
 // const GITHUB_AUTHORIZATION_SCOPES: string = ['public_repo'].join(' ');
-const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback';
 
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     const { username } = useGithub();
