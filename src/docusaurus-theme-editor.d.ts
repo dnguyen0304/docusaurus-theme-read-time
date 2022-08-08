@@ -1,3 +1,5 @@
+/// <reference types="@docusaurus/module-type-aliases" />
+
 declare module '@theme/DocBreadcrumbs'
 
 declare module '@theme-init/DocBreadcrumbs' {
