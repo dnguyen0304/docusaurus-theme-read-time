@@ -58,22 +58,14 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         setConfirmationIsOpen(prev => !prev);
     };
 
-    const getLocationOrigin = (): string => {
-        const currentUri = new URI();
-        const { protocol, hostname, port } = URI.parse(currentUri.toString());
-        return `${protocol}://${hostname}${port ? `:${port}` : ''}`;
-    }
-
     const initializeAuth = async () => {
         const authRedirectUrl =
             new URI(GITHUB_AUTHORIZATION_CODE_URL)
                 .query({
                     client_id: APP_CLIENT_ID,
                     // scope: GITHUB_AUTHORIZATION_SCOPES,
-                    redirect_uri: `${URI.joinPaths(
-                        getLocationOrigin(),
-                        GITHUB_AUTHORIZATION_CALLBACK_PATH,
-                    )}`,
+                    redirect_uri:
+                        new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
                     state: pathname,
                 })
                 .toString();
