@@ -1,3 +1,4 @@
+import { useLocation } from '@docusaurus/router';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,6 +13,8 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import URI from 'urijs';
+import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
@@ -35,26 +38,61 @@ const StyledBox = styled(Box)({
     },
 });
 
+// TODO(dnguyen0304): Extract as a configuration option.
+const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
+const GITHUB_AUTHORIZATION_CODE_URL: string = 'https://github.com/login/oauth/authorize';
+// const GITHUB_AUTHORIZATION_SCOPES: string = ['public_repo'].join(' ');
+const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback';
+
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
-    const snackbar = useSnackbar().snackbar;
+    const { username } = useGithub();
+    const { pathname } = useLocation();
+    const { snackbar } = useSnackbar();
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
     const [description, setDescription] = React.useState<string>('');
+    const [externalRedirect, setExternalRedirect] = React.useState('');
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
     };
 
-    const handleSubmit = () => {
-        // TODO(dnguyen0304): Add validation for description text field.
-        // TODO(dnguyen0304): Investigate adding delay to wait for the
-        // transition animation.
-        toggleConfirmation();
-        onSubmit();
-        snackbar.sendSuccessAlert(
-            `Successfully proposed changes for "${description}".`
-        );
+    const getLocationOrigin = (): string => {
+        const currentUri = new URI();
+        const { protocol, hostname, port } = URI.parse(currentUri.toString());
+        return `${protocol}://${hostname}${port ? `:${port}` : ''}`;
+    }
+
+    const initializeAuth = async () => {
+        const authRedirectUrl =
+            new URI(GITHUB_AUTHORIZATION_CODE_URL)
+                .query({
+                    client_id: APP_CLIENT_ID,
+                    // scope: GITHUB_AUTHORIZATION_SCOPES,
+                    redirect_uri: `${URI.joinPaths(
+                        getLocationOrigin(),
+                        GITHUB_AUTHORIZATION_CALLBACK_PATH,
+                    )}`,
+                    state: pathname,
+                })
+                .toString();
+        setExternalRedirect(authRedirectUrl);
+    };
+
+    const handleSubmit = async () => {
+        if (username) {
+            // TODO(dnguyen0304): Add validation for description text field.
+            // TODO(dnguyen0304): Investigate adding delay to wait for the
+            // transition animation.
+            toggleConfirmation();
+            onSubmit();
+            snackbar.sendSuccessAlert(
+                `Successfully proposed changes for "${description}".`
+            );
+        } else {
+            await initializeAuth();
+        }
     };
 
     const handleDescriptionKeyUp = (event: React.KeyboardEvent) => {
@@ -67,6 +105,12 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         KeyBinding.key,
         toggleConfirmation,
     );
+
+    React.useEffect(() => {
+        if (externalRedirect) {
+            window.location.replace(externalRedirect);
+        }
+    }, [externalRedirect]);
 
     return (
         <React.Fragment>
