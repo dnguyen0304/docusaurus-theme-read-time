@@ -4,8 +4,8 @@ import { ReactContextError } from './errors';
 
 interface User {
     readonly username: string;
-    readonly emailAddress: string;
-    readonly fullName: string;
+    readonly emailAddress?: string;
+    readonly fullName?: string;
 }
 
 interface ContextValue {
