@@ -41,17 +41,17 @@ export default function Root({ children }: Props): JSX.Element {
     const snackbar: SnackbarType = Snackbar();
 
     return (
-        <>
-            <ThemeProvider theme={theme}>
-                <SnackbarProvider snackbar={snackbar}>
-                    {snackbar.create()}
-                    <GithubProvider>
-                        <EditorProvider>
-                            {children}
-                        </EditorProvider>
-                    </GithubProvider>
-                </SnackbarProvider>
-            </ThemeProvider>
-        </>
+        <ThemeProvider theme={theme}>
+            <SnackbarProvider snackbar={snackbar}>
+                {snackbar.create()}
+                <GithubProvider>
+                    {/* TODO(dnguyen0304): Investigate if this provider can be
+                        moved to a smaller scope such as DocPage/Layout. */}
+                    <EditorProvider>
+                        {children}
+                    </EditorProvider>
+                </GithubProvider>
+            </SnackbarProvider>
+        </ThemeProvider>
     );
 }
