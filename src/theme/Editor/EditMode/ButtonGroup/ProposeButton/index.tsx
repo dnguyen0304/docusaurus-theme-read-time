@@ -45,7 +45,7 @@ const GITHUB_AUTHORIZATION_CODE_URL: string = 'https://github.com/login/oauth/au
 // const GITHUB_AUTHORIZATION_SCOPES: string = ['public_repo'].join(' ');
 
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
-    const { username } = useGithub();
+    const { user } = useGithub();
     const { pathname } = useLocation();
     const { snackbar } = useSnackbar();
 
@@ -73,7 +73,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     };
 
     const handleSubmit = async () => {
-        if (username) {
+        if (user) {
             // TODO(dnguyen0304): Add validation for description text field.
             // TODO(dnguyen0304): Investigate adding delay to wait for the
             // transition animation.

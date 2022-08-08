@@ -2,22 +2,28 @@ import type { RestEndpointMethodTypes } from '@octokit/plugin-rest-endpoint-meth
 import * as React from 'react';
 import { ReactContextError } from './errors';
 
+interface User {
+    emailAddress: string;
+    username: string;
+    fullName: string;
+}
+
 interface ContextValue {
+    readonly user: User | undefined;
     readonly api: RestEndpointMethodTypes | undefined;
-    readonly username: string;
+    readonly setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
     readonly setApi: React.Dispatch<React.SetStateAction<RestEndpointMethodTypes | undefined>>;
-    readonly setUsername: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
 function useContextValue(): ContextValue {
+    const [user, setUser] = React.useState<User>();
     const [api, setApi] = React.useState<RestEndpointMethodTypes>();
-    const [username, setUsername] = React.useState<string>('');
 
     return React.useMemo(
-        () => ({ api, username, setApi, setUsername }),
-        [api, username, setApi, setUsername],
+        () => ({ user, api, setUser, setApi }),
+        [user, api, setUser, setApi],
     );
 }
 
