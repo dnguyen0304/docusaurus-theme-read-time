@@ -2,6 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
@@ -18,6 +19,17 @@ export default function EditButton(
         toggleEditorIsOpen,
     }: Props
 ): JSX.Element {
+    useHotkeys(
+        EditButtonKeyBinding.key,
+        toggleEditorIsOpen,
+        {
+            // Bind to KeyUp instead of KeyDown to avoid the KeyPress event
+            // being captured when the editor is open.
+            keydown: false,
+            keyup: true,
+        },
+    );
+
     return (
         <Tooltip
             title={`Open editor panel (${EditButtonKeyBinding.friendlyLabel})`}
