@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import { GITHUB_AUTHORIZATION_CALLBACK_PATH } from '../../../../../constants';
 import { useGithub } from '../../../../../contexts/github';
@@ -73,7 +74,9 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     };
 
     const handleSubmit = async () => {
-        if (user) {
+        const cookies = new Cookies();
+
+        if (user || cookies.get('sessionid')) {
             // TODO(dnguyen0304): Add validation for description text field.
             // TODO(dnguyen0304): Investigate adding delay to wait for the
             // transition animation.

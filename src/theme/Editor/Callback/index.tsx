@@ -1,8 +1,10 @@
 import { Redirect } from '@docusaurus/router';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import { Octokit } from '@octokit/core';
 import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods';
 import { RequestError } from '@octokit/request-error';
 import * as React from 'react';
+import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import { ENDPOINT_EXCHANGE_CODE_TO_TOKEN } from '../../../constants';
 import { useGithub } from '../../../contexts/github';
@@ -12,6 +14,7 @@ interface GetAccessTokenResponse {
 }
 
 export default function Callback(): JSX.Element | null {
+    const { path: docsPath } = usePluginData('docusaurus-plugin-content-docs');
     const { user, setUser, setApi } = useGithub();
 
     const [redirectPath, setRedirectPath] = React.useState<string>('');
@@ -44,6 +47,20 @@ export default function Callback(): JSX.Element | null {
                 `Failed to exchange code for token: ${error.message}`
             );
         }
+
+        const cookies = new Cookies();
+        cookies.set(
+            'sessionid',
+            // TODO(dnguyen0304): Implement exchanging session ID for access
+            // token.
+            accessToken,
+            {
+                path: docsPath,
+                maxAge: 28 * 24 * 60 * 60,  // 28 days in seconds
+                secure: true,
+            },
+        );
+
         const OctokitRest = Octokit.plugin(restEndpointMethods);
         const { hook, rest: api } = new OctokitRest({ auth: accessToken });
 
