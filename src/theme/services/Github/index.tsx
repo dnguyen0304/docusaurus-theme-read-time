@@ -27,7 +27,7 @@ interface GetAccessTokenResponse {
 }
 
 interface GithubType {
-    readonly getDefaultBranch: () => Promise<string>;
+    readonly createBranch: (name: string) => Promise<void>;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -163,6 +163,8 @@ export default function Github(
     } = siteContext;
 
     let defaultBranch = '';
+    let branchName = '';
+    let branchCommitSha = '';
 
     const getDefaultBranch = async (): Promise<string> => {
         if (!defaultBranch) {
@@ -179,7 +181,42 @@ export default function Github(
         return defaultBranch;
     };
 
+    const createBranch = async (name: string): Promise<void> => {
+        if (branchName) {
+            throw new Error(
+                `failed to create branch "${name}" because branch `
+                + `"${branchName}" already exists`);
+        }
+        if (!defaultBranch) {
+            await getDefaultBranch();
+        }
+
+        const {
+            // TODO(dnguyen0304): Fix missing type declaration.
+            data: {
+                commit: {
+                    sha,
+                },
+            },
+        } = await api?.repos.getBranch({
+            owner,
+            repo: repository,
+            branch: defaultBranch,
+        });
+
+        // TODO(dnguyen0304): Add error handling for HTTP 422: Reference already
+        // exists.
+        await api?.git.createRef({
+            owner,
+            repo: repository,
+            sha,
+            ref: `refs/heads/${name}`,
+        });
+
+        branchCommitSha = sha;
+    }
+
     return {
-        getDefaultBranch,
+        createBranch,
     };
 }
