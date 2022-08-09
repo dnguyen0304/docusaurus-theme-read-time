@@ -207,14 +207,21 @@ export default function Github(
             branch: defaultBranch,
         });
 
-        // TODO(dnguyen0304): Add error handling for HTTP 422: Reference already
-        // exists.
-        await api?.git.createRef({
-            owner,
-            repo: repository,
-            sha,
-            ref: `${GITHUB_REF_PREFIX}${name}`,
-        });
+        try {
+            await api?.git.createRef({
+                owner,
+                repo: repository,
+                sha,
+                ref: `${GITHUB_REF_PREFIX}${name}`,
+            });
+        } catch (error) {
+            if (
+                error.name === 'HttpError'
+                && error.message === 'Reference already exists'
+            ) {
+                throw new Error(`branch "${name}" already exists`);
+            }
+        }
 
         branchCommitSha = sha;
     }
