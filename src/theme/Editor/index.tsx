@@ -41,6 +41,9 @@ export default function Editor(): JSX.Element {
     };
 
     const resetMarkdown = () => {
+        const localStorageKey = getLocalStorageKey(siteContext);
+        localStorage.removeItem(localStorageKey);
+
         setEditorState(
             draft.EditorState.createWithContent(
                 draft.ContentState.createFromText(originalMarkdown.current)));
