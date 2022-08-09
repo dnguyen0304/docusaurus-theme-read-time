@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { GithubUser } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
-export interface ContextValue {
+interface ContextValue {
     readonly user: GithubUser | undefined;
     readonly api: RestEndpointMethods | undefined;
     readonly setUser: React.Dispatch<React.SetStateAction<GithubUser | undefined>>;
