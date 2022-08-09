@@ -24,8 +24,11 @@ const KeyBinding: KeyBindingType = {
 };
 
 const StyledDialog = styled(Dialog)({
-    '& .MuiPaper-root': {
+    '& div.MuiPaper-root': {
         padding: '1rem',
+    },
+    '& div.MuiDialogContent-root': {
+        paddingBottom: '1rem',
     },
 });
 
@@ -76,8 +79,8 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
                 <DialogTitle>Discard changes?</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Do you want to discard your changes without saving? Your
-                        changes will be permanently lost if you don't save them.
+                        Do you want to discard your changes? Your changes will
+                        be permanently lost.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
