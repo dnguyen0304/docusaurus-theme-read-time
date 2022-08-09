@@ -1,6 +1,6 @@
 import { useLocation } from '@docusaurus/router';
 import type { DraftHandleValue, EditorState } from 'draft-js';
-import draft from 'draft-js';
+import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
 import { useEditorContent } from '../../contexts/editorContent';
@@ -41,6 +41,36 @@ export default function Editor(): JSX.Element {
         setEditorState(
             draft.EditorState.createWithContent(
                 draft.ContentState.createFromText(originalMarkdown.current)));
+    };
+
+    // Copied from:
+    // https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
+    const getMarkdown = (): string => {
+        const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+        const processed = blocks.map(
+            // If the block is empty, return a newline. Otherwise, return the
+            // block text.
+            block => (!block.text.trim() && '\n') || block.text
+        );
+
+        let rawMarkdown = '';
+
+        for (let i = 0; i < processed.length; i++) {
+            const block = processed[i];
+
+            // Handle the last block.
+            if (i === processed.length - 1) {
+                rawMarkdown += block;
+            } else {
+                // Handle blocks that contain only a newline character.
+                if (block === '\n') {
+                    rawMarkdown += block;
+                } else {
+                    rawMarkdown += block + '\n';
+                }
+            }
+        }
+        return rawMarkdown;
     };
 
     const handleChange = (editorState: draft.EditorState) => {
