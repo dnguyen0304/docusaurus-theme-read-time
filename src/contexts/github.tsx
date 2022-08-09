@@ -1,25 +1,20 @@
-import type { RestEndpointMethodTypes } from '@octokit/plugin-rest-endpoint-methods';
+import type { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types';
 import * as React from 'react';
+import type { GithubUser } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
-interface User {
-    readonly username: string;
-    readonly emailAddress?: string;
-    readonly fullName?: string;
-}
-
 interface ContextValue {
-    readonly user: User | undefined;
-    readonly api: RestEndpointMethodTypes | undefined;
-    readonly setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-    readonly setApi: React.Dispatch<React.SetStateAction<RestEndpointMethodTypes | undefined>>;
+    readonly user: GithubUser | undefined;
+    readonly api: RestEndpointMethods | undefined;
+    readonly setUser: React.Dispatch<React.SetStateAction<GithubUser | undefined>>;
+    readonly setApi: React.Dispatch<React.SetStateAction<RestEndpointMethods | undefined>>;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
 function useContextValue(): ContextValue {
-    const [user, setUser] = React.useState<User>();
-    const [api, setApi] = React.useState<RestEndpointMethodTypes>();
+    const [user, setUser] = React.useState<GithubUser>();
+    const [api, setApi] = React.useState<RestEndpointMethods>();
 
     return React.useMemo(
         () => ({ user, api, setUser, setApi }),

@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/core';
 import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods';
-import { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types';
+import type { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types';
 import { RequestError } from '@octokit/request-error';
 import Cookies from 'universal-cookie';
 import URI from 'urijs';
@@ -8,7 +8,7 @@ import {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
-import { GithubUser } from '../../../docusaurus-theme-editor';
+import type { GithubUser } from '../../../docusaurus-theme-editor';
 
 interface ParseCallbackUrlType {
     authorizationCode: string;
