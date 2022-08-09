@@ -27,6 +27,9 @@ const theme = createTheme({
                 // https://mui.com/material-ui/api/button/#css
                 textPrimary: {
                     color: COLOR_GREY_700,
+                    '& .MuiTouchRipple-child': {
+                        backgroundColor: COLOR_ACCENT_GREEN,
+                    },
                 },
                 outlinedPrimary: {
                     borderColor: COLOR_GREY_700,
