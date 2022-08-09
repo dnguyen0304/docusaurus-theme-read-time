@@ -1,5 +1,6 @@
 import Stack from '@mui/material/Stack';
 import * as React from 'react';
+import { useSite } from '../../../../contexts/site';
 import DiscardButton from './DiscardButton';
 import ProposeButton from './ProposeButton';
 import SaveButton from './SaveButton';
@@ -7,6 +8,7 @@ import styles from './styles.module.css';
 
 interface Props {
     readonly closeEditor: () => void;
+    readonly getMarkdown: () => string;
     readonly isSaving: boolean;
     readonly resetMarkdown: () => void;
     readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
@@ -15,14 +17,29 @@ interface Props {
 export default function EditModeButtonGroup(
     {
         closeEditor,
+        getMarkdown,
         isSaving,
         resetMarkdown,
         setIsSaving,
     }: Props
 ): JSX.Element {
+    const {
+        owner,
+        repository,
+        path,
+    } = useSite();
+
+    const getLocalStorageKey = (): string => {
+        return `${owner}/${repository}/${path}`;
+    }
+
     const discardOnSubmit = () => {
         resetMarkdown();
         closeEditor();
+    };
+
+    const saveOnClick = () => {
+        localStorage.setItem(getLocalStorageKey(), getMarkdown());
     };
 
     return (
@@ -34,6 +51,7 @@ export default function EditModeButtonGroup(
                 <DiscardButton onSubmit={discardOnSubmit} />
                 <SaveButton
                     isSaving={isSaving}
+                    onClick={saveOnClick}
                     setIsSaving={setIsSaving}
                 />
                 <ProposeButton onSubmit={closeEditor} />

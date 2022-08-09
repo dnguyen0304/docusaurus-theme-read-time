@@ -10,6 +10,7 @@ import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-the
 
 interface Props {
     readonly isSaving: boolean;
+    readonly onClick: () => void;
     readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
@@ -21,6 +22,7 @@ const KeyBinding: KeyBindingType = {
 export default function SaveButton(
     {
         isSaving,
+        onClick,
         setIsSaving,
     }: Props
 ): JSX.Element {

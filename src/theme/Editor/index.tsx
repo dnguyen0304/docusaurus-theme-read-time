@@ -126,6 +126,7 @@ export default function Editor(): JSX.Element {
             />
             <EditModeButtonGroup
                 closeEditor={closeEditor}
+                getMarkdown={getMarkdown}
                 isSaving={isSaving}
                 resetMarkdown={resetMarkdown}
                 setIsSaving={setIsSaving}
