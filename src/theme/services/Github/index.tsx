@@ -8,6 +8,8 @@ import {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
+import type { ContextValue as GithubContextValue } from '../../../contexts/github';
+import type { ContextValue as SiteContextValue } from '../../../contexts/site';
 import type { GithubUser } from '../../../docusaurus-theme-editor';
 
 interface ParseCallbackUrlType {
@@ -22,6 +24,10 @@ interface AuthenticateType {
 
 interface GetAccessTokenResponse {
     accessToken: string;
+}
+
+interface GithubType {
+    readonly getDefaultBranch: () => Promise<string>;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -141,3 +147,39 @@ const exchangeCodeToToken = async (
     }
     return rawResponse.json();
 };
+
+export default function Github(
+    githubContext: Pick<GithubContextValue, 'user' | 'api'>,
+    siteContext: SiteContextValue,
+): GithubType {
+    const {
+        user,
+        api,
+    } = githubContext;
+    const {
+        owner,
+        repository,
+        path,
+    } = siteContext;
+
+    let defaultBranch = '';
+
+    const getDefaultBranch = async (): Promise<string> => {
+        if (!defaultBranch) {
+            const {
+                data: {
+                    default_branch: siteDefaultBranch,
+                }
+            } = await api?.repos.get({
+                owner,
+                repo: repository,
+            });
+            defaultBranch = siteDefaultBranch;
+        }
+        return defaultBranch;
+    };
+
+    return {
+        getDefaultBranch,
+    };
+}

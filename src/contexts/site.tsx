@@ -28,4 +28,5 @@ function useSite(): ContextValue {
 
 export {
     useSite,
+    ContextValue,
 };

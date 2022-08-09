@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { GithubUser } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
-interface ContextValue {
+export interface ContextValue {
     readonly user: GithubUser | undefined;
     readonly api: RestEndpointMethods | undefined;
     readonly setUser: React.Dispatch<React.SetStateAction<GithubUser | undefined>>;
@@ -47,4 +47,5 @@ function useGithub(): ContextValue {
 export {
     GithubProvider,
     useGithub,
+    ContextValue,
 };
