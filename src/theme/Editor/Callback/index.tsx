@@ -1,14 +1,12 @@
 import { Redirect } from '@docusaurus/router';
-import { usePluginData } from '@docusaurus/useGlobalData';
 import * as React from 'react';
 import URI from 'urijs';
 import { useGithub } from '../../../contexts/github';
+import { useSite } from '../../../contexts/site';
 import { authenticate, parseCallbackUrl } from '../../services/Github';
 
 export default function Callback(): JSX.Element | null {
-    // TODO(dnguyen0304): Fix missing type declaration.
-    // See: https://github.com/facebook/docusaurus/blob/main/packages/docusaurus-plugin-content-docs/src/client/index.ts#L91
-    const { path: docsPath } = usePluginData('docusaurus-plugin-content-docs');
+    const { docsRoot } = useSite();
     const { user, setUser, setApi } = useGithub();
 
     const [redirectPath, setRedirectPath] = React.useState<string>('');
@@ -22,7 +20,7 @@ export default function Callback(): JSX.Element | null {
             const {
                 user,
                 api,
-            } = await authenticate(authorizationCode, docsPath);
+            } = await authenticate(authorizationCode, docsRoot);
 
             setUser(user);
             setApi(api);
