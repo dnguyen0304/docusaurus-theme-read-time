@@ -25,10 +25,11 @@ const KeyBinding: KeyBindingType = {
 
 const StyledDialog = styled(Dialog)({
     '& div.MuiPaper-root': {
-        padding: '1rem',
+        padding: '1.5rem 1.25rem',
+        borderRadius: '30px',
     },
     '& div.MuiDialogContent-root': {
-        paddingBottom: '1rem',
+        paddingBottom: '.9rem',
     },
 });
 
