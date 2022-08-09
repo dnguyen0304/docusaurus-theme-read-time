@@ -32,13 +32,15 @@ export default function SaveButton(
 
     // TODO(dnguyen0304): Investigate if a real implementation is necessary in
     // addition to background saving.
-    const handleClick = () => {
+    const handleClick = (alert: boolean) => {
         setIsSaving(true);
         new Promise(resolve => setTimeout(resolve, 750))
             .then(() => {
                 setIsSaving(false);
                 setIsConfirmed(true);
-                snackbar.sendSuccessAlert('Successfully saved changes.');
+                if (alert) {
+                    snackbar.sendSuccessAlert('Successfully saved changes.');
+                }
             })
             .then(() => {
                 timerId.current = window.setTimeout(() => {
@@ -61,7 +63,9 @@ export default function SaveButton(
 
     useHotkeys(
         KeyBinding.key,
-        handleClick,
+        () => handleClick(
+            true  // alert
+        ),
     );
 
     React.useEffect(() => {
@@ -77,7 +81,9 @@ export default function SaveButton(
         >
             <IconButton
                 aria-label='save'
-                onClick={handleClick}
+                onClick={() => handleClick(
+                    true  // alert
+                )}
             >
                 {getIcon()}
             </IconButton>
