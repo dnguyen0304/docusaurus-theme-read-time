@@ -136,7 +136,12 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={toggleConfirmation}>Go Back</Button>
-                        <Button type='submit'>Propose</Button>
+                        <Button
+                            type='submit'
+                            variant='outlined'
+                        >
+                            Propose
+                        </Button>
                     </DialogActions>
                 </StyledBox>
             </StyledDialog>
