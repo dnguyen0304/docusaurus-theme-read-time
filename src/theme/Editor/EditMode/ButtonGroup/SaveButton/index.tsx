@@ -28,7 +28,8 @@ export default function SaveButton(
 ): JSX.Element {
     const snackbar = useSnackbar().snackbar;
     const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
-    const timerId = React.useRef<number>();
+    const doneIconTimerId = React.useRef<number>();
+    const backgroundSaveTimerId = React.useRef<number>();
 
     // TODO(dnguyen0304): Investigate if a real implementation is necessary in
     // addition to background saving.
@@ -43,7 +44,7 @@ export default function SaveButton(
                 }
             })
             .then(() => {
-                timerId.current = window.setTimeout(() => {
+                doneIconTimerId.current = window.setTimeout(() => {
                     setIsConfirmed(false);
                 }, 1250);
             });
@@ -70,7 +71,7 @@ export default function SaveButton(
 
     React.useEffect(() => {
         return () => {
-            clearTimeout(timerId.current);
+            clearTimeout(doneIconTimerId.current);
         };
     }, []);
 
