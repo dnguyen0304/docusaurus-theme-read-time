@@ -137,7 +137,8 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                             </DialogContentText>
                             {/* TODO(dnguyen0304): Add autoFocus. */}
                             <StyledTextField
-                                helperText='Title'
+                                helperText={<>Press <b>↩︎ Enter</b> to send</>}
+                                label='Title'
                                 onChange={(e) => setTitle(e.target.value)}
                                 onKeyUp={handleTitleKeyUp}
                                 value={title}
