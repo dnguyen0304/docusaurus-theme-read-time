@@ -18,7 +18,7 @@ import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
-import Github from '../../../../services/Github';
+import { initializeAuth } from '../../../../services/Github';
 
 interface Props {
     readonly onSubmit: () => void;
@@ -66,7 +66,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                 `Successfully proposed changes for "${description}".`
             );
         } else {
-            const authRedirectUrl = await Github().initializeAuth(currentPath);
+            const authRedirectUrl = await initializeAuth(currentPath);
             setExternalRedirect(authRedirectUrl);
         }
     };

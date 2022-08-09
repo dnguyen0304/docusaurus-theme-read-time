@@ -25,7 +25,6 @@ interface GetAccessTokenResponse {
 }
 
 interface GithubType {
-    initializeAuth: (currentPath: string) => Promise<string>;
     parseCallbackUrl: (url: URI) => ParseCallbackUrlType;
     authenticate: (
         authorizationCode: string,
@@ -40,21 +39,21 @@ const GITHUB_AUTHORIZATION_CODE_URL: string =
 const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
 const COOKIE_SESSION_ID_KEY: string = 'sessionid';
 
-export default function Github(): GithubType {
-    const initializeAuth = async (currentPath: string): Promise<string> => {
-        const authRedirectUrl =
-            new URI(GITHUB_AUTHORIZATION_CODE_URL)
-                .query({
-                    client_id: APP_CLIENT_ID,
-                    scope: GITHUB_AUTHORIZATION_SCOPES,
-                    redirect_uri:
-                        new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
-                    state: currentPath,
-                })
-                .toString();
-        return authRedirectUrl;
-    };
+export const initializeAuth = async (currentPath: string): Promise<string> => {
+    const authRedirectUrl =
+        new URI(GITHUB_AUTHORIZATION_CODE_URL)
+            .query({
+                client_id: APP_CLIENT_ID,
+                scope: GITHUB_AUTHORIZATION_SCOPES,
+                redirect_uri:
+                    new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
+                state: currentPath,
+            })
+            .toString();
+    return authRedirectUrl;
+};
 
+export default function Github(): GithubType {
     const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
         const { code, state } = URI.parseQuery(url.query());
         if (!code || !state) {
@@ -153,7 +152,6 @@ export default function Github(): GithubType {
     };
 
     return {
-        initializeAuth,
         parseCallbackUrl,
         authenticate,
     };
