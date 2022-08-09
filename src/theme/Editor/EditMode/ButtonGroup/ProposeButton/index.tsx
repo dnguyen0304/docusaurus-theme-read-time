@@ -43,7 +43,7 @@ const StyledBox = styled(Box)({
 // TODO(dnguyen0304): Extract as a configuration option.
 const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
 const GITHUB_AUTHORIZATION_CODE_URL: string = 'https://github.com/login/oauth/authorize';
-// const GITHUB_AUTHORIZATION_SCOPES: string = ['public_repo'].join(' ');
+const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
 
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     const { user } = useGithub();
@@ -64,7 +64,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
             new URI(GITHUB_AUTHORIZATION_CODE_URL)
                 .query({
                     client_id: APP_CLIENT_ID,
-                    // scope: GITHUB_AUTHORIZATION_SCOPES,
+                    scope: GITHUB_AUTHORIZATION_SCOPES,
                     redirect_uri:
                         new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
                     state: pathname,
