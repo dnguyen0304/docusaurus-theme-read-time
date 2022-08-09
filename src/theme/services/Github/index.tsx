@@ -117,6 +117,9 @@ export default function Github(): GithubType {
                 login: username,
                 email: emailAddress,
                 name: fullName,
+                // TODO(dnguyen0304): Implement NavbarItem/ComponentTypes
+                // accessible through useThemeConfig for login avatar.
+                // avatar_url: avatarUrl,
             },
         } = await api.users.getAuthenticated();
 
