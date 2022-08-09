@@ -81,7 +81,7 @@ export default function SaveButton(
             clearTimeout(backgroundSaveTimerId.current);
             clearTimeout(doneIconTimerId.current);
         };
-    }, []);
+    }, [editorState]);
 
     return (
         <Tooltip
