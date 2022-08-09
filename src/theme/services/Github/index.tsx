@@ -25,7 +25,6 @@ interface GetAccessTokenResponse {
 }
 
 interface GithubType {
-    parseCallbackUrl: (url: URI) => ParseCallbackUrlType;
     authenticate: (
         authorizationCode: string,
         cookiePath: string,
@@ -53,22 +52,22 @@ export const initializeAuth = async (currentPath: string): Promise<string> => {
     return authRedirectUrl;
 };
 
-export default function Github(): GithubType {
-    const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
-        const { code, state } = URI.parseQuery(url.query());
-        if (!code || !state) {
-            // TODO(dnguyen0304): Add error handling.
-            return {
-                authorizationCode: '',
-                redirectPath: '',
-            };
-        }
+export const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
+    const { code, state } = URI.parseQuery(url.query());
+    if (!code || !state) {
+        // TODO(dnguyen0304): Add error handling.
         return {
-            authorizationCode: code,
-            redirectPath: state,
+            authorizationCode: '',
+            redirectPath: '',
         };
+    }
+    return {
+        authorizationCode: code,
+        redirectPath: state,
     };
+};
 
+export default function Github(): GithubType {
     const authenticate = async (
         authorizationCode: string,
         cookiePath: string,
@@ -152,7 +151,6 @@ export default function Github(): GithubType {
     };
 
     return {
-        parseCallbackUrl,
         authenticate,
     };
 }

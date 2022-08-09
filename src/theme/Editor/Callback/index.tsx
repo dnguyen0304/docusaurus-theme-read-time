@@ -3,7 +3,7 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import * as React from 'react';
 import URI from 'urijs';
 import { useGithub } from '../../../contexts/github';
-import Github from '../../services/Github';
+import Github, { parseCallbackUrl } from '../../services/Github';
 
 export default function Callback(): JSX.Element | null {
     // TODO(dnguyen0304): Fix missing type declaration.
@@ -18,7 +18,7 @@ export default function Callback(): JSX.Element | null {
             const {
                 authorizationCode,
                 redirectPath,
-            } = Github().parseCallbackUrl(new URI());
+            } = parseCallbackUrl(new URI());
             const {
                 user,
                 api,
