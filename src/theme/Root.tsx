@@ -27,7 +27,11 @@ const theme = createTheme({
                 // https://mui.com/material-ui/api/button/#css
                 textPrimary: {
                     color: COLOR_GREY_700,
-                    '& .MuiTouchRipple-child': {
+                    // Use the double ampersand to increase CSS specificity.
+                    // See also:
+                    // https://spectrum.chat/styled-components/general/how-does-the-ampersand-that-increases-specificity-work~89c28653-e27c-49f0-9d8c-d89dc05c59dc
+                    // https://stackoverflow.com/questions/56169750/change-ripple-color-on-click-of-material-ui-button
+                    '&& .MuiTouchRipple-child': {
                         backgroundColor: COLOR_ACCENT_GREEN,
                     },
                 },
@@ -37,7 +41,7 @@ const theme = createTheme({
                     '&:focus': {
                         borderColor: COLOR_ACCENT_GREEN,
                     },
-                    '& .MuiTouchRipple-child': {
+                    '&& .MuiTouchRipple-child': {
                         backgroundColor: COLOR_ACCENT_GREEN,
                     },
                 },
