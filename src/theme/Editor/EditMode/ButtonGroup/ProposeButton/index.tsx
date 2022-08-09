@@ -39,6 +39,15 @@ const StyledBox = styled(Box)({
     },
 });
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+    '& .MuiOutlinedInput-root': {
+        '&:hover fieldset': {
+            borderColor: theme.palette.primary.main,
+            borderWidth: '2px',
+        },
+    }
+}));
+
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     const { user } = useGithub();
     const { pathname: currentPath } = useLocation();
@@ -127,10 +136,11 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                                 reviewed by the documentation owners.
                             </DialogContentText>
                             {/* TODO(dnguyen0304): Add autoFocus. */}
-                            <TextField
+                            <StyledTextField
                                 helperText='Title'
                                 onChange={(e) => setTitle(e.target.value)}
                                 onKeyUp={handleTitleKeyUp}
+                                value={title}
                             />
                         </Stack>
                     </DialogContent>
