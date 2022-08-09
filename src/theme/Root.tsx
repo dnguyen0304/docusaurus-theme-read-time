@@ -31,6 +31,9 @@ const theme = createTheme({
                 outlinedPrimary: {
                     borderColor: COLOR_GREY_700,
                     color: COLOR_GREY_700,
+                    '&:focus': {
+                        borderColor: COLOR_ACCENT_GREEN,
+                    },
                 },
             },
         },
