@@ -2,6 +2,7 @@ import { Octokit } from '@octokit/core';
 import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods';
 import type { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types';
 import { RequestError } from '@octokit/request-error';
+import { encode } from 'js-base64';
 import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import {
@@ -28,6 +29,7 @@ interface GetAccessTokenResponse {
 
 interface GithubType {
     readonly createBranch: (name: string) => Promise<void>;
+    readonly createCommit: (content: string, message: string) => Promise<void>;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -35,6 +37,7 @@ const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
 const GITHUB_AUTHORIZATION_CODE_URL: string =
     'https://github.com/login/oauth/authorize';
 const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
+const GITHUB_REF_PREFIX = 'refs/heads/';
 const COOKIE_SESSION_ID_KEY: string = 'sessionid';
 
 export const initializeAuth = async (currentPath: string): Promise<string> => {
@@ -183,9 +186,7 @@ export default function Github(
 
     const createBranch = async (name: string): Promise<void> => {
         if (branchName) {
-            throw new Error(
-                `failed to create branch "${name}" because branch `
-                + `"${branchName}" already exists`);
+            throw new Error(`branch "${branchName}" already exists`);
         }
         if (!defaultBranch) {
             await getDefaultBranch();
@@ -210,13 +211,42 @@ export default function Github(
             owner,
             repo: repository,
             sha,
-            ref: `refs/heads/${name}`,
+            ref: `${GITHUB_REF_PREFIX}${name}`,
         });
 
         branchCommitSha = sha;
     }
 
+    const createCommit = async (content: string, message: string) => {
+        if (!branchName) {
+            throw new Error('branch not found');
+        }
+
+        // TODO(dnguyen0304): Fix missing type declaration.
+        const {
+            data: {
+                sha: contentSha,
+            },
+        } = await api?.repos.getContent({
+            owner,
+            repo: repository,
+            path: path,
+            ref: `${GITHUB_REF_PREFIX}${branchName}`,
+        });
+
+        await api?.repos.createOrUpdateFileContents({
+            owner,
+            repo: repository,
+            branch: branchName,
+            path: path,
+            sha: contentSha,
+            content: encode(content),
+            message,
+        });
+    };
+
     return {
         createBranch,
+        createCommit,
     };
 }
