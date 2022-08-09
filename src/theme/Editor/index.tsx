@@ -4,10 +4,12 @@ import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
 import { useEditorContent } from '../../contexts/editorContent';
+import { useSite } from '../../contexts/site';
 import { useSnackbar } from '../../contexts/snackbar';
 import EditorContainer from './Container';
 import EditModeButtonGroup from './EditMode/ButtonGroup';
 import EditorLine from './Line';
+import { getLocalStorageKey } from './utils';
 
 // TODO(dnguyen0304): Extract to a centralized location to facilitate
 // maintenance.
@@ -26,6 +28,7 @@ export default function Editor(): JSX.Element {
     const { editorContent } = useEditorContent();
     const { pathname } = useLocation();
     const { snackbar } = useSnackbar();
+    const siteContext = useSite();
 
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
@@ -112,7 +115,16 @@ export default function Editor(): JSX.Element {
     }
 
     React.useEffect(() => {
-        resetMarkdown();
+        const localStorageKey = getLocalStorageKey(siteContext);
+        const savedMarkdown = localStorage.getItem(localStorageKey);
+
+        if (savedMarkdown) {
+            setEditorState(
+                draft.EditorState.createWithContent(
+                    draft.ContentState.createFromText(savedMarkdown)));
+        } else {
+            resetMarkdown();
+        }
     }, []);
 
     return (
