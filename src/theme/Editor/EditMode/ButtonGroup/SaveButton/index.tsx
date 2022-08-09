@@ -3,6 +3,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import { EditorState } from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
@@ -10,6 +11,7 @@ import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-the
 
 interface Props {
     readonly onClick: () => void;
+    readonly editorState: EditorState;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -17,7 +19,12 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥S',
 };
 
-export default function SaveButton({ onClick }: Props): JSX.Element {
+export default function SaveButton(
+    {
+        onClick,
+        editorState,
+    }: Props
+): JSX.Element {
     const { snackbar } = useSnackbar();
 
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
@@ -25,14 +32,14 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
     const backgroundSaveTimerId = React.useRef<number>();
     const doneIconTimerId = React.useRef<number>();
 
-    const handleClick = (alert: boolean) => {
+    const handleClick = (shouldAlert: boolean) => {
         setIsSaving(true);
         onClick();
         new Promise(resolve => setTimeout(resolve, 2500))
             .then(() => {
                 setIsSaving(false);
                 setIsConfirmed(true);
-                if (alert) {
+                if (shouldAlert) {
                     snackbar.sendSuccessAlert('Successfully saved changes.');
                 }
             })
@@ -58,14 +65,15 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
     useHotkeys(
         KeyBinding.key,
         () => handleClick(
-            true  // alert
+            true  // shouldAlert
         ),
+        [editorState],
     );
 
     React.useEffect(() => {
         backgroundSaveTimerId.current = window.setInterval(() => {
             handleClick(
-                false  // alert
+                false  // shouldAlert
             );
         }, 60 * 1000);
 
@@ -83,7 +91,7 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
             <IconButton
                 aria-label='save'
                 onClick={() => handleClick(
-                    true  // alert
+                    true  // shouldAlert
                 )}
             >
                 {getIcon()}

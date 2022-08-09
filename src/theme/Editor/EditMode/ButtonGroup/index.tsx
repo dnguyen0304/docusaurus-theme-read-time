@@ -1,4 +1,5 @@
 import Stack from '@mui/material/Stack';
+import { EditorState } from 'draft-js';
 import * as React from 'react';
 import { useSite } from '../../../../contexts/site';
 import { getLocalStorageKey } from '../../utils';
@@ -11,6 +12,7 @@ interface Props {
     readonly closeEditor: () => void;
     readonly getMarkdown: () => string;
     readonly resetMarkdown: () => void;
+    readonly editorState: EditorState;
 }
 
 export default function EditModeButtonGroup(
@@ -18,6 +20,7 @@ export default function EditModeButtonGroup(
         closeEditor,
         getMarkdown,
         resetMarkdown,
+        editorState,
     }: Props
 ): JSX.Element {
     const siteContext = useSite();
@@ -38,7 +41,10 @@ export default function EditModeButtonGroup(
                 spacing={2}
             >
                 <DiscardButton onSubmit={discardOnSubmit} />
-                <SaveButton onClick={saveOnClick} />
+                <SaveButton
+                    onClick={saveOnClick}
+                    editorState={editorState}
+                />
                 <ProposeButton onSubmit={closeEditor} />
             </Stack>
         </div>

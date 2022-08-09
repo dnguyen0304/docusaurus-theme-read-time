@@ -131,6 +131,9 @@ export default function Editor(): JSX.Element {
                 closeEditor={closeEditor}
                 getMarkdown={getMarkdown}
                 resetMarkdown={resetMarkdown}
+                // TODO(dnguyen0304): Investigate a better way to handle
+                // keybinding dependencies.
+                editorState={editorState}
             />
         </EditorContainer >
     );
