@@ -2,7 +2,6 @@ import { useLocation } from '@docusaurus/router';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -19,6 +18,7 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
+import StyledDialog from '../Dialog';
 
 interface Props {
     readonly onSubmit: () => void;
@@ -29,10 +29,7 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '⌘↩︎',
 };
 
-// TODO(dnguyen0304): Extract to a centralized location to facilitate
-// maintenance.
 const StyledBox = styled(Box)({
-    padding: '1rem',
     '& .MuiDialogContent-root': {
         // TODO(dnguyen0304): Migrate to theme.spacing.
         paddingTop: '1rem',
@@ -107,7 +104,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                     Propose
                 </Button>
             </Tooltip>
-            <Dialog
+            <StyledDialog
                 TransitionComponent={Transition}
                 onClose={toggleConfirmation}
                 open={confirmationIsOpen}
@@ -142,7 +139,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                         <Button type='submit'>Propose</Button>
                     </DialogActions>
                 </StyledBox>
-            </Dialog>
+            </StyledDialog>
         </React.Fragment>
     );
 }
