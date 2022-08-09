@@ -30,6 +30,7 @@ interface GetAccessTokenResponse {
 interface GithubType {
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
+    readonly createPull: (title: string) => Promise<string>;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -168,6 +169,7 @@ export default function Github(
     let defaultBranch = '';
     let branchName = '';
     let branchCommitSha = '';
+    let commitExists = false;
 
     const getDefaultBranch = async (): Promise<string> => {
         if (!defaultBranch) {
@@ -222,8 +224,8 @@ export default function Github(
             throw new Error('branch not found');
         }
 
-        // TODO(dnguyen0304): Fix missing type declaration.
         const {
+            // TODO(dnguyen0304): Fix missing type declaration.
             data: {
                 sha: contentSha,
             },
@@ -243,10 +245,34 @@ export default function Github(
             content: encode(content),
             message,
         });
+
+        commitExists = true;
+    };
+
+    const createPull = async (title: string): Promise<string> => {
+        if (!commitExists) {
+            throw new Error('commits not found');
+        }
+
+        const {
+            // TODO(dnguyen0304): Fix missing type declaration.
+            data: {
+                html_url,
+            },
+        } = await api?.pulls.create({
+            owner,
+            repo: repository,
+            base: defaultBranch,
+            head: `${user?.username}:${branchName}`,
+            title: title,
+        });
+
+        return html_url;
     };
 
     return {
         createBranch,
         createCommit,
+        createPull,
     };
 }
