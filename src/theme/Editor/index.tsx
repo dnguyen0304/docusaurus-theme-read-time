@@ -34,7 +34,6 @@ export default function Editor(): JSX.Element {
         () => draft.EditorState.createEmpty(),
     );
     const originalMarkdown = React.useRef<string>(editorContent[pathname]);
-    const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
     const closeEditor = () => {
         setEditorIsOpen(false);
@@ -81,17 +80,6 @@ export default function Editor(): JSX.Element {
 
     const handleChange = (editorState: draft.EditorState) => {
         setEditorState(editorState);
-
-        // TODO(dnguyen0304): Fix save loading triggering on blur (see handleBeforeInput).
-        // TODO(dnguyen0304): Fix save loading triggering on cursor movement.
-        // TODO(dnguyen0304): Fix save loading triggering constantly.
-        if (editorState.getLastChangeType() !== undefined) {
-            setIsSaving(true);
-            new Promise(resolve => setTimeout(resolve, 750))
-                .then(() => {
-                    setIsSaving(false);
-                });
-        };
     };
 
     const blockRendererFn = () => ({
@@ -142,9 +130,7 @@ export default function Editor(): JSX.Element {
             <EditModeButtonGroup
                 closeEditor={closeEditor}
                 getMarkdown={getMarkdown}
-                isSaving={isSaving}
                 resetMarkdown={resetMarkdown}
-                setIsSaving={setIsSaving}
             />
         </EditorContainer >
     );

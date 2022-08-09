@@ -10,18 +10,14 @@ import styles from './styles.module.css';
 interface Props {
     readonly closeEditor: () => void;
     readonly getMarkdown: () => string;
-    readonly isSaving: boolean;
     readonly resetMarkdown: () => void;
-    readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 export default function EditModeButtonGroup(
     {
         closeEditor,
         getMarkdown,
-        isSaving,
         resetMarkdown,
-        setIsSaving,
     }: Props
 ): JSX.Element {
     const siteContext = useSite();
@@ -42,11 +38,7 @@ export default function EditModeButtonGroup(
                 spacing={2}
             >
                 <DiscardButton onSubmit={discardOnSubmit} />
-                <SaveButton
-                    isSaving={isSaving}
-                    onClick={saveOnClick}
-                    setIsSaving={setIsSaving}
-                />
+                <SaveButton onClick={saveOnClick} />
                 <ProposeButton onSubmit={closeEditor} />
             </Stack>
         </div>

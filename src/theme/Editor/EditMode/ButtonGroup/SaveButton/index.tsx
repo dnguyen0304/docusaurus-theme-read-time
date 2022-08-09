@@ -9,9 +9,7 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
 interface Props {
-    readonly isSaving: boolean;
     readonly onClick: () => void;
-    readonly setIsSaving: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const KeyBinding: KeyBindingType = {
@@ -19,15 +17,10 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥S',
 };
 
-export default function SaveButton(
-    {
-        isSaving,
-        onClick,
-        setIsSaving,
-    }: Props
-): JSX.Element {
+export default function SaveButton({ onClick }: Props): JSX.Element {
     const { snackbar } = useSnackbar();
 
+    const [isSaving, setIsSaving] = React.useState<boolean>(false);
     const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
     const backgroundSaveTimerId = React.useRef<number>();
     const doneIconTimerId = React.useRef<number>();
