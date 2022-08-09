@@ -26,7 +26,8 @@ export default function SaveButton(
         setIsSaving,
     }: Props
 ): JSX.Element {
-    const snackbar = useSnackbar().snackbar;
+    const { snackbar } = useSnackbar();
+
     const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
     const backgroundSaveTimerId = React.useRef<number>();
     const doneIconTimerId = React.useRef<number>();
