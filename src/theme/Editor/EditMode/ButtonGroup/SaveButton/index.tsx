@@ -31,10 +31,9 @@ export default function SaveButton(
     const backgroundSaveTimerId = React.useRef<number>();
     const doneIconTimerId = React.useRef<number>();
 
-    // TODO(dnguyen0304): Investigate if a real implementation is necessary in
-    // addition to background saving.
     const handleClick = (alert: boolean) => {
         setIsSaving(true);
+        onClick();
         new Promise(resolve => setTimeout(resolve, 2500))
             .then(() => {
                 setIsSaving(false);
