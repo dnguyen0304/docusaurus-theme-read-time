@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 
 const StyledDialog = styled(Dialog)({
     '& div.MuiPaper-root': {
-        padding: '1.5rem 1.25rem',
+        padding: '1.5rem 1.25rem 1.75rem',
         borderRadius: '30px',
     },
     '& div.MuiDialogContent-root': {
