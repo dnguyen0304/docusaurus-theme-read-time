@@ -34,6 +34,9 @@ const theme = createTheme({
                     '&:focus': {
                         borderColor: COLOR_ACCENT_GREEN,
                     },
+                    '& .MuiTouchRipple-child': {
+                        backgroundColor: COLOR_ACCENT_GREEN,
+                    },
                 },
             },
         },
