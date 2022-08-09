@@ -40,15 +40,6 @@ export default function Editor(): JSX.Element {
         setEditorIsOpen(false);
     };
 
-    const resetMarkdown = () => {
-        const localStorageKey = getLocalStorageKey(siteContext);
-        localStorage.removeItem(localStorageKey);
-
-        setEditorState(
-            draft.EditorState.createWithContent(
-                draft.ContentState.createFromText(originalMarkdown.current)));
-    };
-
     // Copied from:
     // https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
     const getMarkdown = (): string => {
@@ -77,6 +68,15 @@ export default function Editor(): JSX.Element {
             }
         }
         return rawMarkdown;
+    };
+
+    const resetMarkdown = () => {
+        const localStorageKey = getLocalStorageKey(siteContext);
+        localStorage.removeItem(localStorageKey);
+
+        setEditorState(
+            draft.EditorState.createWithContent(
+                draft.ContentState.createFromText(originalMarkdown.current)));
     };
 
     const handleChange = (editorState: draft.EditorState) => {
