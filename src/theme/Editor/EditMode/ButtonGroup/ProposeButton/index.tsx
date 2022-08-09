@@ -14,12 +14,11 @@ import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import Cookies from 'universal-cookie';
-import URI from 'urijs';
-import { GITHUB_AUTHORIZATION_CALLBACK_PATH } from '../../../../../constants';
 import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
+import Github from '../../../../services/Github';
 
 interface Props {
     readonly onSubmit: () => void;
@@ -40,11 +39,6 @@ const StyledBox = styled(Box)({
     },
 });
 
-// TODO(dnguyen0304): Extract as a configuration option.
-const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
-const GITHUB_AUTHORIZATION_CODE_URL: string = 'https://github.com/login/oauth/authorize';
-const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
-
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     const { user } = useGithub();
     const { pathname } = useLocation();
@@ -57,20 +51,6 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
-    };
-
-    const initializeAuth = async () => {
-        const authRedirectUrl =
-            new URI(GITHUB_AUTHORIZATION_CODE_URL)
-                .query({
-                    client_id: APP_CLIENT_ID,
-                    scope: GITHUB_AUTHORIZATION_SCOPES,
-                    redirect_uri:
-                        new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
-                    state: pathname,
-                })
-                .toString();
-        setExternalRedirect(authRedirectUrl);
     };
 
     const handleSubmit = async () => {
@@ -86,7 +66,8 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                 `Successfully proposed changes for "${description}".`
             );
         } else {
-            await initializeAuth();
+            const authRedirectUrl = await Github().initializeAuth(pathname);
+            setExternalRedirect(authRedirectUrl);
         }
     };
 
