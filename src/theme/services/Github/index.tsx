@@ -74,20 +74,23 @@ export default function Github(): GithubType {
         authorizationCode: string,
         cookiePath: string,
     ): Promise<AuthenticateType> => {
-        let accessToken: string;
-        try {
-            ({ accessToken } = await exchangeCodeToToken(authorizationCode));
-        } catch (error) {
-            throw new Error(
-                `Failed to exchange code for token: ${error.message}.`
-            );
+        const cookies = new Cookies();
+
+        // TODO(dnguyen0304): Implement exchanging session ID for access token.
+        let accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
+        if (!accessToken) {
+            try {
+                ({ accessToken } =
+                    await exchangeCodeToToken(authorizationCode));
+            } catch (error) {
+                throw new Error(
+                    `Failed to exchange code for token: ${error.message}.`
+                );
+            }
         }
 
-        const cookies = new Cookies();
         cookies.set(
             COOKIE_SESSION_ID_KEY,
-            // TODO(dnguyen0304): Implement exchanging session ID for access
-            // token.
             accessToken,
             {
                 path: cookiePath,
