@@ -1,18 +1,17 @@
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
+import StyledDialog from '../Dialog';
 
 interface Props {
     readonly onSubmit: () => void;
@@ -22,16 +21,6 @@ const KeyBinding: KeyBindingType = {
     key: 'shift+option+d',
     friendlyLabel: '^⌥D',
 };
-
-const StyledDialog = styled(Dialog)({
-    '& div.MuiPaper-root': {
-        padding: '1.5rem 1.25rem',
-        borderRadius: '30px',
-    },
-    '& div.MuiDialogContent-root': {
-        paddingBottom: '.9rem',
-    },
-});
 
 export default function DiscardButton({ onSubmit }: Props): JSX.Element {
     const snackbar = useSnackbar().snackbar;
