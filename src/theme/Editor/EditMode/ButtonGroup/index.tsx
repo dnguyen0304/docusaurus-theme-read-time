@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import * as React from 'react';
 import { useSite } from '../../../../contexts/site';
+import { getLocalStorageKey } from '../../utils';
 import DiscardButton from './DiscardButton';
 import ProposeButton from './ProposeButton';
 import SaveButton from './SaveButton';
@@ -23,15 +24,7 @@ export default function EditModeButtonGroup(
         setIsSaving,
     }: Props
 ): JSX.Element {
-    const {
-        owner,
-        repository,
-        path,
-    } = useSite();
-
-    const getLocalStorageKey = (): string => {
-        return `${owner}/${repository}/${path}`;
-    }
+    const siteContext = useSite();
 
     const discardOnSubmit = () => {
         resetMarkdown();
@@ -39,7 +32,7 @@ export default function EditModeButtonGroup(
     };
 
     const saveOnClick = () => {
-        localStorage.setItem(getLocalStorageKey(), getMarkdown());
+        localStorage.setItem(getLocalStorageKey(siteContext), getMarkdown());
     };
 
     return (
