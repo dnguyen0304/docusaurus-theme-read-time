@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import { ENDPOINT_EXCHANGE_CODE_TO_TOKEN } from '../../../constants';
 import { useGithub } from '../../../contexts/github';
+import Github from '../../services/Github';
 
 interface GetAccessTokenResponse {
     accessToken: string;
@@ -91,14 +92,13 @@ export default function Callback(): JSX.Element | null {
     };
 
     React.useEffect(() => {
-        const url = new URI();
-        const { code, state } = URI.parseQuery(url.query());
-        if (!code || !state) {
-            // TODO(dnguyen0304): Add error handling.
-            return;
-        }
-        getAuthenticatedUser(code);
-        setRedirectPath(state);
+        const {
+            authorizationCode,
+            redirectPath,
+        } = Github().parseCallbackUrl(new URI());
+
+        getAuthenticatedUser(authorizationCode);
+        setRedirectPath(redirectPath);
     }, []);
 
     return (

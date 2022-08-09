@@ -1,8 +1,14 @@
 import URI from 'urijs';
 import { GITHUB_AUTHORIZATION_CALLBACK_PATH } from '../../../constants';
 
-export interface GithubType {
+interface ParseCallbackUrlType {
+    authorizationCode: string;
+    redirectPath: string;
+}
+
+interface GithubType {
     initializeAuth: (currentPath: string) => Promise<string>;
+    parseCallbackUrl: (url: URI) => ParseCallbackUrlType;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -26,7 +32,23 @@ export default function Github(): GithubType {
         return authRedirectUrl;
     };
 
+    const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
+        const { code, state } = URI.parseQuery(url.query());
+        if (!code || !state) {
+            // TODO(dnguyen0304): Add error handling.
+            return {
+                authorizationCode: '',
+                redirectPath: '',
+            };
+        }
+        return {
+            authorizationCode: code,
+            redirectPath: state,
+        };
+    };
+
     return {
         initializeAuth,
+        parseCallbackUrl,
     };
 }
