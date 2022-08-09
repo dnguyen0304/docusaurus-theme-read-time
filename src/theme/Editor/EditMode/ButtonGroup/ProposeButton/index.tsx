@@ -132,10 +132,6 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                                 onChange={(e) => setDescription(e.target.value)}
                                 onKeyUp={handleDescriptionKeyUp}
                             />
-                            <TextField
-                                helperText='Optional Details'
-                                multiline
-                            />
                         </Stack>
                     </DialogContent>
                     <DialogActions>
