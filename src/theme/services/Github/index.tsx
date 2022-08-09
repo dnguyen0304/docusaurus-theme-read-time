@@ -24,13 +24,6 @@ interface GetAccessTokenResponse {
     accessToken: string;
 }
 
-interface GithubType {
-    authenticate: (
-        authorizationCode: string,
-        cookiePath: string,
-    ) => Promise<AuthenticateType>;
-}
-
 // TODO(dnguyen0304): Extract as a configuration option.
 const APP_CLIENT_ID: string = 'ce971b93f5383248a42b';
 const GITHUB_AUTHORIZATION_CODE_URL: string =
@@ -67,90 +60,84 @@ export const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
     };
 };
 
-export default function Github(): GithubType {
-    const authenticate = async (
-        authorizationCode: string,
-        cookiePath: string,
-    ): Promise<AuthenticateType> => {
-        const cookies = new Cookies();
+export const authenticate = async (
+    authorizationCode: string,
+    cookiePath: string,
+): Promise<AuthenticateType> => {
+    const cookies = new Cookies();
 
-        // TODO(dnguyen0304): Implement exchanging session ID for access token.
-        let accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
-        if (!accessToken) {
-            try {
-                ({ accessToken } =
-                    await exchangeCodeToToken(authorizationCode));
-            } catch (error) {
-                throw new Error(
-                    `Failed to exchange code for token: ${error.message}.`
-                );
-            }
+    // TODO(dnguyen0304): Implement exchanging session ID for access token.
+    let accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
+    if (!accessToken) {
+        try {
+            ({ accessToken } =
+                await exchangeCodeToToken(authorizationCode));
+        } catch (error) {
+            throw new Error(
+                `Failed to exchange code for token: ${error.message}.`
+            );
         }
+    }
 
-        cookies.set(
-            COOKIE_SESSION_ID_KEY,
-            accessToken,
-            {
-                path: cookiePath,
-                maxAge: 28 * 24 * 60 * 60,  // 28 days in seconds
-                secure: true,
-            },
-        );
+    cookies.set(
+        COOKIE_SESSION_ID_KEY,
+        accessToken,
+        {
+            path: cookiePath,
+            maxAge: 28 * 24 * 60 * 60,  // 28 days in seconds
+            secure: true,
+        },
+    );
 
-        const OctokitRest = Octokit.plugin(restEndpointMethods);
-        const { hook, rest: api } = new OctokitRest({ auth: accessToken });
+    const OctokitRest = Octokit.plugin(restEndpointMethods);
+    const { hook, rest: api } = new OctokitRest({ auth: accessToken });
 
-        // TODO(dnguyen0304): Investigate naming convention for hooks.
-        hook.error('request', async (error) => {
-            if (error instanceof RequestError && error.status === 403) {
-                // TODO(dnguyen0304): Add error handling.
-                console.log(error);
-            } else {
-                throw error;
-            }
-        });
-
-        const {
-            data: {
-                login: username,
-                email: emailAddress,
-                name: fullName,
-                // TODO(dnguyen0304): Implement NavbarItem/ComponentTypes
-                // accessible through useThemeConfig for login avatar.
-                // avatar_url: avatarUrl,
-            },
-        } = await api.users.getAuthenticated();
-
-        return {
-            user: {
-                username,
-                ...emailAddress && { emailAddress },
-                ...fullName && { fullName },
-            },
-            api,
-        };
-    };
-
-    const exchangeCodeToToken = async (
-        authorizationCode: string,
-    ): Promise<GetAccessTokenResponse> => {
-        const rawResponse = await fetch(
-            ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ authorizationCode }),
-            });
-        if (rawResponse.status === 400) {
-            throw new Error(await rawResponse.text())
+    // TODO(dnguyen0304): Investigate naming convention for hooks.
+    hook.error('request', async (error) => {
+        if (error instanceof RequestError && error.status === 403) {
+            // TODO(dnguyen0304): Add error handling.
+            console.log(error);
+        } else {
+            throw error;
         }
-        return rawResponse.json();
-    };
+    });
+
+    const {
+        data: {
+            login: username,
+            email: emailAddress,
+            name: fullName,
+            // TODO(dnguyen0304): Implement NavbarItem/ComponentTypes
+            // accessible through useThemeConfig for login avatar.
+            // avatar_url: avatarUrl,
+        },
+    } = await api.users.getAuthenticated();
 
     return {
-        authenticate,
+        user: {
+            username,
+            ...emailAddress && { emailAddress },
+            ...fullName && { fullName },
+        },
+        api,
     };
-}
+};
+
+const exchangeCodeToToken = async (
+    authorizationCode: string,
+): Promise<GetAccessTokenResponse> => {
+    const rawResponse = await fetch(
+        ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ authorizationCode }),
+        });
+    if (rawResponse.status === 400) {
+        throw new Error(await rawResponse.text())
+    }
+    return rawResponse.json();
+};

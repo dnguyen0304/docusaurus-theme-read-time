@@ -3,7 +3,7 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import * as React from 'react';
 import URI from 'urijs';
 import { useGithub } from '../../../contexts/github';
-import Github, { parseCallbackUrl } from '../../services/Github';
+import { authenticate, parseCallbackUrl } from '../../services/Github';
 
 export default function Callback(): JSX.Element | null {
     // TODO(dnguyen0304): Fix missing type declaration.
@@ -14,7 +14,7 @@ export default function Callback(): JSX.Element | null {
     const [redirectPath, setRedirectPath] = React.useState<string>('');
 
     React.useEffect(() => {
-        const authenticate = async () => {
+        const doAuthenticate = async () => {
             const {
                 authorizationCode,
                 redirectPath,
@@ -22,13 +22,13 @@ export default function Callback(): JSX.Element | null {
             const {
                 user,
                 api,
-            } = await Github().authenticate(authorizationCode, docsPath);
+            } = await authenticate(authorizationCode, docsPath);
 
             setUser(user);
             setApi(api);
             setRedirectPath(redirectPath);
         };
-        authenticate();
+        doAuthenticate();
     }, []);
 
     return (
