@@ -41,8 +41,31 @@ const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
 const GITHUB_REF_PREFIX = 'refs/heads/';
 const COOKIE_SESSION_ID_KEY: string = 'sessionid';
 
-export const initializeAuth = async (currentPath: string): Promise<string> => {
-    const authRedirectUrl =
+export const initializeAuth = async (
+    githubContext: GithubContextValue,
+    currentPath: string,
+): Promise<string> => {
+    const {
+        user,
+        api,
+        setUser,
+        setApi,
+    } = githubContext;
+
+    if (user && api) {
+        return '';
+    }
+
+    const cookies = new Cookies();
+    const accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
+    if (accessToken) {
+        const auth = await doAuthenticate(accessToken);
+        setUser(auth.user)
+        setApi(auth.api)
+        return '';
+    }
+
+    return (
         new URI(GITHUB_AUTHORIZATION_CODE_URL)
             .query({
                 client_id: APP_CLIENT_ID,
@@ -51,8 +74,8 @@ export const initializeAuth = async (currentPath: string): Promise<string> => {
                     new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
                 state: currentPath,
             })
-            .toString();
-    return authRedirectUrl;
+            .toString()
+    );
 };
 
 export const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
@@ -99,6 +122,31 @@ export const authenticate = async (
         },
     );
 
+    return doAuthenticate(accessToken);
+};
+
+const exchangeCodeToToken = async (
+    authorizationCode: string,
+): Promise<GetAccessTokenResponse> => {
+    const rawResponse = await fetch(
+        ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ authorizationCode }),
+        });
+    if (rawResponse.status === 400) {
+        throw new Error(await rawResponse.text())
+    }
+    return rawResponse.json();
+};
+
+const doAuthenticate = async (
+    accessToken: string,
+): Promise<AuthenticateType> => {
     const OctokitRest = Octokit.plugin(restEndpointMethods);
     const { hook, rest: api } = new OctokitRest({ auth: accessToken });
 
@@ -131,26 +179,7 @@ export const authenticate = async (
         },
         api,
     };
-};
-
-const exchangeCodeToToken = async (
-    authorizationCode: string,
-): Promise<GetAccessTokenResponse> => {
-    const rawResponse = await fetch(
-        ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ authorizationCode }),
-        });
-    if (rawResponse.status === 400) {
-        throw new Error(await rawResponse.text())
-    }
-    return rawResponse.json();
-};
+}
 
 export default function Github(
     githubContext: Pick<GithubContextValue, 'user' | 'api'>,
