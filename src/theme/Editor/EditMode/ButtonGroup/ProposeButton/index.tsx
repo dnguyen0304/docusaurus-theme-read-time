@@ -41,7 +41,7 @@ const StyledBox = styled(Box)({
 
 export default function ProposeButton({ onSubmit }: Props): JSX.Element {
     const { user } = useGithub();
-    const { pathname } = useLocation();
+    const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
@@ -66,7 +66,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                 `Successfully proposed changes for "${description}".`
             );
         } else {
-            const authRedirectUrl = await Github().initializeAuth(pathname);
+            const authRedirectUrl = await Github().initializeAuth(currentPath);
             setExternalRedirect(authRedirectUrl);
         }
     };
