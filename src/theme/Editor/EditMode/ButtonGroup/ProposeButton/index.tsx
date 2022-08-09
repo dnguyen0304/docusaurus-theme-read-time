@@ -36,6 +36,9 @@ const StyledBox = styled(Box)({
     '& .MuiDialogContent-root': {
         // TODO(dnguyen0304): Migrate to theme.spacing.
         paddingTop: '1rem',
+        '& .MuiDialogContentText-root': {
+            paddingBottom: '1rem',
+        },
     },
 });
 
