@@ -49,7 +49,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
-    const [description, setDescription] = React.useState<string>('');
+    const [title, setTitle] = React.useState<string>('');
     const [externalRedirect, setExternalRedirect] = React.useState('');
 
     const toggleConfirmation = () => {
@@ -60,13 +60,13 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         const cookies = new Cookies();
 
         if (user || cookies.get('sessionid')) {
-            // TODO(dnguyen0304): Add validation for description text field.
+            // TODO(dnguyen0304): Add validation for title text field.
             // TODO(dnguyen0304): Investigate adding delay to wait for the
             // transition animation.
             toggleConfirmation();
             onSubmit();
             snackbar.sendSuccessAlert(
-                `Successfully proposed changes for "${description}".`
+                `Successfully proposed changes for "${title}".`
             );
         } else {
             const authRedirectUrl = await initializeAuth(currentPath);
@@ -74,7 +74,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         }
     };
 
-    const handleDescriptionKeyUp = (event: React.KeyboardEvent) => {
+    const handleTitleKeyUp = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             handleSubmit();
         }
@@ -131,9 +131,9 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                             </DialogContentText>
                             {/* TODO(dnguyen0304): Add autoFocus. */}
                             <TextField
-                                helperText='Description'
-                                onChange={(e) => setDescription(e.target.value)}
-                                onKeyUp={handleDescriptionKeyUp}
+                                helperText='Title'
+                                onChange={(e) => setTitle(e.target.value)}
+                                onKeyUp={handleTitleKeyUp}
                             />
                         </Stack>
                     </DialogContent>
