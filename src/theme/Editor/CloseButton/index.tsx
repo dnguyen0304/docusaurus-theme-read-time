@@ -19,7 +19,6 @@ const COLOR_GREY_400: string = '#8996a5';
 
 // TODO(dnguyen0304): Investigate changing color on hover.
 const StyledButton = styled(Button)({
-    borderColor: COLOR_GREY_400,
     color: COLOR_GREY_400,
 })
 
