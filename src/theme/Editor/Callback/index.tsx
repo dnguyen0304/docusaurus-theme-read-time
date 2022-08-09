@@ -7,6 +7,7 @@ import Github from '../../services/Github';
 
 export default function Callback(): JSX.Element | null {
     // TODO(dnguyen0304): Fix missing type declaration.
+    // See: https://github.com/facebook/docusaurus/blob/main/packages/docusaurus-plugin-content-docs/src/client/index.ts#L91
     const { path: docsPath } = usePluginData('docusaurus-plugin-content-docs');
     const { user, setUser, setApi } = useGithub();
 
