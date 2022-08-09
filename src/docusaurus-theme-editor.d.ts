@@ -13,3 +13,9 @@ export interface KeyBinding {
     key: string;
     friendlyLabel: string;
 }
+
+export interface GithubUser {
+    readonly username: string;
+    readonly emailAddress?: string;
+    readonly fullName?: string;
+}
