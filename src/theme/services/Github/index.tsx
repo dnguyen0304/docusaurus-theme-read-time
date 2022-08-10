@@ -280,6 +280,7 @@ export default function Github(
             }
         }
 
+        branchName = name;
         branchCommitSha = sha;
     }
 
