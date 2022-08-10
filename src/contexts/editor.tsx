@@ -3,6 +3,7 @@ import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
+    tabId: number;
     pullRequestUrl: string;
 }
 
@@ -11,6 +12,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTab: number | undefined;
     readonly tabs: EditorTab[];
+    readonly getNextTabId: () => number;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTab: React.Dispatch<React.SetStateAction<number | undefined>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -22,12 +24,20 @@ function useContextValue(): ContextValue {
     const [editorIsOpen, setEditorIsOpen] = React.useState<boolean>(false);
     const [activeTab, setActiveTab] = React.useState<number | undefined>();
     const [tabs, setTabs] = React.useState<EditorTab[]>([]);
+    const [tabIdCounter, setTabIdCounter] = React.useState<number>(0);
+
+    const getNextTabId = (): number => {
+        const nextTabId = tabIdCounter + 1;
+        setTabIdCounter(nextTabId);
+        return nextTabId;
+    };
 
     return React.useMemo(
         () => ({
             editorIsOpen,
             activeTab,
             tabs,
+            getNextTabId,
             setEditorIsOpen,
             setActiveTab,
             setTabs,
@@ -36,6 +46,7 @@ function useContextValue(): ContextValue {
             editorIsOpen,
             activeTab,
             tabs,
+            getNextTabId,
             setEditorIsOpen,
             setActiveTab,
             setTabs,
