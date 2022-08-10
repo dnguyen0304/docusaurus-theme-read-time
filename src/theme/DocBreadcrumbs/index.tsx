@@ -24,7 +24,7 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
             return null;
         }
         if (!editorIsOpen) {
-            return <EditButton toggleEditorIsOpen={toggleEditorIsOpen} />;
+            return <EditButton onClick={toggleEditorIsOpen} />;
         }
         return <CloseButton toggleEditorIsOpen={toggleEditorIsOpen} />;
     }

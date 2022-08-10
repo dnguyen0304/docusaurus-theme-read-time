@@ -6,7 +6,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
-    readonly toggleEditorIsOpen: () => void;
+    readonly onClick: () => void;
 }
 
 export const EditButtonKeyBinding: KeyBinding = {
@@ -14,14 +14,10 @@ export const EditButtonKeyBinding: KeyBinding = {
     friendlyLabel: 'e',
 };
 
-export default function EditButton(
-    {
-        toggleEditorIsOpen,
-    }: Props
-): JSX.Element {
+export default function EditButton({ onClick }: Props): JSX.Element {
     useHotkeys(
         EditButtonKeyBinding.key,
-        toggleEditorIsOpen,
+        onClick,
         {
             // Bind to KeyUp instead of KeyDown to avoid the KeyPress event
             // being captured when the editor is open.
@@ -41,7 +37,7 @@ export default function EditButton(
                 data-intro='Update and fix your docs live.'
                 data-step={1}
                 data-position='top'
-                onClick={toggleEditorIsOpen}
+                onClick={onClick}
                 startIcon={<EditIcon />}
                 // See "MUI - Change Button text color in theme" for an
                 // explanation of Button color:
