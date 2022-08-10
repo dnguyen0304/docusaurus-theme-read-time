@@ -1,7 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { EditorState } from 'draft-js';
 import * as React from 'react';
-import { useEditor } from '../../../../contexts/editor';
 import { useSite } from '../../../../contexts/site';
 import { getLocalStorageKey } from '../../utils';
 import DiscardButton from './DiscardButton';
@@ -24,14 +23,6 @@ export default function EditModeButtonGroup(
         editorState,
     }: Props
 ): JSX.Element {
-    const {
-        activeTab: {
-            // TODO(dnguyen0304): Fix type error.
-            // See: https://stackoverflow.com/questions/45210111/destructuring-nullable-objects
-            pullRequestUrl,
-            setPullRequestUrl,
-        },
-    } = useEditor();
     const siteContext = useSite();
 
     const discardOnSubmit = () => {
@@ -49,10 +40,7 @@ export default function EditModeButtonGroup(
                 direction='row'
                 spacing={2}
             >
-                <DiscardButton
-                    pullRequestUrl={pullRequestUrl}
-                    onSubmit={discardOnSubmit}
-                />
+                <DiscardButton onSubmit={discardOnSubmit} />
                 <SaveButton
                     onClick={saveOnClick}
                     editorState={editorState}
@@ -60,7 +48,6 @@ export default function EditModeButtonGroup(
                 <ProposeButton
                     getMarkdown={getMarkdown}
                     onClick={closeEditor}
-                    setPullRequestUrl={setPullRequestUrl}
                 />
             </Stack>
         </div>
