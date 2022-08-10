@@ -28,8 +28,8 @@ function useContextValue(): ContextValue {
     const [tabIdCounter, setTabIdCounter] = React.useState<number>(0);
 
     const getNextTabId = (): number => {
-        const nextTabId = tabIdCounter + 1;
-        setTabIdCounter(nextTabId);
+        const nextTabId = tabIdCounter;
+        setTabIdCounter(nextTabId + 1);
         return nextTabId;
     };
 
