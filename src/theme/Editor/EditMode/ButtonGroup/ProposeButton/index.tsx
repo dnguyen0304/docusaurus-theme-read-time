@@ -23,6 +23,7 @@ import StyledDialog from '../Dialog';
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 
 interface Props {
+    readonly getMarkdown: () => string;
     readonly onClick: () => void;
 }
 
@@ -50,7 +51,12 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     }
 }));
 
-export default function ProposeButton({ onClick }: Props): JSX.Element {
+export default function ProposeButton(
+    {
+        getMarkdown,
+        onClick,
+    }: Props
+): JSX.Element {
     const { user } = useGithub();
     const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
