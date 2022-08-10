@@ -43,29 +43,53 @@ const COOKIE_SESSION_ID_KEY: string = 'sessionid';
 
 export const initializeAuth = async (
     githubContext: GithubContextValue,
+    siteContext: SiteContextValue,
     currentPath: string,
-): Promise<string> => {
+): Promise<{
+    authRedirectUrl: string,
+    github: GithubType | undefined,
+}> => {
     const {
-        user,
-        api,
+        user: existingUser,
+        api: existingApi,
         setUser,
         setApi,
     } = githubContext;
 
-    if (user && api) {
-        return '';
+    if (existingUser && existingApi) {
+        return {
+            authRedirectUrl: '',
+            github: Github(
+                {
+                    user: existingUser,
+                    api: existingApi,
+                },
+                siteContext,
+            ),
+        };
     }
 
     const cookies = new Cookies();
     const accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
     if (accessToken) {
-        const auth = await doAuthenticate(accessToken);
-        setUser(auth.user)
-        setApi(auth.api)
-        return '';
+        const newAuth = await doAuthenticate(accessToken);
+
+        setUser(newAuth.user)
+        setApi(newAuth.api)
+
+        return {
+            authRedirectUrl: '',
+            github: Github(
+                {
+                    user: newAuth.user,
+                    api: newAuth.api,
+                },
+                siteContext,
+            ),
+        };
     }
 
-    return (
+    const authRedirectUrl = (
         new URI(GITHUB_AUTHORIZATION_CODE_URL)
             .query({
                 client_id: APP_CLIENT_ID,
@@ -76,6 +100,10 @@ export const initializeAuth = async (
             })
             .toString()
     );
+    return {
+        authRedirectUrl,
+        github: undefined,
+    };
 };
 
 export const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
