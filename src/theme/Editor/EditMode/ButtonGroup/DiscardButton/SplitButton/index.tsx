@@ -65,6 +65,11 @@ export default function SplitButton(
         <React.Fragment>
             <ButtonGroup
                 ref={anchorRef}
+                sx={{
+                    // Add the margin-left style because this component is not
+                    // included in .MuiDialogActions-root>:not(:first-of-type).
+                    ml: '.5rem',
+                }}
                 variant='contained'
             >
                 <Button onClick={handleClick}>
