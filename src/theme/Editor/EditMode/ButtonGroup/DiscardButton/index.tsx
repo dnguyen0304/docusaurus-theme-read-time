@@ -15,7 +15,6 @@ import StyledDialog from '../Dialog';
 import SplitButton from './SplitButton';
 
 interface Props {
-    readonly pullRequestUrl: string;
     readonly onSubmit: () => void;
 }
 
@@ -24,12 +23,7 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥D',
 };
 
-export default function DiscardButton(
-    {
-        pullRequestUrl,
-        onSubmit,
-    }: Props
-): JSX.Element {
+export default function DiscardButton({ onSubmit }: Props): JSX.Element {
     const snackbar = useSnackbar().snackbar;
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
@@ -82,10 +76,7 @@ export default function DiscardButton(
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={toggleConfirmation}>Go Back</Button>
-                    <SplitButton
-                        handleSubmit={handleSubmit}
-                        pullRequestUrl={pullRequestUrl}
-                    />
+                    <SplitButton handleSubmit={handleSubmit} />
                 </DialogActions>
             </StyledDialog>
         </React.Fragment>
