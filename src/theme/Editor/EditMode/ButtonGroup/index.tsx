@@ -27,6 +27,7 @@ export default function EditModeButtonGroup(
     const {
         activeTab: {
             // TODO(dnguyen0304): Fix type error.
+            // See: https://stackoverflow.com/questions/45210111/destructuring-nullable-objects
             pullRequestUrl,
             setPullRequestUrl,
         },
