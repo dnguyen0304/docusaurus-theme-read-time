@@ -4,7 +4,7 @@ import DocBreadcrumbs from '@theme-init/DocBreadcrumbs';
 import type DocBreadcrumbsType from '@theme/DocBreadcrumbs';
 import React from 'react';
 import { useEditor } from '../../contexts/editor';
-import { useRawContent } from '../../contexts/editorContent';
+import { useRawContent } from '../../contexts/rawContent';
 import CloseButton from '../Editor/CloseButton';
 import EditButton from '../Editor/EditButton';
 import styles from './styles.module.css';

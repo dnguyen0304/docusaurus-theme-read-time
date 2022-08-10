@@ -3,7 +3,7 @@ import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
-import { useRawContent } from '../../contexts/editorContent';
+import { useRawContent } from '../../contexts/rawContent';
 import { useSite } from '../../contexts/site';
 import { useSnackbar } from '../../contexts/snackbar';
 import EditorContainer from './Container';

@@ -2,7 +2,7 @@ import type { WrapperProps } from '@docusaurus/types';
 import type DocPageType from '@theme-init/DocPage';
 import DocPage from '@theme-init/DocPage';
 import React from 'react';
-import { RawContentProvider } from '../../contexts/editorContent';
+import { RawContentProvider } from '../../contexts/rawContent';
 
 type Props = WrapperProps<typeof DocPageType>;
 
