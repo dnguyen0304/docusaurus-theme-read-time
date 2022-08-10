@@ -28,6 +28,8 @@ interface GetAccessTokenResponse {
 }
 
 interface GithubType {
+    readonly getUser: () => GithubUser;
+    readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
     readonly createPull: (title: string) => Promise<string>;
@@ -210,7 +212,7 @@ const doAuthenticate = async (
 }
 
 export default function Github(
-    githubContext: Pick<GithubContextValue, 'user' | 'api'>,
+    githubContext: AuthenticateType,
     siteContext: SiteContextValue,
 ): GithubType {
     const {
@@ -240,6 +242,14 @@ export default function Github(
             defaultBranch = siteDefaultBranch;
         }
         return defaultBranch;
+    };
+
+    const getUser = (): GithubUser => {
+        return user;
+    };
+
+    const getApi = (): RestEndpointMethods => {
+        return api;
     };
 
     const createBranch = async (name: string): Promise<void> => {
@@ -334,6 +344,8 @@ export default function Github(
     };
 
     return {
+        getUser,
+        getApi,
         createBranch,
         createCommit,
         createPull,
