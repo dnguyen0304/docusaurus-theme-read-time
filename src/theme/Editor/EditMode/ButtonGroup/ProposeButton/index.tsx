@@ -24,6 +24,7 @@ import { useRefMeasure } from '../../../utils';
 import StyledDialog from '../Dialog';
 
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
+const BUTTON_SUBMIT_BORDER_WIDTH_PIXELS: number = 1;
 
 interface Props {
     readonly getMarkdown: () => string;
@@ -76,7 +77,7 @@ export default function ProposeButton(
     const [measure, measureRef] = useRefMeasure<HTMLButtonElement>(
         clientRect => clientRect.width
     );
-    const workingButtonWidthRef = React.useRef<number>(24);
+    const workingIconWidthRef = React.useRef<number>(24);
     const [workingButtonPadding, setWorkingButtonPadding] =
         React.useState<number>(0);
     const [isWorking, setIsWorking] = React.useState<boolean>(false);
@@ -161,7 +162,7 @@ export default function ProposeButton(
                     }}
                     variant='outlined'
                 >
-                    <CircularProgress size={workingButtonWidthRef.current} />
+                    <CircularProgress size={workingIconWidthRef.current} />
                 </Button>
             );
         } else {
@@ -192,7 +193,9 @@ export default function ProposeButton(
         if (measure) {
             // TODO(dnguyen0304): Fix type error.
             setWorkingButtonPadding(
-                (measure - workingButtonWidthRef.current) / 2
+                (measure
+                    - workingIconWidthRef.current
+                    - 2 * BUTTON_SUBMIT_BORDER_WIDTH_PIXELS) / 2
             );
         }
     }, [measure])
