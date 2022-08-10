@@ -45,7 +45,7 @@ export default function EditModeButtonGroup(
                     onClick={saveOnClick}
                     editorState={editorState}
                 />
-                <ProposeButton onSubmit={closeEditor} />
+                <ProposeButton onClick={closeEditor} />
             </Stack>
         </div>
     );

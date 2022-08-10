@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import { initializeAuth } from '../../../../services/Github';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import Cookies from 'universal-cookie';
@@ -17,13 +18,12 @@ import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
-import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 
 interface Props {
-    readonly onSubmit: () => void;
+    readonly onClick: () => void;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -50,7 +50,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     }
 }));
 
-export default function ProposeButton({ onSubmit }: Props): JSX.Element {
+export default function ProposeButton({ onClick }: Props): JSX.Element {
     const { user } = useGithub();
     const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
@@ -68,7 +68,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
         setConfirmationIsOpen(prev => !prev);
     };
 
-    const handleSubmit = async () => {
+    const handleClick = async () => {
         const cookies = new Cookies();
 
         if (user || cookies.get('sessionid')) {
@@ -76,7 +76,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
             // TODO(dnguyen0304): Investigate adding delay to wait for the
             // transition animation.
             toggleConfirmation();
-            onSubmit();
+            onClick();
             snackbar.sendSuccessAlert(
                 `Successfully proposed changes for "${title}".`
             );
@@ -88,7 +88,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            handleSubmit();
+            handleClick();
         }
     };
 
@@ -128,7 +128,7 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                 <StyledBox
                     autoComplete='off'
                     component='form'
-                    onSubmit={handleSubmit}
+                    onSubmit={handleClick}
                     noValidate
                 >
                     <DialogTitle>Propose Changes</DialogTitle>
