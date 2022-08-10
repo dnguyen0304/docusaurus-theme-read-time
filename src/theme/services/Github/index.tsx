@@ -292,11 +292,13 @@ export default function Github(
                 ref: `${GITHUB_REF_PREFIX}${name}`,
             });
         } catch (error) {
-            if (
-                error.name === 'HttpError'
-                && error.message === 'Reference already exists'
+            if (error instanceof RequestError
+                && error.status === 422
+                && error.message.includes('Reference already exists')
             ) {
                 throw new Error(`branch "${name}" already exists`);
+            } else {
+                throw error;
             }
         }
 
