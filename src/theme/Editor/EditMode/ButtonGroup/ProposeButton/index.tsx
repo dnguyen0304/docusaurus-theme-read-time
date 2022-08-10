@@ -89,6 +89,7 @@ export default function ProposeButton(
     };
 
     const handleClick = async () => {
+        // TODO(dnguyen0304): Fix duplicated auth code.
         const {
             authRedirectUrl,
             github,
