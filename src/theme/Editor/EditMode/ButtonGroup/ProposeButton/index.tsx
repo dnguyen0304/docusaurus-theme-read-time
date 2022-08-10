@@ -20,6 +20,8 @@ import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 
+const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
+
 interface Props {
     readonly onSubmit: () => void;
 }
@@ -55,8 +57,12 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
-    const [title, setTitle] = React.useState<string>('');
-    const [externalRedirect, setExternalRedirect] = React.useState('');
+    const [title, setTitle] = React.useState<string>(
+        LOCAL_STORAGE_KEY_TITLE in localStorage
+            ? localStorage.getItem(LOCAL_STORAGE_KEY_TITLE)!
+            : ''
+    );
+    const [externalRedirect, setExternalRedirect] = React.useState<string>('');
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
@@ -139,7 +145,13 @@ export default function ProposeButton({ onSubmit }: Props): JSX.Element {
                             <StyledTextField
                                 helperText={<>Press <b>↩︎ Enter</b> to send</>}
                                 label='Title'
-                                onChange={(e) => setTitle(e.target.value)}
+                                onChange={(e) => {
+                                    setTitle(e.target.value)
+                                    localStorage.setItem(
+                                        LOCAL_STORAGE_KEY_TITLE,
+                                        e.target.value,
+                                    );
+                                }}
                                 onKeyUp={handleTitleKeyUp}
                                 value={title}
                             />
