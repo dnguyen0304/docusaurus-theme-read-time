@@ -12,8 +12,10 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import StyledDialog from '../Dialog';
+import SplitButton from './SplitButton';
 
 interface Props {
+    readonly pullRequestUrl: string;
     readonly onSubmit: () => void;
 }
 
@@ -22,7 +24,12 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥D',
 };
 
-export default function DiscardButton({ onSubmit }: Props): JSX.Element {
+export default function DiscardButton(
+    {
+        pullRequestUrl,
+        onSubmit,
+    }: Props
+): JSX.Element {
     const snackbar = useSnackbar().snackbar;
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
@@ -32,7 +39,7 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
         setConfirmationIsOpen(prev => !prev);
     };
 
-    const closeEditor = () => {
+    const handleSubmit = () => {
         toggleConfirmation();
         onSubmit();
         snackbar.sendSuccessAlert('Successfully discarded changes.');
@@ -74,16 +81,11 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        onClick={toggleConfirmation}
-                        variant='contained'
-                        autoFocus
-                    >
-                        Go Back
-                    </Button>
-                    <Button onClick={closeEditor}>
-                        Discard
-                    </Button>
+                    <Button onClick={toggleConfirmation}>Go Back</Button>
+                    <SplitButton
+                        handleSubmit={handleSubmit}
+                        pullRequestUrl={pullRequestUrl}
+                    />
                 </DialogActions>
             </StyledDialog>
         </React.Fragment>

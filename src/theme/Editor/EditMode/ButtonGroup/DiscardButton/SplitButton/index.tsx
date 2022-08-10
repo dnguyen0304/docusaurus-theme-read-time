@@ -18,14 +18,14 @@ const MENU_ITEM_OPTIONS: string[] = [
 
 interface Props {
     readonly handleSubmit: () => void;
-    readonly hasPullRequest: boolean;
+    readonly pullRequestUrl: string;
 }
 
 // TODO(dnguyen0304): Add danger style.
 export default function SplitButton(
     {
         handleSubmit,
-        hasPullRequest,
+        pullRequestUrl,
     }: Props
 ): JSX.Element {
     const anchorRef = React.useRef<HTMLDivElement>(null);
@@ -102,7 +102,7 @@ export default function SplitButton(
                                     {MENU_ITEM_OPTIONS.map((option, index) => (
                                         <MenuItem
                                             key={`${MENU_ITEM_KEY_PREFIX}-${option}`}
-                                            disabled={option.includes('Close') && !hasPullRequest}
+                                            disabled={option.includes('Close') && !pullRequestUrl}
                                             onClick={event => handleMenuItemClick(event, index)}
                                             selected={index === menuItemIndex}
                                         >

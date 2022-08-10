@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import { EditorState } from 'draft-js';
 import * as React from 'react';
+import { useActiveEditorTab } from '../../../../contexts/activeEditorTab';
 import { useSite } from '../../../../contexts/site';
 import { getLocalStorageKey } from '../../utils';
 import DiscardButton from './DiscardButton';
@@ -23,6 +24,10 @@ export default function EditModeButtonGroup(
         editorState,
     }: Props
 ): JSX.Element {
+    const {
+        pullRequestUrl,
+        setPullRequestUrl,
+    } = useActiveEditorTab();
     const siteContext = useSite();
 
     const discardOnSubmit = () => {
@@ -40,7 +45,10 @@ export default function EditModeButtonGroup(
                 direction='row'
                 spacing={2}
             >
-                <DiscardButton onSubmit={discardOnSubmit} />
+                <DiscardButton
+                    pullRequestUrl={pullRequestUrl}
+                    onSubmit={discardOnSubmit}
+                />
                 <SaveButton
                     onClick={saveOnClick}
                     editorState={editorState}
@@ -48,6 +56,7 @@ export default function EditModeButtonGroup(
                 <ProposeButton
                     getMarkdown={getMarkdown}
                     onClick={closeEditor}
+                    setPullRequestUrl={setPullRequestUrl}
                 />
             </Stack>
         </div>

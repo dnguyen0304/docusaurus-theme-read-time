@@ -29,6 +29,7 @@ const BUTTON_SUBMIT_BORDER_WIDTH_PIXELS: number = 1;
 interface Props {
     readonly getMarkdown: () => string;
     readonly onClick: () => void;
+    readonly setPullRequestUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -59,6 +60,7 @@ export default function ProposeButton(
     {
         getMarkdown,
         onClick,
+        setPullRequestUrl,
     }: Props
 ): JSX.Element {
     const { pathname: currentPath } = useLocation();
@@ -133,6 +135,7 @@ export default function ProposeButton(
             }
         }
         const pullUrl = await github.createPull(title);
+        setPullRequestUrl(pullUrl);
         window.open(pullUrl, '_blank')!.focus();
         snackbar.sendSuccessAlert(
             `Successfully proposed changes for "${title}".`
