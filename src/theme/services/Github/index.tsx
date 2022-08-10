@@ -74,21 +74,32 @@ export const initializeAuth = async (
     const cookies = new Cookies();
     const accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
     if (accessToken) {
-        const newAuth = await doAuthenticate(accessToken);
+        try {
+            const newAuth = await doAuthenticate(accessToken);
 
-        setUser(newAuth.user)
-        setApi(newAuth.api)
+            setUser(newAuth.user)
+            setApi(newAuth.api)
 
-        return {
-            authRedirectUrl: '',
-            github: Github(
-                {
-                    user: newAuth.user,
-                    api: newAuth.api,
-                },
-                siteContext,
-            ),
-        };
+            return {
+                authRedirectUrl: '',
+                github: Github(
+                    {
+                        user: newAuth.user,
+                        api: newAuth.api,
+                    },
+                    siteContext,
+                ),
+            };
+        } catch (error) {
+            if (error.status === 401) {
+                cookies.remove(COOKIE_SESSION_ID_KEY);
+                initializeAuth(
+                    githubContext,
+                    siteContext,
+                    currentPath,
+                );
+            }
+        }
     }
 
     const authRedirectUrl = (
