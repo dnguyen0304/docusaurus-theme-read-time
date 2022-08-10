@@ -14,8 +14,6 @@ type Props = WrapperProps<typeof DocBreadcrumbsType>;
 export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const {
         editorIsOpen,
-        activeTab,
-        addTab,
         setEditorIsOpen,
     } = useEditor();
     const { rawContent } = useRawContent();
@@ -24,19 +22,12 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     // TODO(dnguyen0304): Set editor focus.
     const toggleEditorIsOpen = () => { setEditorIsOpen(prev => !prev) };
 
-    const editHandleClick = () => {
-        if (!activeTab) {
-            addTab();
-        }
-        toggleEditorIsOpen();
-    };
-
     const getButton = (): JSX.Element | null => {
         if (pathname in rawContent === false) {
             return null;
         }
         if (!editorIsOpen) {
-            return <EditButton onClick={editHandleClick} />;
+            return <EditButton onClick={toggleEditorIsOpen} />;
         }
         return <CloseButton toggleEditorIsOpen={toggleEditorIsOpen} />;
     }

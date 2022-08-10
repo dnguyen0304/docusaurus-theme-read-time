@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useEditor } from '../../../contexts/editor';
 import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
@@ -15,15 +16,29 @@ export const EditButtonKeyBinding: KeyBinding = {
 };
 
 export default function EditButton({ onClick }: Props): JSX.Element {
+    const {
+        activeTab,
+        addTab,
+        setActiveTab,
+    } = useEditor();
+
+    const handleClick = () => {
+        if (!activeTab) {
+            setActiveTab(addTab());
+        }
+        onClick();
+    };
+
     useHotkeys(
         EditButtonKeyBinding.key,
-        onClick,
+        handleClick,
         {
             // Bind to KeyUp instead of KeyDown to avoid the KeyPress event
             // being captured when the editor is open.
             keydown: false,
             keyup: true,
         },
+        [activeTab],
     );
 
     return (
@@ -37,7 +52,7 @@ export default function EditButton({ onClick }: Props): JSX.Element {
                 data-intro='Update and fix your docs live.'
                 data-step={1}
                 data-position='top'
-                onClick={onClick}
+                onClick={handleClick}
                 startIcon={<EditIcon />}
                 // See "MUI - Change Button text color in theme" for an
                 // explanation of Button color:
