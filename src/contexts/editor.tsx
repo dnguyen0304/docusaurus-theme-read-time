@@ -5,7 +5,7 @@ import { ReactContextError } from './errors';
 interface EditorTab {
     tabId: number;
     pullRequestUrl: string;
-    setPullRequestUrl: React.Dispatch<React.SetStateAction<string>>;
+    setPullRequestUrl: (newValue: string) => void;
 }
 
 // aliases: table of contents
@@ -34,14 +34,25 @@ function useContextValue(): ContextValue {
     };
 
     const addTab = () => {
-        const [pullRequestUrl, setPullRequestUrl] = React.useState<string>('');
+        const tabId = getNextTabId();
+        const setPullRequestUrl = (newValue: string) => {
+            setTabs(tabs => tabs.map(tab => {
+                if (tab.tabId !== tabId) {
+                    return tab;
+                }
+                return {
+                    ...tab,
+                    pullRequestUrl: newValue,
+                }
+            }));
+        };
 
         setTabs(prev => [
             ...prev,
             {
-                tabId: getNextTabId(),
-                pullRequestUrl: pullRequestUrl,
-                setPullRequestUrl: setPullRequestUrl,
+                tabId,
+                pullRequestUrl: '',
+                setPullRequestUrl,
             },
         ]);
     };
@@ -92,5 +103,6 @@ function useEditor(): ContextValue {
 
 export {
     EditorProvider,
+    EditorTab,
     useEditor,
 };
