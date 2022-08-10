@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { RequestError } from '@octokit/request-error';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
 import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
@@ -29,7 +30,6 @@ const BUTTON_SUBMIT_BORDER_WIDTH_PIXELS: number = 1;
 interface Props {
     readonly getMarkdown: () => string;
     readonly onClick: () => void;
-    readonly setPullRequestUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -60,9 +60,12 @@ export default function ProposeButton(
     {
         getMarkdown,
         onClick,
-        setPullRequestUrl,
     }: Props
 ): JSX.Element {
+    const {
+        activeTabId,
+        tabs,
+    } = useEditor();
     const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
     const githubContext = useGithub();
@@ -108,6 +111,7 @@ export default function ProposeButton(
         }
 
         setIsWorking(true);
+        const { setPullRequestUrl } = tabs[activeTabId];
 
         await github.createBranch(
             `docusaurus-theme-editor`
