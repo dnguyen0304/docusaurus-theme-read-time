@@ -13,7 +13,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTab: number | undefined;
     readonly tabs: EditorTab[];
-    readonly addTab: () => void;
+    readonly addTab: () => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTab: React.Dispatch<React.SetStateAction<number | undefined>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -33,7 +33,7 @@ function useContextValue(): ContextValue {
         return nextTabId;
     };
 
-    const addTab = () => {
+    const addTab = (): EditorTab => {
         const tabId = getNextTabId();
         const setPullRequestUrl = (newValue: string) => {
             setTabs(tabs => tabs.map(tab => {
@@ -46,15 +46,18 @@ function useContextValue(): ContextValue {
                 }
             }));
         };
+        const newTab = {
+            tabId,
+            pullRequestUrl: '',
+            setPullRequestUrl,
+        };
 
         setTabs(prev => [
             ...prev,
-            {
-                tabId,
-                pullRequestUrl: '',
-                setPullRequestUrl,
-            },
+            newTab,
         ]);
+
+        return newTab;
     };
 
     return React.useMemo(
