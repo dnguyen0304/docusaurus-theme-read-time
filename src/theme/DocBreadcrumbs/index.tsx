@@ -16,6 +16,7 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const { editorContent } = useEditorContent();
     const { pathname } = useLocation();
 
+    // TODO(dnguyen0304): Set editor focus.
     const toggleEditorIsOpen = () => { setEditorIsOpen(prev => !prev) };
 
     const getButton = (): JSX.Element | null => {
