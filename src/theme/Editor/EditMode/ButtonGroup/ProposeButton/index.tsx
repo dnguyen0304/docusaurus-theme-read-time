@@ -2,6 +2,7 @@ import { useLocation } from '@docusaurus/router';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -19,6 +20,7 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
+import { useRefMeasure } from '../../../utils';
 import StyledDialog from '../Dialog';
 
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
@@ -71,6 +73,13 @@ export default function ProposeButton(
             : ''
     );
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
+    const [measure, measureRef] = useRefMeasure<HTMLButtonElement>(
+        clientRect => clientRect.width
+    );
+    const workingButtonWidthRef = React.useRef<number>(24);
+    const [workingButtonPadding, setWorkingButtonPadding] =
+        React.useState<number>(0);
+    const [isWorking, setIsWorking] = React.useState<boolean>(false);
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
@@ -94,6 +103,8 @@ export default function ProposeButton(
             throw new Error('expected Github service to be defined');
         }
 
+        setIsWorking(true);
+
         await github.createBranch(
             `docusaurus-theme-editor`
             + `-${github.getUser().username}`
@@ -113,6 +124,7 @@ export default function ProposeButton(
                     `Failed to propose changes. The local version is unchanged `
                     + `from the site version.`
                 );
+                setIsWorking(false);
                 toggleConfirmation();
                 return;
             } else {
@@ -128,6 +140,7 @@ export default function ProposeButton(
         // TODO(dnguyen0304): Add validation for title text field.
         // TODO(dnguyen0304): Investigate adding delay to wait for the
         // transition animation.
+        setIsWorking(false);
         toggleConfirmation();
         onClick();
     };
@@ -135,6 +148,32 @@ export default function ProposeButton(
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             handleClick();
+        }
+    };
+
+    const getSubmitButton = (): JSX.Element => {
+        if (isWorking) {
+            return (
+                <Button
+                    onClick={handleClick}
+                    sx={{
+                        px: `${workingButtonPadding}px`,
+                    }}
+                    variant='outlined'
+                >
+                    <CircularProgress size={workingButtonWidthRef.current} />
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    ref={measureRef}
+                    onClick={handleClick}
+                    variant='outlined'
+                >
+                    Propose
+                </Button>
+            );
         }
     };
 
@@ -148,6 +187,15 @@ export default function ProposeButton(
             window.location.replace(externalRedirect);
         }
     }, [externalRedirect]);
+
+    React.useEffect(() => {
+        if (measure) {
+            // TODO(dnguyen0304): Fix type error.
+            setWorkingButtonPadding(
+                (measure - workingButtonWidthRef.current) / 2
+            );
+        }
+    }, [measure])
 
     return (
         <React.Fragment>
@@ -201,12 +249,7 @@ export default function ProposeButton(
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={toggleConfirmation}>Go Back</Button>
-                        <Button
-                            onClick={handleClick}
-                            variant='outlined'
-                        >
-                            Propose
-                        </Button>
+                        {getSubmitButton()}
                     </DialogActions>
                 </StyledBox>
             </StyledDialog>
