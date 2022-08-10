@@ -12,8 +12,8 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import Cookies from 'universal-cookie';
 import { useGithub } from '../../../../../contexts/github';
+import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
@@ -57,9 +57,10 @@ export default function ProposeButton(
         onClick,
     }: Props
 ): JSX.Element {
-    const { user } = useGithub();
     const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
+    const githubContext = useGithub();
+    const siteContext = useSite();
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
@@ -75,21 +76,42 @@ export default function ProposeButton(
     };
 
     const handleClick = async () => {
-        const cookies = new Cookies();
+        const {
+            authRedirectUrl,
+            github,
+        } = await initializeAuth(
+            githubContext,
+            siteContext,
+            currentPath,
+        );
 
-        if (user || cookies.get('sessionid')) {
-            // TODO(dnguyen0304): Add validation for title text field.
-            // TODO(dnguyen0304): Investigate adding delay to wait for the
-            // transition animation.
-            toggleConfirmation();
-            onClick();
-            snackbar.sendSuccessAlert(
-                `Successfully proposed changes for "${title}".`
-            );
-        } else {
-            const authRedirectUrl = await initializeAuth(currentPath);
+        if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);
+            return;
         }
+        if (!github) {
+            throw new Error('expected Github service to be defined');
+        }
+
+        await github.createBranch(
+            `docusaurus-theme-editor`
+            + `-${github.getUser().username}`
+            + `-${new Date().toISOString()}`
+        );
+        await github.createCommit(
+            getMarkdown(),
+            '[docusaurus-theme-editor] Partial save.',
+        );
+        const pullUrl = await github.createPull(title);
+
+        // TODO(dnguyen0304): Add validation for title text field.
+        // TODO(dnguyen0304): Investigate adding delay to wait for the
+        // transition animation.
+        toggleConfirmation();
+        onClick();
+        snackbar.sendSuccessAlert(
+            `Successfully proposed changes for "${title}": ${pullUrl}.`
+        );
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
