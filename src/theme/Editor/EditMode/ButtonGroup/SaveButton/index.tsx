@@ -19,6 +19,7 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥S',
 };
 
+// TODO(dnguyen0304): Fix memory leak on closing the editor while still saving.
 export default function SaveButton(
     {
         onClick,
