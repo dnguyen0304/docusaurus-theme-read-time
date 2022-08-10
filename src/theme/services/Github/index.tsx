@@ -33,6 +33,7 @@ interface GithubType {
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
     readonly createPull: (title: string) => Promise<string>;
+    readonly closePull: (pullUrl: string) => Promise<void>;
 }
 
 // TODO(dnguyen0304): Extract as a configuration option.
@@ -356,11 +357,33 @@ export default function Github(
         return html_url;
     };
 
+    const closePull = async (pullUrl: string): Promise<void> => {
+        const pullId = new URI(pullUrl).filename();
+        if (pullId === '') {
+            throw new Error(`failed to parse pull number from ${pullUrl}`);
+        }
+
+        try {
+            const foo = await api?.pulls.update({
+                owner,
+                repo: repository,
+                pull_number: Number(pullId),
+                state: 'closed',
+            });
+            // TODO(dnguyen0304): Remove development comments.
+            console.log(foo);
+        } catch (error) {
+            // TODO(dnguyen0304): Remove development comments.
+            console.log(error);
+        }
+    };
+
     return {
         getUser,
         getApi,
         createBranch,
         createCommit,
         createPull,
+        closePull,
     };
 }
