@@ -15,9 +15,8 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const {
         editorIsOpen,
         activeTab,
-        getNextTabId,
+        addTab,
         setEditorIsOpen,
-        setTabs,
     } = useEditor();
     const { rawContent } = useRawContent();
     const { pathname } = useLocation();
@@ -27,11 +26,7 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
 
     const editHandleClick = () => {
         if (!activeTab) {
-            const firstTab = {
-                tabId: getNextTabId(),
-                pullRequestUrl: '',
-            };
-            setTabs([firstTab]);
+            addTab();
         }
         toggleEditorIsOpen();
     };

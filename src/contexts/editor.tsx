@@ -5,6 +5,7 @@ import { ReactContextError } from './errors';
 interface EditorTab {
     tabId: number;
     pullRequestUrl: string;
+    setPullRequestUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // aliases: table of contents
@@ -12,7 +13,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTab: number | undefined;
     readonly tabs: EditorTab[];
-    readonly getNextTabId: () => number;
+    readonly addTab: () => void;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTab: React.Dispatch<React.SetStateAction<number | undefined>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -32,12 +33,25 @@ function useContextValue(): ContextValue {
         return nextTabId;
     };
 
+    const addTab = () => {
+        const [pullRequestUrl, setPullRequestUrl] = React.useState<string>('');
+
+        setTabs(prev => [
+            ...prev,
+            {
+                tabId: getNextTabId(),
+                pullRequestUrl: pullRequestUrl,
+                setPullRequestUrl: setPullRequestUrl,
+            },
+        ]);
+    };
+
     return React.useMemo(
         () => ({
             editorIsOpen,
             activeTab,
             tabs,
-            getNextTabId,
+            addTab,
             setEditorIsOpen,
             setActiveTab,
             setTabs,
@@ -46,7 +60,7 @@ function useContextValue(): ContextValue {
             editorIsOpen,
             activeTab,
             tabs,
-            getNextTabId,
+            addTab,
             setEditorIsOpen,
             setActiveTab,
             setTabs,
