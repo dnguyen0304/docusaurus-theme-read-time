@@ -2,33 +2,32 @@ import * as React from 'react';
 import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Import from docusaurus-plugin-editor.
-interface EditorContent {
+interface RawContent {
     [key: string]: string;
 }
 
 interface ContextValue {
-    readonly editorContent: EditorContent;
-    readonly setEditorContent: React.Dispatch<React.SetStateAction<EditorContent>>;
+    readonly rawContent: RawContent;
+    readonly setRawContent: React.Dispatch<React.SetStateAction<RawContent>>;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
-function useContextValue(content: EditorContent): ContextValue {
-    const [editorContent, setEditorContent] =
-        React.useState<EditorContent>(content);
+function useContextValue(content: RawContent): ContextValue {
+    const [rawContent, setRawContent] = React.useState<RawContent>(content);
 
     return React.useMemo(
-        () => ({ editorContent, setEditorContent }),
-        [editorContent, setEditorContent],
+        () => ({ rawContent, setRawContent }),
+        [rawContent, setRawContent],
     );
 }
 
 interface Props {
-    readonly content: EditorContent;
+    readonly content: RawContent;
     readonly children: React.ReactNode;
 };
 
-function EditorContentProvider(
+function RawContentProvider(
     {
         content,
         children,
@@ -43,15 +42,15 @@ function EditorContentProvider(
     );
 };
 
-function useEditorContent(): ContextValue {
+function useRawContent(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
-        throw new ReactContextError('EditorContentProvider');
+        throw new ReactContextError('RawContentProvider');
     }
     return context;
 }
 
 export {
-    EditorContentProvider,
-    useEditorContent,
+    RawContentProvider,
+    useRawContent,
 };

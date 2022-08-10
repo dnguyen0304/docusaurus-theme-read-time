@@ -3,7 +3,7 @@ import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
-import { useEditorContent } from '../../contexts/editorContent';
+import { useRawContent } from '../../contexts/editorContent';
 import { useSite } from '../../contexts/site';
 import { useSnackbar } from '../../contexts/snackbar';
 import EditorContainer from './Container';
@@ -25,7 +25,7 @@ const KEY_CODE_ESCAPE: number = 27;
 // TODO: Fix inconsistent padding or margin in edit mode.
 export default function Editor(): JSX.Element {
     const { setEditorIsOpen } = useEditor();
-    const { editorContent } = useEditorContent();
+    const { rawContent } = useRawContent();
     const { pathname } = useLocation();
     const { snackbar } = useSnackbar();
     const siteContext = useSite();
@@ -33,7 +33,7 @@ export default function Editor(): JSX.Element {
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
     );
-    const originalMarkdown = React.useRef<string>(editorContent[pathname]);
+    const originalMarkdown = React.useRef<string>(rawContent[pathname]);
 
     const closeEditor = () => {
         setEditorIsOpen(false);
