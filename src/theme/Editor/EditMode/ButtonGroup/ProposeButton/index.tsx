@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import { RequestError } from '@octokit/request-error';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useGithub } from '../../../../../contexts/github';
@@ -98,20 +99,36 @@ export default function ProposeButton(
             + `-${github.getUser().username}`
             + `-${new Date().toISOString()}`
         );
-        await github.createCommit(
-            getMarkdown(),
-            '[docusaurus-theme-editor] Partial save.',
-        );
+        try {
+            await github.createCommit(
+                getMarkdown(),
+                '[docusaurus-theme-editor] Partial save.',
+            );
+        } catch (error) {
+            if (error instanceof RequestError
+                && error.status === 404
+                && error.message.includes('No commit found for the ref')
+            ) {
+                snackbar.sendWarningAlert(
+                    `Failed to propose changes. The local version is unchanged `
+                    + `from the site version.`
+                );
+                toggleConfirmation();
+                return;
+            } else {
+                throw error;
+            }
+        }
         const pullUrl = await github.createPull(title);
+        snackbar.sendSuccessAlert(
+            `Successfully proposed changes for "${title}".`
+        );
 
         // TODO(dnguyen0304): Add validation for title text field.
         // TODO(dnguyen0304): Investigate adding delay to wait for the
         // transition animation.
         toggleConfirmation();
         onClick();
-        snackbar.sendSuccessAlert(
-            `Successfully proposed changes for "${title}": ${pullUrl}.`
-        );
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
