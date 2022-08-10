@@ -97,7 +97,7 @@ export default function ProposeButton(
         await github.createBranch(
             `docusaurus-theme-editor`
             + `-${github.getUser().username}`
-            + `-${new Date().toISOString()}`
+            + `-${Math.floor(Date.now() / 1000)}`
         );
         try {
             await github.createCommit(
