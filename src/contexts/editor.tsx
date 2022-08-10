@@ -1,20 +1,45 @@
 import * as React from 'react';
 import { ReactContextError } from './errors';
 
+// TODO(dnguyen0304): Add lastUpdatedAt.
+interface EditorTab {
+    pullRequestUrl: string;
+}
+
 // aliases: table of contents
 interface ContextValue {
     readonly editorIsOpen: boolean;
+    readonly activeTab: number | undefined;
+    readonly tabs: EditorTab[];
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    readonly setActiveTab: React.Dispatch<React.SetStateAction<number | undefined>>
+    readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
 function useContextValue(): ContextValue {
     const [editorIsOpen, setEditorIsOpen] = React.useState<boolean>(false);
+    const [activeTab, setActiveTab] = React.useState<number | undefined>();
+    const [tabs, setTabs] = React.useState<EditorTab[]>([]);
 
     return React.useMemo(
-        () => ({ editorIsOpen, setEditorIsOpen }),
-        [editorIsOpen, setEditorIsOpen],
+        () => ({
+            editorIsOpen,
+            activeTab,
+            tabs,
+            setEditorIsOpen,
+            setActiveTab,
+            setTabs,
+        }),
+        [
+            editorIsOpen,
+            activeTab,
+            tabs,
+            setEditorIsOpen,
+            setActiveTab,
+            setTabs,
+        ],
     );
 }
 
