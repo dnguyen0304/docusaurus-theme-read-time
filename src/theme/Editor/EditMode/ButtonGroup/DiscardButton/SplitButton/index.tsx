@@ -70,7 +70,7 @@ export default function SplitButton(
                     // included in .MuiDialogActions-root>:not(:first-of-type).
                     ml: '.5rem',
                 }}
-                variant='contained'
+                variant='outlined'
             >
                 <Button onClick={handleClick}>
                     {MENU_ITEM_OPTIONS[menuItemIndex]}
