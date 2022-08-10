@@ -17,14 +17,13 @@ export const EditButtonKeyBinding: KeyBinding = {
 
 export default function EditButton({ onClick }: Props): JSX.Element {
     const {
-        activeTab,
+        tabs,
         addTab,
-        setActiveTab,
     } = useEditor();
 
     const handleClick = () => {
-        if (!activeTab) {
-            setActiveTab(addTab());
+        if (tabs.length === 0) {
+            addTab();
         }
         onClick();
     };
@@ -38,7 +37,7 @@ export default function EditButton({ onClick }: Props): JSX.Element {
             keydown: false,
             keyup: true,
         },
-        [activeTab],
+        [tabs],
     );
 
     return (
