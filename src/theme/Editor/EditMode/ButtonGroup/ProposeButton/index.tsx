@@ -10,7 +10,6 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import { initializeAuth } from '../../../../services/Github';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import Cookies from 'universal-cookie';
@@ -18,6 +17,7 @@ import { useGithub } from '../../../../../contexts/github';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
+import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
@@ -125,12 +125,8 @@ export default function ProposeButton({ onClick }: Props): JSX.Element {
                 open={confirmationIsOpen}
                 keepMounted
             >
-                <StyledBox
-                    autoComplete='off'
-                    component='form'
-                    onSubmit={handleClick}
-                    noValidate
-                >
+                {/* TODO(dnguyen0304): Merge into StyledDialog. */}
+                <StyledBox>
                     <DialogTitle>Propose Changes</DialogTitle>
                     <DialogContent>
                         <Stack spacing={2}>
@@ -160,7 +156,7 @@ export default function ProposeButton({ onClick }: Props): JSX.Element {
                     <DialogActions>
                         <Button onClick={toggleConfirmation}>Go Back</Button>
                         <Button
-                            type='submit'
+                            onClick={handleClick}
                             variant='outlined'
                         >
                             Propose
