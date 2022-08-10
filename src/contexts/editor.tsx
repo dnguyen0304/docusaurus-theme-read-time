@@ -11,11 +11,11 @@ interface EditorTab {
 // aliases: table of contents
 interface ContextValue {
     readonly editorIsOpen: boolean;
-    readonly activeTab: EditorTab | undefined;
+    readonly activeTabId: number;
     readonly tabs: EditorTab[];
     readonly addTab: () => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    readonly setActiveTab: React.Dispatch<React.SetStateAction<EditorTab | undefined>>
+    readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
 };
 
@@ -23,7 +23,7 @@ const Context = React.createContext<ContextValue | undefined>(undefined);
 
 function useContextValue(): ContextValue {
     const [editorIsOpen, setEditorIsOpen] = React.useState<boolean>(false);
-    const [activeTab, setActiveTab] = React.useState<EditorTab | undefined>();
+    const [activeTabId, setActiveTabId] = React.useState<number>(0);
     const [tabs, setTabs] = React.useState<EditorTab[]>([]);
     const [tabIdCounter, setTabIdCounter] = React.useState<number>(0);
 
@@ -63,20 +63,20 @@ function useContextValue(): ContextValue {
     return React.useMemo(
         () => ({
             editorIsOpen,
-            activeTab,
+            activeTabId,
             tabs,
             addTab,
             setEditorIsOpen,
-            setActiveTab,
+            setActiveTabId,
             setTabs,
         }),
         [
             editorIsOpen,
-            activeTab,
+            activeTabId,
             tabs,
             addTab,
             setEditorIsOpen,
-            setActiveTab,
+            setActiveTabId,
             setTabs,
         ],
     );
