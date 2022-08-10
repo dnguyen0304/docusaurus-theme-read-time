@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 import { EditorState } from 'draft-js';
 import * as React from 'react';
-import { useActiveEditorTab } from '../../../../contexts/activeEditorTab';
+import { useEditor } from '../../../../contexts/editor';
 import { useSite } from '../../../../contexts/site';
 import { getLocalStorageKey } from '../../utils';
 import DiscardButton from './DiscardButton';
@@ -25,9 +25,12 @@ export default function EditModeButtonGroup(
     }: Props
 ): JSX.Element {
     const {
-        pullRequestUrl,
-        setPullRequestUrl,
-    } = useActiveEditorTab();
+        activeTab: {
+            // TODO(dnguyen0304): Fix type error.
+            pullRequestUrl,
+            setPullRequestUrl,
+        },
+    } = useEditor();
     const siteContext = useSite();
 
     const discardOnSubmit = () => {
