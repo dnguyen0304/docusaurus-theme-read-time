@@ -40,6 +40,7 @@ export default function Snackbar(): SnackbarType {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+                // TODO(dnguyen0304): Extract as a configuration option.
                 autoHideDuration={10 * 1000}  // 10 seconds in milliseconds
                 onClose={close}
                 open={isOpen}
