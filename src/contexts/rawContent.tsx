@@ -23,17 +23,17 @@ function useContextValue(content: RawContent): ContextValue {
 }
 
 interface Props {
-    readonly content: RawContent;
+    readonly rawContent: RawContent;
     readonly children: React.ReactNode;
 };
 
 function RawContentProvider(
     {
-        content,
+        rawContent,
         children,
     }: Props
 ): JSX.Element {
-    const value = useContextValue(content);
+    const value = useContextValue(rawContent);
 
     return (
         <Context.Provider value={value}>

@@ -10,7 +10,7 @@ export default function DocPageWrapper(props: Props): JSX.Element {
     const { rawContent } = props;
 
     return (
-        <RawContentProvider content={rawContent}>
+        <RawContentProvider rawContent={rawContent}>
             <DocPage {...props} />
         </RawContentProvider>
     );
