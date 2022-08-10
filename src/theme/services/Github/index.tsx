@@ -225,7 +225,6 @@ export default function Github(
 
     let defaultBranch = '';
     let branchName = '';
-    let branchCommitSha = '';
     let commitExists = false;
 
     const getDefaultBranch = async (): Promise<string> => {
@@ -281,7 +280,6 @@ export default function Github(
         }
 
         branchName = name;
-        branchCommitSha = sha;
     }
 
     const createCommit = async (content: string, message: string) => {
