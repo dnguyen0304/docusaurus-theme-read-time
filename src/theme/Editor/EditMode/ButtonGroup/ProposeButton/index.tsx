@@ -120,6 +120,7 @@ export default function ProposeButton(
             }
         }
         const pullUrl = await github.createPull(title);
+        window.open(pullUrl, '_blank')!.focus();
         snackbar.sendSuccessAlert(
             `Successfully proposed changes for "${title}".`
         );
