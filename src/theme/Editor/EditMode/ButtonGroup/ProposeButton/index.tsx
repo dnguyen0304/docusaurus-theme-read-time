@@ -92,6 +92,9 @@ export default function ProposeButton(
     };
 
     const handleClick = async () => {
+        setIsWorking(true);
+        const { setPullRequestUrl } = tabs[activeTabId];
+
         // TODO(dnguyen0304): Fix duplicated auth code.
         const {
             authRedirectUrl,
@@ -109,9 +112,6 @@ export default function ProposeButton(
         if (!github) {
             throw new Error('expected Github service to be defined');
         }
-
-        setIsWorking(true);
-        const { setPullRequestUrl } = tabs[activeTabId];
 
         await github.createBranch(
             `docusaurus-theme-editor`
