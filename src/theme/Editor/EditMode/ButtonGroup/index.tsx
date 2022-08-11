@@ -44,8 +44,8 @@ export default function EditModeButtonGroup(
                     editorState={editorState}
                 />
                 <ProposeButton
+                    closeEditor={closeEditor}
                     getMarkdown={getMarkdown}
-                    onClick={closeEditor}
                 />
             </Stack>
         </div>

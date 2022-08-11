@@ -28,8 +28,8 @@ const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 const BUTTON_SUBMIT_BORDER_WIDTH_PIXELS: number = 1;
 
 interface Props {
+    readonly closeEditor: () => void;
     readonly getMarkdown: () => string;
-    readonly onClick: () => void;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -58,8 +58,8 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 export default function ProposeButton(
     {
+        closeEditor,
         getMarkdown,
-        onClick,
     }: Props
 ): JSX.Element {
     const {
@@ -142,16 +142,17 @@ export default function ProposeButton(
         const pullUrl = await github.createPull(title);
         setPullRequestUrl(pullUrl);
         window.open(pullUrl, '_blank')!.focus();
-        snackbar.sendSuccessAlert(
-            `Successfully proposed changes for "${title}".`
-        );
+
+        setIsWorking(false);
 
         // TODO(dnguyen0304): Add validation for title text field.
         // TODO(dnguyen0304): Investigate adding delay to wait for the
         // transition animation.
-        setIsWorking(false);
+        snackbar.sendSuccessAlert(
+            `Successfully proposed changes for "${title}".`
+        );
         toggleConfirmation();
-        onClick();
+        closeEditor();
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
