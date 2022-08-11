@@ -22,7 +22,8 @@ export default function LoadingButton(
     }: Props
 ): JSX.Element {
     const [measure, measureRef] = useRefMeasure<HTMLAnchorElement>(
-        clientRect => clientRect.width
+        clientRect => clientRect.width,
+        [children],
     );
     const [padding, setPadding] = React.useState<number>(0);
 
@@ -49,7 +50,7 @@ export default function LoadingButton(
                 </Button>
             );
         }
-    }
+    };
 
     React.useEffect(() => {
         if (measure) {
