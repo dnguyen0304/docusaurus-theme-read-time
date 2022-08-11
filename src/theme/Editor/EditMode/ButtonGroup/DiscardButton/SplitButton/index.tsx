@@ -15,6 +15,8 @@ import { useSite } from '../../../../../../contexts/site';
 import { useSnackbar } from '../../../../../../contexts/snackbar';
 import { initializeAuth } from '../../../../../services/Github';
 
+// TODO(dnguyen0304): Add a tooltip to explain the difference between discarding
+// and closing.
 const MENU_ITEM_OPTION_DISCARD: string = 'Discard';
 const MENU_ITEM_OPTION_CLOSE: string = 'Close';
 const MENU_ITEM_KEY_PREFIX: string = 'menu-item'
