@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
+import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useEditor } from '../../../../../../contexts/editor';
 import { useGithub } from '../../../../../../contexts/github';
@@ -31,6 +32,13 @@ interface Props {
     readonly resetMarkdown: () => void;
     readonly toggleConfirmation: () => void;
 }
+
+const StyledPaper = styled(Paper)({
+    '&&.MuiPaper-root': {
+        borderRadius: '5px',
+        padding: '0 0.5rem',
+    },
+});
 
 // TODO(dnguyen0304): Add danger style.
 export default function SplitButton(
@@ -203,7 +211,7 @@ export default function SplitButton(
                             transformOrigin: 'center bottom',
                         }}
                     >
-                        <Paper>
+                        <StyledPaper>
                             <ClickAwayListener onClickAway={handleMenuItemClose}>
                                 <MenuList autoFocusItem>
                                     {MENU_ITEM_OPTIONS.map((option, index) => (
@@ -221,7 +229,7 @@ export default function SplitButton(
                                     ))}
                                 </MenuList>
                             </ClickAwayListener>
-                        </Paper>
+                        </StyledPaper>
                     </Grow>
                 )}
             </Popper>
