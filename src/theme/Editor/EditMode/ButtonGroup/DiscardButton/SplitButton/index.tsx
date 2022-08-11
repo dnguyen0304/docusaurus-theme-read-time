@@ -14,10 +14,12 @@ import { useEditor } from '../../../../../../contexts/editor';
 // import { useSite } from '../../../../../../contexts/site';
 // import { initializeAuth } from '../../../../../services/Github';
 
+const MENU_ITEM_OPTION_DISCARD: string = 'Discard';
+const MENU_ITEM_OPTION_CLOSE: string = 'Close';
 const MENU_ITEM_KEY_PREFIX: string = 'menu-item'
 const MENU_ITEM_OPTIONS: string[] = [
-    'Discard',
-    'Close',
+    MENU_ITEM_OPTION_DISCARD,
+    MENU_ITEM_OPTION_CLOSE,
 ];
 
 interface Props {
@@ -46,10 +48,10 @@ export default function SplitButton({ handleSubmit }: Props): JSX.Element {
     } = tabs[activeTabId];
 
     const handleClick = async () => {
-        if (MENU_ITEM_OPTIONS[menuItemIndex].includes('Discard')) {
+        if (MENU_ITEM_OPTIONS[menuItemIndex].includes(MENU_ITEM_OPTION_DISCARD)) {
             handleSubmit();
         }
-        // if (MENU_ITEM_OPTIONS[menuItemIndex].includes('Close')) {
+        // if (MENU_ITEM_OPTIONS[menuItemIndex].includes(MENU_ITEM_OPTION_CLOSE)) {
         //     // TODO(dnguyen0304): Fix duplicated auth code.
         //     const {
         //         authRedirectUrl,
@@ -97,8 +99,8 @@ export default function SplitButton({ handleSubmit }: Props): JSX.Element {
     const getText = (text: string): string => {
         // TODO(dnguyen0304): Investigate if there is a use case for discarding
         // local changes without closing the remote pull.
-        if (text.includes('Discard') && pullRequestUrl) {
-            return 'Discard and Close';
+        if (text.includes(MENU_ITEM_OPTION_DISCARD) && pullRequestUrl) {
+            return `${MENU_ITEM_OPTION_DISCARD} and ${MENU_ITEM_OPTION_CLOSE}`;
         }
         return text;
     };
@@ -155,7 +157,10 @@ export default function SplitButton({ handleSubmit }: Props): JSX.Element {
                                     {MENU_ITEM_OPTIONS.map((option, index) => (
                                         <MenuItem
                                             key={`${MENU_ITEM_KEY_PREFIX}-${option}`}
-                                            disabled={option.includes('Close') && !pullRequestUrl}
+                                            disabled={
+                                                option.includes(MENU_ITEM_OPTION_CLOSE)
+                                                && !pullRequestUrl
+                                            }
                                             onClick={event => handleMenuItemClick(event, index)}
                                             selected={index === menuItemIndex}
                                         >
