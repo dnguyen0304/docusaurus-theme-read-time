@@ -25,11 +25,6 @@ export default function EditModeButtonGroup(
 ): JSX.Element {
     const siteContext = useSite();
 
-    const discardOnSubmit = () => {
-        resetMarkdown();
-        closeEditor();
-    };
-
     const saveOnClick = () => {
         localStorage.setItem(getLocalStorageKey(siteContext), getMarkdown());
     };
@@ -40,7 +35,10 @@ export default function EditModeButtonGroup(
                 direction='row'
                 spacing={2}
             >
-                <DiscardButton onSubmit={discardOnSubmit} />
+                <DiscardButton
+                    closeEditor={closeEditor}
+                    resetMarkdown={resetMarkdown}
+                />
                 <SaveButton
                     onClick={saveOnClick}
                     editorState={editorState}

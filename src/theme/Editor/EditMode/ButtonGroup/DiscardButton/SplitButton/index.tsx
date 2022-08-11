@@ -1,4 +1,4 @@
-// import { useLocation } from '@docusaurus/router';
+import { useLocation } from '@docusaurus/router';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -10,9 +10,10 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
 import { useEditor } from '../../../../../../contexts/editor';
-// import { useGithub } from '../../../../../../contexts/github';
-// import { useSite } from '../../../../../../contexts/site';
-// import { initializeAuth } from '../../../../../services/Github';
+import { useGithub } from '../../../../../../contexts/github';
+import { useSite } from '../../../../../../contexts/site';
+import { useSnackbar } from '../../../../../../contexts/snackbar';
+import { initializeAuth } from '../../../../../services/Github';
 
 const MENU_ITEM_OPTION_DISCARD: string = 'Discard';
 const MENU_ITEM_OPTION_CLOSE: string = 'Close';
@@ -23,14 +24,23 @@ const MENU_ITEM_OPTIONS: string[] = [
 ];
 
 interface Props {
-    readonly handleSubmit: () => void;
+    readonly closeEditor: () => void;
+    readonly resetMarkdown: () => void;
+    readonly toggleConfirmation: () => void;
 }
 
 // TODO(dnguyen0304): Add danger style.
-export default function SplitButton({ handleSubmit }: Props): JSX.Element {
-    // const { pathname: currentPath } = useLocation();
-    // const githubContext = useGithub();
-    // const siteContext = useSite();
+export default function SplitButton(
+    {
+        closeEditor,
+        resetMarkdown,
+        toggleConfirmation,
+    }: Props
+): JSX.Element {
+    const { snackbar } = useSnackbar();
+    const { pathname: currentPath } = useLocation();
+    const githubContext = useGithub();
+    const siteContext = useSite();
     const {
         activeTabId,
         tabs,
@@ -39,40 +49,59 @@ export default function SplitButton({ handleSubmit }: Props): JSX.Element {
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const [isMenuItemOpen, setIsMenuItemOpen] = React.useState<boolean>(false);
     const [menuItemIndex, setMenuItemIndex] = React.useState<number>(0);
-    // const [externalRedirect, setExternalRedirect] = React.useState<string>('');
+    const [externalRedirect, setExternalRedirect] = React.useState<string>('');
 
     // TODO(dnguyen0304): Remove duplicated active tab code.
     const {
         pullRequestUrl,
-        // setPullRequestUrl,
+        setPullRequestUrl,
     } = tabs[activeTabId];
 
     const handleClick = async () => {
-        if (MENU_ITEM_OPTIONS[menuItemIndex].includes(MENU_ITEM_OPTION_DISCARD)) {
-            handleSubmit();
+        const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
+
+        if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
+            resetMarkdown();
         }
-        // if (MENU_ITEM_OPTIONS[menuItemIndex].includes(MENU_ITEM_OPTION_CLOSE)) {
-        //     // TODO(dnguyen0304): Fix duplicated auth code.
-        //     const {
-        //         authRedirectUrl,
-        //         github,
-        //     } = await initializeAuth(
-        //         githubContext,
-        //         siteContext,
-        //         currentPath,
-        //     );
+        if (text.includes(MENU_ITEM_OPTION_CLOSE)) {
+            // TODO(dnguyen0304): Fix duplicated auth code.
+            const {
+                authRedirectUrl,
+                github,
+            } = await initializeAuth(
+                githubContext,
+                siteContext,
+                currentPath,
+            );
 
-        //     if (authRedirectUrl) {
-        //         setExternalRedirect(authRedirectUrl);
-        //         return;
-        //     }
-        //     if (!github) {
-        //         throw new Error('expected Github service to be defined');
-        //     }
+            if (authRedirectUrl) {
+                setExternalRedirect(authRedirectUrl);
+                return;
+            }
+            if (!github) {
+                throw new Error('expected Github service to be defined');
+            }
 
-        //     github.closePull(pullRequestUrl);
-        //     setPullRequestUrl('');
-        // }
+            await github.closePull(pullRequestUrl);
+            setPullRequestUrl('');
+        }
+
+        let message: string = '';
+
+        if (text.includes(MENU_ITEM_OPTION_DISCARD)
+            && text.includes(MENU_ITEM_OPTION_CLOSE)
+        ) {
+            message =
+                'Successfully discarded changes and closed the pull request.';
+        } else if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
+            message = 'Successfully discarded changes.';
+        } else if (text.includes(MENU_ITEM_OPTION_CLOSE)) {
+            message = 'Successfully closed the pull request.';
+        }
+
+        snackbar.sendSuccessAlert(message);
+        toggleConfirmation();
+        closeEditor();
     };
 
     const toggleMenuItem = () => {
@@ -105,11 +134,11 @@ export default function SplitButton({ handleSubmit }: Props): JSX.Element {
         return text;
     };
 
-    // React.useEffect(() => {
-    //     if (externalRedirect) {
-    //         window.location.replace(externalRedirect);
-    //     }
-    // }, [externalRedirect]);
+    React.useEffect(() => {
+        if (externalRedirect) {
+            window.location.replace(externalRedirect);
+        }
+    }, [externalRedirect]);
 
     return (
         <React.Fragment>

@@ -8,14 +8,14 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import StyledDialog from '../Dialog';
 import SplitButton from './SplitButton';
 
 interface Props {
-    readonly onSubmit: () => void;
+    readonly closeEditor: () => void;
+    readonly resetMarkdown: () => void;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -23,20 +23,17 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '^⌥D',
 };
 
-export default function DiscardButton({ onSubmit }: Props): JSX.Element {
-    const snackbar = useSnackbar().snackbar;
-
+export default function DiscardButton(
+    {
+        closeEditor,
+        resetMarkdown,
+    }: Props
+): JSX.Element {
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
-    };
-
-    const handleSubmit = () => {
-        toggleConfirmation();
-        onSubmit();
-        snackbar.sendSuccessAlert('Successfully discarded changes.');
     };
 
     useHotkeys(
@@ -76,7 +73,11 @@ export default function DiscardButton({ onSubmit }: Props): JSX.Element {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={toggleConfirmation}>Go Back</Button>
-                    <SplitButton handleSubmit={handleSubmit} />
+                    <SplitButton
+                        closeEditor={closeEditor}
+                        resetMarkdown={resetMarkdown}
+                        toggleConfirmation={toggleConfirmation}
+                    />
                 </DialogActions>
             </StyledDialog>
         </React.Fragment>
