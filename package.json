@@ -1,5 +1,5 @@
 {
-    "name": "docusaurus-theme-editor",
+    "name": "@docupotamus/docusaurus-theme-editor",
     "version": "0.1.0",
     "description": "Docusaurus live editor UI component.",
     "main": "lib/index.js",
