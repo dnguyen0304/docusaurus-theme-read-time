@@ -14,6 +14,7 @@ import { useGithub } from '../../../../../../contexts/github';
 import { useSite } from '../../../../../../contexts/site';
 import { useSnackbar } from '../../../../../../contexts/snackbar';
 import { initializeAuth } from '../../../../../services/Github';
+import LoadingButton from '../../LoadingButton';
 
 // TODO(dnguyen0304): Add a tooltip to explain the difference between discarding
 // and closing.
@@ -51,6 +52,7 @@ export default function SplitButton(
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const [isMenuItemOpen, setIsMenuItemOpen] = React.useState<boolean>(false);
     const [menuItemIndex, setMenuItemIndex] = React.useState<number>(0);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
 
     // TODO(dnguyen0304): Remove duplicated active tab code.
@@ -66,6 +68,8 @@ export default function SplitButton(
             resetMarkdown();
         }
         if (text.includes(MENU_ITEM_OPTION_CLOSE)) {
+            setIsLoading(true);
+
             // TODO(dnguyen0304): Fix duplicated auth code.
             const {
                 authRedirectUrl,
@@ -86,6 +90,7 @@ export default function SplitButton(
 
             await github.closePull(pullRequestUrl);
             setPullRequestUrl('');
+            setIsLoading(false);
         }
 
         let message: string = '';
@@ -153,9 +158,13 @@ export default function SplitButton(
                 }}
                 variant='outlined'
             >
-                <Button onClick={handleClick}>
+                <LoadingButton
+                    onClick={handleClick}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                >
                     {getText(MENU_ITEM_OPTIONS[menuItemIndex])}
-                </Button>
+                </LoadingButton>
                 <Button
                     onClick={toggleMenuItem}
                     size='small'
