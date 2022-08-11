@@ -12,7 +12,8 @@ export const getLocalStorageKey = (
 }
 
 export const useRefMeasure = <T extends HTMLElement>(
-    callback: (clientRect: DOMRect) => number
+    callback: (clientRect: DOMRect) => number,
+    deps: ReadonlyArray<unknown> = [],
 ) => {
     const [measure, setMeasure] = React.useState<number | undefined>();
 
@@ -20,7 +21,7 @@ export const useRefMeasure = <T extends HTMLElement>(
         if (node !== null) {
             setMeasure(callback(node.getBoundingClientRect()));
         }
-    }, []);
+    }, deps);
 
     return [measure, measureRef];
 }
