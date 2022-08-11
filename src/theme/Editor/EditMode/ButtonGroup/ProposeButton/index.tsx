@@ -2,7 +2,6 @@ import { useLocation } from '@docusaurus/router';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -21,11 +20,10 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
-import { useRefMeasure } from '../../../utils';
 import StyledDialog from '../Dialog';
+import LoadingButton from '../LoadingButton';
 
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
-const BUTTON_SUBMIT_BORDER_WIDTH_PIXELS: number = 1;
 
 interface Props {
     readonly closeEditor: () => void;
@@ -79,20 +77,14 @@ export default function ProposeButton(
             : ''
     );
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
-    const [measure, measureRef] = useRefMeasure<HTMLButtonElement>(
-        clientRect => clientRect.width
-    );
-    const workingIconWidthRef = React.useRef<number>(24);
-    const [workingButtonPadding, setWorkingButtonPadding] =
-        React.useState<number>(0);
-    const [isWorking, setIsWorking] = React.useState<boolean>(false);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
     };
 
     const handleClick = async () => {
-        setIsWorking(true);
+        setIsLoading(true);
         const { setPullRequestUrl } = tabs[activeTabId];
 
         // TODO(dnguyen0304): Fix duplicated auth code.
@@ -132,7 +124,7 @@ export default function ProposeButton(
                     `Failed to propose changes. The local version is unchanged `
                     + `from the site version.`
                 );
-                setIsWorking(false);
+                setIsLoading(false);
                 toggleConfirmation();
                 return;
             } else {
@@ -143,7 +135,7 @@ export default function ProposeButton(
         setPullRequestUrl(pullUrl);
         window.open(pullUrl, '_blank')!.focus();
 
-        setIsWorking(false);
+        setIsLoading(false);
 
         // TODO(dnguyen0304): Add validation for title text field.
         // TODO(dnguyen0304): Investigate adding delay to wait for the
@@ -161,32 +153,6 @@ export default function ProposeButton(
         }
     };
 
-    const getSubmitButton = (): JSX.Element => {
-        if (isWorking) {
-            return (
-                <Button
-                    onClick={handleClick}
-                    sx={{
-                        px: `${workingButtonPadding}px`,
-                    }}
-                    variant='outlined'
-                >
-                    <CircularProgress size={workingIconWidthRef.current} />
-                </Button>
-            );
-        } else {
-            return (
-                <Button
-                    ref={measureRef}
-                    onClick={handleClick}
-                    variant='outlined'
-                >
-                    Propose
-                </Button>
-            );
-        }
-    };
-
     useHotkeys(
         KeyBinding.key,
         toggleConfirmation,
@@ -197,17 +163,6 @@ export default function ProposeButton(
             window.location.replace(externalRedirect);
         }
     }, [externalRedirect]);
-
-    React.useEffect(() => {
-        if (measure) {
-            // TODO(dnguyen0304): Fix type error.
-            setWorkingButtonPadding(
-                (measure
-                    - workingIconWidthRef.current
-                    - 2 * BUTTON_SUBMIT_BORDER_WIDTH_PIXELS) / 2
-            );
-        }
-    }, [measure])
 
     return (
         <React.Fragment>
@@ -261,7 +216,14 @@ export default function ProposeButton(
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={toggleConfirmation}>Go Back</Button>
-                        {getSubmitButton()}
+                        <LoadingButton
+                            onClick={handleClick}
+                            isLoading={isLoading}
+                            setIsLoading={setIsLoading}
+                            variant='outlined'
+                        >
+                            Propose
+                        </LoadingButton>
                     </DialogActions>
                 </StyledBox>
             </StyledDialog>
