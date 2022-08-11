@@ -121,7 +121,7 @@ export default function ProposeButton(
         try {
             await github.createCommit(
                 getMarkdown(),
-                '[docusaurus-theme-editor] Partial save.',
+                '[Auto-generated] [docusaurus-theme-editor] Partial save.',
             );
         } catch (error) {
             if (error instanceof RequestError
