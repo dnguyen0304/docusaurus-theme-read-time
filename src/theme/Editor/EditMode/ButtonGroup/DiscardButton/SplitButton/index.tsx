@@ -175,6 +175,18 @@ export default function SplitButton(
             <Popper
                 anchorEl={anchorRef.current}
                 disablePortal
+                // See:
+                // https://mui.com/material-ui/react-popper/#scroll-playground
+                // https://popper.js.org/docs/v2/modifiers/offset/
+                modifiers={[
+                    {
+                        name: 'offset',
+                        enabled: true,
+                        options: {
+                            offset: [0, 10],
+                        },
+                    },
+                ]}
                 open={isMenuItemOpen}
                 placement='top'
                 role={undefined}
