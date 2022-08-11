@@ -194,6 +194,13 @@ export default function SplitButton(
                             offset: [0, 10],
                         },
                     },
+                    {
+                        name: 'preventOverflow',
+                        enabled: true,
+                        options: {
+                            padding: 12,
+                        },
+                    },
                 ]}
                 open={isMenuItemOpen}
                 placement='top'
