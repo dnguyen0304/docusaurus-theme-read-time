@@ -1,3 +1,4 @@
+// import { useLocation } from '@docusaurus/router';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -8,36 +9,68 @@ import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
+import { useEditor } from '../../../../../../contexts/editor';
+// import { useGithub } from '../../../../../../contexts/github';
+// import { useSite } from '../../../../../../contexts/site';
+// import { initializeAuth } from '../../../../../services/Github';
 
 const MENU_ITEM_KEY_PREFIX: string = 'menu-item'
 const MENU_ITEM_OPTIONS: string[] = [
     'Discard',
-    'Discard and Close',
     'Close',
 ];
 
 interface Props {
     readonly handleSubmit: () => void;
-    readonly pullRequestUrl: string;
 }
 
 // TODO(dnguyen0304): Add danger style.
-export default function SplitButton(
-    {
-        handleSubmit,
-        pullRequestUrl,
-    }: Props
-): JSX.Element {
+export default function SplitButton({ handleSubmit }: Props): JSX.Element {
+    // const { pathname: currentPath } = useLocation();
+    // const githubContext = useGithub();
+    // const siteContext = useSite();
+    const {
+        activeTabId,
+        tabs,
+    } = useEditor();
+
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const [isMenuItemOpen, setIsMenuItemOpen] = React.useState<boolean>(false);
     const [menuItemIndex, setMenuItemIndex] = React.useState<number>(0);
+    // const [externalRedirect, setExternalRedirect] = React.useState<string>('');
 
-    const handleClick = () => {
-        if (MENU_ITEM_OPTIONS[menuItemIndex] === 'Discard') {
+    // TODO(dnguyen0304): Remove duplicated active tab code.
+    const {
+        pullRequestUrl,
+        // setPullRequestUrl,
+    } = tabs[activeTabId];
+
+    const handleClick = async () => {
+        if (MENU_ITEM_OPTIONS[menuItemIndex].includes('Discard')) {
             handleSubmit();
-        } else {
-            console.log(`pressed ${MENU_ITEM_OPTIONS[menuItemIndex]}`);
         }
+        // if (MENU_ITEM_OPTIONS[menuItemIndex].includes('Close')) {
+        //     // TODO(dnguyen0304): Fix duplicated auth code.
+        //     const {
+        //         authRedirectUrl,
+        //         github,
+        //     } = await initializeAuth(
+        //         githubContext,
+        //         siteContext,
+        //         currentPath,
+        //     );
+
+        //     if (authRedirectUrl) {
+        //         setExternalRedirect(authRedirectUrl);
+        //         return;
+        //     }
+        //     if (!github) {
+        //         throw new Error('expected Github service to be defined');
+        //     }
+
+        //     github.closePull(pullRequestUrl);
+        //     setPullRequestUrl('');
+        // }
     };
 
     const toggleMenuItem = () => {
@@ -61,6 +94,21 @@ export default function SplitButton(
         setIsMenuItemOpen(false);
     };
 
+    const getText = (text: string): string => {
+        // TODO(dnguyen0304): Investigate if there is a use case for discarding
+        // local changes without closing the remote pull.
+        if (text.includes('Discard') && pullRequestUrl) {
+            return 'Discard and Close';
+        }
+        return text;
+    };
+
+    // React.useEffect(() => {
+    //     if (externalRedirect) {
+    //         window.location.replace(externalRedirect);
+    //     }
+    // }, [externalRedirect]);
+
     return (
         <React.Fragment>
             <ButtonGroup
@@ -73,7 +121,7 @@ export default function SplitButton(
                 variant='outlined'
             >
                 <Button onClick={handleClick}>
-                    {MENU_ITEM_OPTIONS[menuItemIndex]}
+                    {getText(MENU_ITEM_OPTIONS[menuItemIndex])}
                 </Button>
                 <Button
                     onClick={toggleMenuItem}
@@ -111,7 +159,7 @@ export default function SplitButton(
                                             onClick={event => handleMenuItemClick(event, index)}
                                             selected={index === menuItemIndex}
                                         >
-                                            {option}
+                                            {getText(option)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>
