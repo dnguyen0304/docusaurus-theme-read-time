@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE_KEY_TITLE } from '../../../../../constants';
 import { useLocation } from '@docusaurus/router';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Button from '@mui/material/Button';
@@ -71,6 +72,8 @@ export default function SplitButton(
 
     const handleClick = async () => {
         const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
+
+        localStorage.removeItem(LOCAL_STORAGE_KEY_TITLE);
 
         if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
             resetMarkdown();
