@@ -14,6 +14,9 @@ export default function themeEditor(): Plugin<void> {
                 path: GITHUB_AUTHORIZATION_CALLBACK_PATH,
                 component: '@theme/Editor/Callback',
                 exact: true,
+                // TODO(dnguyen0304): See the associated comment for
+                // GITHUB_AUTHORIZATION_CALLBACK_PATH.
+                strict: true,
             });
         }
     };
