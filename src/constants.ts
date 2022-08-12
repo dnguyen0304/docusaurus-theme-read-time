@@ -8,8 +8,11 @@ const ENDPOINT_EXCHANGE_CODE_TO_TOKEN: string = 'https://z39iitznuj.execute-api.
 // GitHub > Developer Settings > OAuth Apps > "Authorization callback URL"
 const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback/';
 
+const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
+
 export {
     DOCUSAURUS_ALIASED_SITE_PATH_PREFIX,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH,
+    LOCAL_STORAGE_KEY_TITLE,
 };
