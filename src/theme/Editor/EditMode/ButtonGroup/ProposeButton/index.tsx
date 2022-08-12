@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { RequestError } from '@octokit/request-error';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { LOCAL_STORAGE_KEY_TITLE } from '../../../../../constants';
 import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
 import { useSite } from '../../../../../contexts/site';
@@ -22,8 +23,6 @@ import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
-
-const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 
 interface Props {
     readonly closeEditor: () => void;
