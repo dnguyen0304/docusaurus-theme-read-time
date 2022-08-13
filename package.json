@@ -1,6 +1,6 @@
 {
     "name": "@docupotamus/docusaurus-theme-editor",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Docusaurus live editor UI component.",
     "main": "lib/index.js",
     "types": "src/docusaurus-theme-editor.d.ts",
