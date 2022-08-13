@@ -42,7 +42,7 @@ const GITHUB_AUTHORIZATION_CODE_URL: string =
     'https://github.com/login/oauth/authorize';
 const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
 const GITHUB_REF_PREFIX = 'refs/heads/';
-const COOKIE_SESSION_ID_KEY: string = 'sessionid';
+const COOKIE_SESSION_ID_KEY: string = 'session_id';
 
 export const initializeAuth = async (
     githubContext: GithubContextValue,
