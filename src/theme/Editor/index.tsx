@@ -43,26 +43,30 @@ export default function Editor(): JSX.Element {
     // https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
     const getMarkdown = (): string => {
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-        const processed = blocks.map(
+        const processed = blocks.map(block =>
             // If the block is empty, return a newline. Otherwise, return the
             // block text.
-            block => (!block.text.trim() && '\n') || block.text
+            (!block.text.trim() && '\n') || block.text
         );
 
         let rawMarkdown = '';
 
         for (let i = 0; i < processed.length; i++) {
-            const block = processed[i];
+            const blockText = processed[i];
 
             // Handle the last block.
             if (i === processed.length - 1) {
-                rawMarkdown += block;
+                if (blockText === '\n') {
+                    // Skip this block to avoid appending an extra newline.
+                    continue;
+                }
+                rawMarkdown += blockText;
             } else {
                 // Handle blocks that contain only a newline character.
-                if (block === '\n') {
-                    rawMarkdown += block;
+                if (blockText === '\n') {
+                    rawMarkdown += blockText;
                 } else {
-                    rawMarkdown += block + '\n';
+                    rawMarkdown += blockText + '\n';
                 }
             }
         }
