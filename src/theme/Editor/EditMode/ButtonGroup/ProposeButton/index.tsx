@@ -153,6 +153,11 @@ export default function ProposeButton(
         closeEditor();
     };
 
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.target.value);
+        localStorage.setItem(LOCAL_STORAGE_KEY_TITLE, event.target.value);
+    };
+
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
         // TODO(dnguyen0304): Add command+enter keyboard shortcut.
         if (event.key === 'Enter') {
@@ -209,13 +214,7 @@ export default function ProposeButton(
                             <StyledTextField
                                 helperText={<>Press <b>↩︎ Enter</b> to send</>}
                                 label='Title'
-                                onChange={(e) => {
-                                    setTitle(e.target.value)
-                                    localStorage.setItem(
-                                        LOCAL_STORAGE_KEY_TITLE,
-                                        e.target.value,
-                                    );
-                                }}
+                                onChange={handleTitleChange}
                                 onKeyUp={handleTitleKeyUp}
                                 value={title}
                             />
