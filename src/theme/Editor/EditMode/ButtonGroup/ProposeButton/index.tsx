@@ -45,12 +45,15 @@ const StyledBox = styled(Box)({
 });
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
+    '& label.MuiInputLabel-root': {
+        fontStyle: 'italic',
+    },
     '& .MuiOutlinedInput-root': {
         '&:hover fieldset': {
             borderColor: theme.palette.primary.main,
             borderWidth: '2px',
         },
-    }
+    },
 }));
 
 export default function ProposeButton(
