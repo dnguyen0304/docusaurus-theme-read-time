@@ -57,6 +57,8 @@ export default function Root({ children }: Props): JSX.Element {
     return (
         <ThemeProvider theme={theme}>
             <SnackbarProvider snackbar={snackbar}>
+                {/* TODO(dnguyen0304): Investigate if this should be moved 1
+                    parent scope higher. */}
                 {snackbar.create()}
                 <GithubProvider>
                     {/* TODO(dnguyen0304): Investigate if this provider can be
