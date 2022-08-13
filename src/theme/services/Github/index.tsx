@@ -6,7 +6,7 @@ import { encode } from 'js-base64';
 import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import {
-    COOKIE_SESSION_ID_KEY,
+    COOKIE_KEY_SESSION_ID,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
@@ -73,7 +73,7 @@ export const initializeAuth = async (
     }
 
     const cookies = new Cookies();
-    const accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
+    const accessToken = cookies.get(COOKIE_KEY_SESSION_ID);
     if (accessToken) {
         try {
             const newAuth = await doAuthenticate(accessToken);
@@ -93,7 +93,7 @@ export const initializeAuth = async (
             };
         } catch (error) {
             if (error.status === 401) {
-                cookies.remove(COOKIE_SESSION_ID_KEY);
+                cookies.remove(COOKIE_KEY_SESSION_ID);
                 initializeAuth(
                     githubContext,
                     siteContext,
@@ -142,7 +142,7 @@ export const authenticate = async (
     const cookies = new Cookies();
 
     // TODO(dnguyen0304): Implement exchanging session ID for access token.
-    let accessToken = cookies.get(COOKIE_SESSION_ID_KEY);
+    let accessToken = cookies.get(COOKIE_KEY_SESSION_ID);
     if (!accessToken) {
         try {
             ({ accessToken } =
@@ -155,7 +155,7 @@ export const authenticate = async (
     }
 
     cookies.set(
-        COOKIE_SESSION_ID_KEY,
+        COOKIE_KEY_SESSION_ID,
         accessToken,
         {
             path: cookiePath,

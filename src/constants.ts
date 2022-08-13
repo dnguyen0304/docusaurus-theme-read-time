@@ -9,11 +9,11 @@ const ENDPOINT_EXCHANGE_CODE_TO_TOKEN: string = 'https://z39iitznuj.execute-api.
 const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback';
 
 const SEARCH_PARAM_KEY_IS_LOGGED_IN: string = 'is_logged_in';
-const COOKIE_SESSION_ID_KEY: string = 'session_id';
+const COOKIE_KEY_SESSION_ID: string = 'session_id';
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 
 export {
-    COOKIE_SESSION_ID_KEY,
+    COOKIE_KEY_SESSION_ID,
     DOCUSAURUS_ALIASED_SITE_PATH_PREFIX,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH,
