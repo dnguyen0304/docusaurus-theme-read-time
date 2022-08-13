@@ -150,6 +150,7 @@ export default function ProposeButton(
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
+        // TODO(dnguyen0304): Add command+enter keyboard shortcut.
         if (event.key === 'Enter') {
             handleClick();
         }
