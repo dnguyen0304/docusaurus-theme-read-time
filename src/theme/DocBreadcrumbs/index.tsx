@@ -23,6 +23,7 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const toggleEditorIsOpen = () => { setEditorIsOpen(prev => !prev) };
 
     const getButton = (): JSX.Element | null => {
+        console.log({ pathname, rawContent });
         if (pathname in rawContent === false) {
             return null;
         }
