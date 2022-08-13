@@ -27,6 +27,7 @@ import LoadingButton from '../LoadingButton';
 interface Props {
     readonly closeEditor: () => void;
     readonly getMarkdown: () => string;
+    readonly saveMarkdown: () => void;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -60,6 +61,7 @@ export default function ProposeButton(
     {
         closeEditor,
         getMarkdown,
+        saveMarkdown,
     }: Props
 ): JSX.Element {
     const {
@@ -87,6 +89,8 @@ export default function ProposeButton(
 
     const handleClick = async () => {
         setIsLoading(true);
+        saveMarkdown();
+
         const { setPullRequestUrl } = tabs[activeTabId];
 
         // TODO(dnguyen0304): Fix duplicated auth code.
