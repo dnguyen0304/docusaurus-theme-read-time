@@ -3,7 +3,8 @@ import React from 'react';
 import { EditorProvider } from '../contexts/editor';
 import { GithubProvider } from '../contexts/github';
 import { SnackbarProvider } from '../contexts/snackbar';
-import Snackbar, { SnackbarType } from '../theme/services/Snackbar';
+import App from '../theme/components/App';
+import Snackbar from '../theme/services/Snackbar';
 
 interface Props {
     readonly children: React.ReactNode;
@@ -52,7 +53,7 @@ const theme = createTheme({
 });
 
 export default function Root({ children }: Props): JSX.Element {
-    const snackbar: SnackbarType = Snackbar();
+    const snackbar = Snackbar();
 
     return (
         <ThemeProvider theme={theme}>
@@ -64,6 +65,7 @@ export default function Root({ children }: Props): JSX.Element {
                     {/* TODO(dnguyen0304): Investigate if this provider can be
                         moved to a smaller scope such as DocPage/Layout. */}
                     <EditorProvider>
+                        <App />
                         {children}
                     </EditorProvider>
                 </GithubProvider>
