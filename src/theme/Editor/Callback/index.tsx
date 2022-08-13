@@ -1,6 +1,7 @@
 import { Redirect } from '@docusaurus/router';
 import * as React from 'react';
 import URI from 'urijs';
+import { SEARCH_PARAM_KEY_IS_LOGGED_IN } from '../../../constants';
 import { useContentDocs } from '../../../contexts/contentDocs';
 import { useGithub } from '../../../contexts/github';
 import { authenticate, parseCallbackUrl } from '../../services/Github';
@@ -31,7 +32,10 @@ export default function Callback(): JSX.Element | null {
 
     return (
         user
-            ? <Redirect to={redirectPath} />
+            ? <Redirect to={{
+                pathname: redirectPath,
+                search: `?${SEARCH_PARAM_KEY_IS_LOGGED_IN}=true`,
+            }} />
             // TODO(dnguyen0304): Add page for "Please wait while you are being
             // redirected" to improve the UX.
             : null

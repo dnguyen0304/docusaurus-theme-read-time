@@ -8,6 +8,7 @@ const ENDPOINT_EXCHANGE_CODE_TO_TOKEN: string = 'https://z39iitznuj.execute-api.
 // GitHub > Developer Settings > OAuth Apps > "Authorization callback URL"
 const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback';
 
+const SEARCH_PARAM_KEY_IS_LOGGED_IN: string = 'is_logged_in';
 const LOCAL_STORAGE_KEY_TITLE: string = 'pull-title';
 
 export {
@@ -15,4 +16,5 @@ export {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH,
     LOCAL_STORAGE_KEY_TITLE,
+    SEARCH_PARAM_KEY_IS_LOGGED_IN,
 };
