@@ -6,6 +6,7 @@ import { encode } from 'js-base64';
 import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import {
+    COOKIE_SESSION_ID_KEY,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
@@ -42,7 +43,6 @@ const GITHUB_AUTHORIZATION_CODE_URL: string =
     'https://github.com/login/oauth/authorize';
 const GITHUB_AUTHORIZATION_SCOPES: string = ['repo'].join(' ');
 const GITHUB_REF_PREFIX = 'refs/heads/';
-const COOKIE_SESSION_ID_KEY: string = 'session_id';
 
 export const initializeAuth = async (
     githubContext: GithubContextValue,
