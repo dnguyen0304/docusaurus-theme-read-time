@@ -41,9 +41,13 @@ export default function Tab(): JSX.Element {
 
     // Copied from:
     // https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
-    const getMarkdown = (): string => {
-        const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-        const processed = blocks.map(block =>
+    const getMarkdown = (state: draft.EditorState | undefined): string => {
+        const currentContent =
+            state === undefined
+                ? editorState.getCurrentContent()
+                : state.getCurrentContent()
+        const rawBlocks = convertToRaw(currentContent).blocks;
+        const processed = rawBlocks.map(block =>
             // If the block is empty, return a newline. Otherwise, return the
             // block text.
             (!block.text.trim() && '\n') || block.text
@@ -73,8 +77,11 @@ export default function Tab(): JSX.Element {
         return rawMarkdown;
     };
 
-    const saveMarkdown = () => {
-        localStorage.setItem(getLocalStorageKey(siteContext), getMarkdown());
+    const saveMarkdown = (state: draft.EditorState | undefined) => {
+        localStorage.setItem(
+            getLocalStorageKey(siteContext),
+            getMarkdown(state),
+        );
     };
 
     const resetMarkdown = () => {
@@ -87,6 +94,9 @@ export default function Tab(): JSX.Element {
     };
 
     const handleChange = (editorState: draft.EditorState) => {
+        // TODO(dnguyen0304): Investigate how saving on every change affects
+        // performance.
+        saveMarkdown(editorState);
         setEditorState(editorState);
     };
 
