@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useEditor } from '../../../contexts/editor';
 import type { KeyBinding } from '../../../docusaurus-theme-editor';
 
 interface Props {
@@ -27,9 +28,16 @@ export default function CloseButton(
         toggleEditorIsOpen,
     }: Props
 ): JSX.Element {
+    const { beforeEditorCloseHooks } = useEditor();
+
+    const handleClick = () => {
+        Object.values(beforeEditorCloseHooks).forEach(hook => hook());
+        toggleEditorIsOpen();
+    };
+
     useHotkeys(
         CloseButtonKeyBinding.key,
-        toggleEditorIsOpen,
+        handleClick,
     );
 
     return (
@@ -38,7 +46,7 @@ export default function CloseButton(
             placement='bottom'
         >
             <StyledButton
-                onClick={toggleEditorIsOpen}
+                onClick={handleClick}
                 startIcon={<CloseIcon />}
                 variant='outlined'
             >

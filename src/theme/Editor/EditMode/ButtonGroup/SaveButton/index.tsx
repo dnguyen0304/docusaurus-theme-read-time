@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { EditorState } from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useEditor } from '../../../../../contexts/editor';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
@@ -27,6 +28,7 @@ export default function SaveButton(
     }: Props
 ): JSX.Element {
     const { snackbar } = useSnackbar();
+    const { registerBeforeEditorCloseHook } = useEditor();
 
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
     const [isConfirmed, setIsConfirmed] = React.useState<boolean>(false);
@@ -70,6 +72,11 @@ export default function SaveButton(
         ),
         [editorState],
     );
+
+    React.useEffect(() => {
+        // TODO(dnguyen0304): Send notification.
+        registerBeforeEditorCloseHook(onClick, 'save');
+    }, [editorState]);
 
     React.useEffect(() => {
         backgroundSaveTimerId.current = window.setInterval(() => {
