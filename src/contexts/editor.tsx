@@ -17,6 +17,10 @@ interface ContextValue {
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
+
+    // Lifecycle API
+    readonly beforeEditorCloseHooks: { [keys: string]: () => void };
+    readonly registerBeforeEditorCloseHook: (hook: () => void, key: string) => void;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
@@ -26,6 +30,9 @@ function useContextValue(): ContextValue {
     const [activeTabId, setActiveTabId] = React.useState<number>(0);
     const [tabs, setTabs] = React.useState<EditorTab[]>([]);
     const [tabIdCounter, setTabIdCounter] = React.useState<number>(0);
+
+    const [beforeEditorCloseHooks, setBeforeEditorCloseHooks] =
+        React.useState<{ [keys: string]: () => void }>({});
 
     const getNextTabId = (): number => {
         const nextTabId = tabIdCounter;
@@ -60,6 +67,15 @@ function useContextValue(): ContextValue {
         return newTab;
     };
 
+    const registerBeforeEditorCloseHook = (hook: () => void, key: string) => {
+        setBeforeEditorCloseHooks(prev => {
+            return {
+                ...prev,
+                key: hook,
+            };
+        });
+    };
+
     return React.useMemo(
         () => ({
             editorIsOpen,
@@ -69,6 +85,8 @@ function useContextValue(): ContextValue {
             setEditorIsOpen,
             setActiveTabId,
             setTabs,
+            beforeEditorCloseHooks,
+            registerBeforeEditorCloseHook,
         }),
         [
             editorIsOpen,
@@ -78,6 +96,8 @@ function useContextValue(): ContextValue {
             setEditorIsOpen,
             setActiveTabId,
             setTabs,
+            beforeEditorCloseHooks,
+            registerBeforeEditorCloseHook,
         ],
     );
 }
