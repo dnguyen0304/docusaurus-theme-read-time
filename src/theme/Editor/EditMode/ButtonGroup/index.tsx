@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack';
-import { EditorState } from 'draft-js';
+import draft from 'draft-js';
 import * as React from 'react';
 import DiscardButton from './DiscardButton';
 import ProposeButton from './ProposeButton';
@@ -8,10 +8,10 @@ import styles from './styles.module.css';
 
 interface Props {
     readonly closeEditor: () => void;
-    readonly getMarkdown: () => string;
+    readonly getMarkdown: (state: draft.EditorState | undefined) => string;
     readonly saveMarkdown: () => void;
     readonly resetMarkdown: () => void;
-    readonly editorState: EditorState;
+    readonly editorState: draft.EditorState;
 }
 
 export default function EditModeButtonGroup(

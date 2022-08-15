@@ -11,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import { RequestError } from '@octokit/request-error';
+import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { LOCAL_STORAGE_KEY_TITLE } from '../../../../../constants';
@@ -26,7 +27,7 @@ import LoadingButton from '../LoadingButton';
 
 interface Props {
     readonly closeEditor: () => void;
-    readonly getMarkdown: () => string;
+    readonly getMarkdown: (state: draft.EditorState | undefined) => string;
     readonly saveMarkdown: () => void;
 }
 
