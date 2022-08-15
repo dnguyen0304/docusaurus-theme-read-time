@@ -22,7 +22,7 @@ const HANDLER_NAME_ESCAPE: string = 'editor-escape';
 const KEY_CODE_ESCAPE: number = 27;
 
 // TODO: Fix inconsistent padding or margin in edit mode.
-export default function Editor(): JSX.Element {
+export default function Tab(): JSX.Element {
     const { setEditorIsOpen } = useEditor();
     const { rawContent } = useRawContent();
     const { pathname } = useLocation();
