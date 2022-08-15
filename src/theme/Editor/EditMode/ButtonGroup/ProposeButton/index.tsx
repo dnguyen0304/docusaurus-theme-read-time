@@ -90,6 +90,7 @@ export default function ProposeButton(
 
     const handleClick = async () => {
         setIsLoading(true);
+        // TODO(dnguyen0304): Investigate if an explicit save is required.
         saveMarkdown();
 
         const { setPullRequestUrl } = tabs[activeTabId];

@@ -35,6 +35,7 @@ export default function SaveButton(
 
     const handleClick = (shouldAlert: boolean) => {
         setIsSaving(true);
+        // TODO(dnguyen0304): Investigate if an explicit save is required.
         onClick();
         new Promise(resolve => setTimeout(resolve, 2500))
             .then(() => {
