@@ -3,15 +3,15 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { EditorState } from 'draft-js';
+import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
 interface Props {
-    readonly onClick: () => void;
-    readonly editorState: EditorState;
+    readonly onClick: (state: draft.EditorState | undefined) => void;
+    readonly editorState: draft.EditorState;
 }
 
 const KeyBinding: KeyBindingType = {
