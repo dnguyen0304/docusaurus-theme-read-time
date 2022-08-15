@@ -9,6 +9,7 @@ import { useSnackbar } from '../../../contexts/snackbar';
 import EditModeButtonGroup from '../EditMode/ButtonGroup';
 import EditorLine from '../Line';
 import { getLocalStorageKey } from '../utils';
+import './styles.module.css';
 
 // TODO(dnguyen0304): Extract to a centralized location to facilitate
 // maintenance.

@@ -20,7 +20,3 @@
     width: calc(100% - 15px);
     height: calc(100vh - var(--ifm-navbar-height));
 }
-
-:global .DraftEditor-root {
-    overflow: scroll;
-}

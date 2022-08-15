@@ -1,0 +1,4 @@
+:global .DraftEditor-root {
+    overflow: scroll;
+    padding: 0 .5rem;
+}
