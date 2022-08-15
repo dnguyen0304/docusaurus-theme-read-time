@@ -39,6 +39,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function Snackbar(): SnackbarType {
+    // TODO(dnguyen0304): Investigate why this does not violate the "Only Call
+    // Hooks from React Functions" rule.
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
     const [content, setContent] =
         React.useState<JSX.Element | undefined>(undefined);
