@@ -72,6 +72,10 @@ export default function Editor(): JSX.Element {
         return rawMarkdown;
     };
 
+    const saveMarkdown = () => {
+        localStorage.setItem(getLocalStorageKey(siteContext), getMarkdown());
+    };
+
     const resetMarkdown = () => {
         const localStorageKey = getLocalStorageKey(siteContext);
         localStorage.removeItem(localStorageKey);
@@ -134,6 +138,7 @@ export default function Editor(): JSX.Element {
                 closeEditor={closeEditor}
                 getMarkdown={getMarkdown}
                 resetMarkdown={resetMarkdown}
+                saveMarkdown={saveMarkdown}
                 // TODO(dnguyen0304): Investigate a better way to handle
                 // keybinding dependencies.
                 editorState={editorState}
