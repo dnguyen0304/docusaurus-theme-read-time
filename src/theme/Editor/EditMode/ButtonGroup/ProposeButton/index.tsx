@@ -27,8 +27,8 @@ import LoadingButton from '../LoadingButton';
 
 interface Props {
     readonly closeEditor: () => void;
-    readonly getMarkdown: (state: draft.EditorState | undefined) => string;
-    readonly saveMarkdown: (state: draft.EditorState | undefined) => void;
+    readonly getMarkdown: (state?: draft.EditorState) => string;
+    readonly saveMarkdown: (state?: draft.EditorState) => void;
 }
 
 const KeyBinding: KeyBindingType = {

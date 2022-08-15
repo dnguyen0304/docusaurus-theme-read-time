@@ -41,7 +41,7 @@ export default function Tab(): JSX.Element {
 
     // Copied from:
     // https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
-    const getMarkdown = (state: draft.EditorState | undefined): string => {
+    const getMarkdown = (state?: draft.EditorState): string => {
         const currentContent =
             state === undefined
                 ? editorState.getCurrentContent()
@@ -77,7 +77,7 @@ export default function Tab(): JSX.Element {
         return rawMarkdown;
     };
 
-    const saveMarkdown = (state: draft.EditorState | undefined) => {
+    const saveMarkdown = (state?: draft.EditorState) => {
         localStorage.setItem(
             getLocalStorageKey(siteContext),
             getMarkdown(state),

@@ -8,8 +8,8 @@ import styles from './styles.module.css';
 
 interface Props {
     readonly closeEditor: () => void;
-    readonly getMarkdown: (state: draft.EditorState | undefined) => string;
-    readonly saveMarkdown: (state: draft.EditorState | undefined) => void;
+    readonly getMarkdown: (state?: draft.EditorState) => string;
+    readonly saveMarkdown: (state?: draft.EditorState) => void;
     readonly resetMarkdown: () => void;
     readonly editorState: draft.EditorState;
 }

@@ -10,7 +10,7 @@ import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
 interface Props {
-    readonly onClick: (state: draft.EditorState | undefined) => void;
+    readonly onClick: (state?: draft.EditorState) => void;
     readonly editorState: draft.EditorState;
 }
 
