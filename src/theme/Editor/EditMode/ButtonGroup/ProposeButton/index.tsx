@@ -91,6 +91,9 @@ export default function ProposeButton(
     );
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const checkPullStatusTimerId = React.useRef<number>();
+
+    const { pullRequestUrl } = tabs[activeTabId];
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
@@ -188,6 +191,40 @@ export default function ProposeButton(
         KeyBinding.key,
         toggleConfirmation,
     );
+
+    React.useEffect(() => {
+        if (!pullRequestUrl) {
+            return;
+        }
+
+        checkPullStatusTimerId.current = window.setInterval(async () => {
+            // TODO(dnguyen0304): Fix duplicated auth code.
+            const {
+                authRedirectUrl,
+                github,
+            } = await initializeAuth(
+                githubContext,
+                siteContext,
+                currentPath,
+            );
+
+            if (authRedirectUrl) {
+                setExternalRedirect(authRedirectUrl);
+                return;
+            }
+            if (!github) {
+                throw new Error('expected Github service to be defined');
+            }
+
+            const { setPull } = tabs[activeTabId];
+            const status = await github.checkPullStatus(pullRequestUrl);
+            setPull(status);
+        }, 60 * 1000);
+
+        return () => {
+            clearTimeout(checkPullStatusTimerId.current);
+        };
+    }, [pullRequestUrl]);
 
     React.useEffect(() => {
         if (externalRedirect) {
