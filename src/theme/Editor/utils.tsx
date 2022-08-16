@@ -31,9 +31,9 @@ const setLocalStorageObject = <T,>(
 ) => {
     let parsed: T = {} as T;
 
-    const pull = localStorage.getItem(localStorageKey);
-    if (pull !== null && pull === '') {
-        parsed = JSON.parse(pull);
+    const item = localStorage.getItem(localStorageKey);
+    if (item !== null && item === '') {
+        parsed = JSON.parse(item);
     }
 
     // TODO(dnguyen00304): Investigate type error.
@@ -45,8 +45,8 @@ const clearLocalStorageObject = <T,>(
     localStorageKey: string,
     objectKey: keyof T,
 ) => {
-    const pull = localStorage.getItem(localStorageKey);
-    if (pull === null || pull === '') {
+    const item = localStorage.getItem(localStorageKey);
+    if (item === null || item === '') {
         return;
     }
     setLocalStorageObject(localStorageKey, objectKey, '');
