@@ -33,6 +33,11 @@ interface GithubType {
     readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
+    readonly checkPullStatus: (pullUrl: string) => Promise<{
+        state: 'open' | 'closed';
+        closed_at: string | null;
+        merged_at: string | null;
+    }>;
     readonly createPull: (title: string) => Promise<string>;
     readonly closePull: (pullUrl: string) => Promise<void>;
 }
@@ -357,6 +362,36 @@ export default function Github(
         return html_url;
     };
 
+    const checkPullStatus = async (pullUrl: string): Promise<{
+        state: 'open' | 'closed';
+        closed_at: string | null;
+        merged_at: string | null;
+    }> => {
+        const pullId = new URI(pullUrl).filename();
+
+        if (pullId === '') {
+            throw new Error(`failed to parse pull number from ${pullUrl}`);
+        }
+
+        const {
+            data: {
+                state,
+                closed_at,
+                merged_at,
+            },
+        } = await api?.pulls.get({
+            owner,
+            repo: repository,
+            pull_number: Number(pullId),
+        });
+
+        return {
+            state,
+            closed_at,
+            merged_at,
+        };
+    };
+
     const closePull = async (pullUrl: string): Promise<void> => {
         const pullId = new URI(pullUrl).filename();
 
@@ -378,6 +413,7 @@ export default function Github(
         createBranch,
         createCommit,
         createPull,
+        checkPullStatus,
         closePull,
     };
 }
