@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ContextValue } from '../../contexts/site';
 
-export const getLocalStorageKey = (
+const getLocalStorageKey = (
     {
         owner,
         repository,
@@ -11,7 +11,7 @@ export const getLocalStorageKey = (
     return `${owner}/${repository}/${path}`;
 }
 
-export const useRefMeasure = <T extends HTMLElement>(
+const useRefMeasure = <T extends HTMLElement>(
     callback: (clientRect: DOMRect) => number,
     deps: ReadonlyArray<unknown> = [],
 ) => {
@@ -25,3 +25,8 @@ export const useRefMeasure = <T extends HTMLElement>(
 
     return [measure, measureRef];
 }
+
+export {
+    getLocalStorageKey,
+    useRefMeasure,
+};
