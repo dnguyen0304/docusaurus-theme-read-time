@@ -28,7 +28,7 @@ const setLocalStorageObject = <T,>(
     localStorage.setItem(localStorageKey, JSON.stringify(parsed));
 };
 
-const removeLocalStorageObject = <T,>(
+const clearLocalStorageObject = <T,>(
     localStorageKey: string,
     objectKey: keyof T,
 ) => {
@@ -36,10 +36,7 @@ const removeLocalStorageObject = <T,>(
     if (pull === null || pull === '') {
         return;
     }
-    const parsed = JSON.parse(pull) as T;
-    // TODO(dnguyen00304): Investigate type error.
-    parsed[objectKey] = '';
-    localStorage.setItem(localStorageKey, JSON.stringify(parsed));
+    setLocalStorageObject(localStorageKey, objectKey, '');
 };
 
 const useRefMeasure = <T extends HTMLElement>(
@@ -58,8 +55,8 @@ const useRefMeasure = <T extends HTMLElement>(
 };
 
 export {
+    clearLocalStorageObject,
     getLocalStorageKey,
-    removeLocalStorageObject,
     setLocalStorageObject,
     useRefMeasure,
 };

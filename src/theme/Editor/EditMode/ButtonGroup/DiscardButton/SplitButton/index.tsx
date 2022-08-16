@@ -18,7 +18,7 @@ import { useEditor } from '../../../../../../contexts/editor';
 import { useGithub } from '../../../../../../contexts/github';
 import { useSite } from '../../../../../../contexts/site';
 import { useSnackbar } from '../../../../../../contexts/snackbar';
-import { removeLocalStorageObject } from '../../../../../Editor/utils';
+import { clearLocalStorageObject } from '../../../../../Editor/utils';
 import { initializeAuth } from '../../../../../services/Github';
 import LoadingButton from '../../LoadingButton';
 
@@ -77,7 +77,7 @@ export default function SplitButton(
     const handleClick = async () => {
         const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
 
-        removeLocalStorageObject<LocalStoragePullType>(
+        clearLocalStorageObject<LocalStoragePullType>(
             LOCAL_STORAGE_KEY_PULL,
             'title',
         );
