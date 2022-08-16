@@ -8,6 +8,10 @@ import { useEditor } from '../../contexts/editor';
 import EditorContainer from './Container';
 import EditorTab from './Tab';
 
+interface TabLabelProps {
+    pullRequestUrl: string;
+}
+
 interface TabContentProps {
     index: number,
     activeIndex: number,
@@ -19,15 +23,18 @@ const StyledTabLabel = styled('span')({
     alignItems: 'center',
 });
 
-function TabLabel(): JSX.Element {
+function TabLabel({ pullRequestUrl }: TabLabelProps): JSX.Element {
 
-    const getIcon = (): JSX.Element => {
-        return (
-            <ScheduleIcon
-                fontSize={'inherit'}
-                sx={{ ml: '0.25rem' }}
-            />
-        );
+    const getIcon = (): JSX.Element | null => {
+        if (pullRequestUrl) {
+            return (
+                <ScheduleIcon
+                    fontSize={'inherit'}
+                    sx={{ ml: '0.25rem' }}
+                />
+            );
+        }
+        return null;
     };
 
     return (
@@ -67,22 +74,29 @@ export default function Editor(): JSX.Element {
                 borderBottom: 1,
                 borderColor: 'divider',
             }}>
+                {/* TODO(dnguyen0304): Set textColor and indicatorColor based on
+                    the pull request status. */}
                 <Tabs
                     onChange={handleChange}
                     value={activeIndex}
                 >
-                    <Tab label={<TabLabel />} />
+                    {tabs.map((tab, index) =>
+                        <Tab
+                            key={`tab-${index}`}
+                            label={
+                                <TabLabel pullRequestUrl={tab.pullRequestUrl} />
+                            }
+                        />
+                    )}
                 </Tabs>
             </Box>
-            {tabs.map((tab, index) => {
-                return (
-                    <TabContent
-                        key={`tab-content-${index}`}
-                        index={index}
-                        activeIndex={activeIndex}
-                    />
-                );
-            })}
+            {tabs.map((tab, index) =>
+                <TabContent
+                    key={`tab-content-${index}`}
+                    index={index}
+                    activeIndex={activeIndex}
+                />
+            )}
         </EditorContainer >
     );
 }
