@@ -1,9 +1,18 @@
 import * as React from 'react';
 import { ReactContextError } from './errors';
 
+interface PullType {
+    state: 'open' | 'closed';
+    closedAt: string | null;
+    mergedAt: string | null;
+}
+
+// TODO(dnguyen0304): Support setState setStatefunctional updates.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
+    pull?: PullType;
+    setPull: (newValue: PullType) => void;
     pullRequestUrl: string;
     setPullRequestUrl: (newValue: string) => void;
 }
@@ -35,6 +44,17 @@ function useContextValue(): ContextValue {
 
     const addTab = (): EditorTab => {
         const tabId = getNextTabId();
+        const setPull = (newValue: PullType) => {
+            setTabs(tabs => tabs.map(tab => {
+                if (tab.tabId !== tabId) {
+                    return tab;
+                }
+                return {
+                    ...tab,
+                    pull: newValue,
+                }
+            }));
+        };
         const setPullRequestUrl = (newValue: string) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
@@ -48,6 +68,7 @@ function useContextValue(): ContextValue {
         };
         const newTab = {
             tabId,
+            setPull,
             pullRequestUrl: '',
             setPullRequestUrl,
         };
@@ -107,5 +128,6 @@ function useEditor(): ContextValue {
 export {
     EditorProvider,
     EditorTab,
+    PullType,
     useEditor,
 };
