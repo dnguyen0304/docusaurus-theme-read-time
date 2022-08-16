@@ -1,14 +1,19 @@
 import styled from '@emotion/styled';
+import MergeIcon from '@mui/icons-material/Merge';
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
-import { useEditor } from '../../contexts/editor';
+import { PullType, useEditor } from '../../contexts/editor';
 import EditorContainer from './Container';
 import EditorTab from './Tab';
 
+type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
+
 interface TabLabelProps {
+    pull: PullType | undefined;
     pullRequestUrl: string;
 }
 
@@ -23,15 +28,32 @@ const StyledTabLabel = styled('span')({
     alignItems: 'center',
 });
 
-function TabLabel({ pullRequestUrl }: TabLabelProps): JSX.Element {
+function TabLabel(
+    {
+        pull,
+        pullRequestUrl,
+    }: TabLabelProps
+): JSX.Element {
 
     const getIcon = (): JSX.Element | null => {
         if (pullRequestUrl) {
+            const fontSize: iconFontSize = 'inherit';
+            const iconProps = {
+                fontSize: fontSize,
+                sx: { ml: '0.25rem' },
+            };
+            if (pull && pull.state === 'closed') {
+                if (pull.closedAt) {
+                    <ReportOutlinedIcon {...iconProps} />
+                }
+                if (pull.mergedAt) {
+                    return (
+                        <MergeIcon {...iconProps} />
+                    );
+                }
+            }
             return (
-                <ScheduleIcon
-                    fontSize={'inherit'}
-                    sx={{ ml: '0.25rem' }}
-                />
+                <ScheduleIcon {...iconProps} />
             );
         }
         return null;
@@ -84,7 +106,10 @@ export default function Editor(): JSX.Element {
                         <Tab
                             key={`tab-${index}`}
                             label={
-                                <TabLabel pullRequestUrl={tab.pullRequestUrl} />
+                                <TabLabel
+                                    pull={tab.pull}
+                                    pullRequestUrl={tab.pullRequestUrl}
+                                />
                             }
                         />
                     )}
