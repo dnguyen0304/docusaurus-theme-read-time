@@ -11,6 +11,19 @@ const getLocalStorageKey = (
     return `${owner}/${repository}/${path}`;
 };
 
+const getLocalStorageObject = <T,>(
+    localStorageKey: string,
+    objectKey: keyof T,
+): string => {
+    const item = localStorage.getItem(localStorageKey);
+    if (item === null || item === '') {
+        return '';
+    }
+    const parsed = JSON.parse(item) as T;
+    // TODO(dnguyen00304): Investigate type error.
+    return parsed[objectKey];
+};
+
 const setLocalStorageObject = <T,>(
     localStorageKey: string,
     objectKey: keyof T,
@@ -57,6 +70,7 @@ const useRefMeasure = <T extends HTMLElement>(
 export {
     clearLocalStorageObject,
     getLocalStorageKey,
+    getLocalStorageObject,
     setLocalStorageObject,
     useRefMeasure,
 };

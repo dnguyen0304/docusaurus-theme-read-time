@@ -24,7 +24,10 @@ import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
-import { setLocalStorageObject } from '../../../../Editor/utils';
+import {
+    getLocalStorageObject,
+    setLocalStorageObject
+} from '../../../../Editor/utils';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
@@ -81,9 +84,10 @@ export default function ProposeButton(
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
     const [title, setTitle] = React.useState<string>(
-        LOCAL_STORAGE_KEY_TITLE in localStorage
-            ? localStorage.getItem(LOCAL_STORAGE_KEY_TITLE)!
-            : ''
+        getLocalStorageObject<LocalStoragePullType>(
+            LOCAL_STORAGE_KEY_PULL,
+            'title',
+        )
     );
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
