@@ -14,9 +14,9 @@ interface TabContentProps {
 }
 
 const StyledTabLabel = styled('span')({
-    'display': 'flex',
-    'justify-content': 'center',
-    'align-items': 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
 });
 
 function TabLabel(): JSX.Element {
