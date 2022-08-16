@@ -16,8 +16,7 @@ import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
     LocalStoragePullType,
-    LOCAL_STORAGE_KEY_PULL,
-    LOCAL_STORAGE_KEY_TITLE
+    LOCAL_STORAGE_KEY_PULL
 } from '../../../../../constants';
 import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
@@ -25,6 +24,7 @@ import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
+import { setLocalStorageObject } from '../../../../Editor/utils';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
@@ -166,7 +166,11 @@ export default function ProposeButton(
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
-        localStorage.setItem(LOCAL_STORAGE_KEY_TITLE, event.target.value);
+        setLocalStorageObject<LocalStoragePullType>(
+            LOCAL_STORAGE_KEY_PULL,
+            'title',
+            event.target.value,
+        );
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {
