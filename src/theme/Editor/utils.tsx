@@ -11,13 +11,30 @@ const getLocalStorageKey = (
     return `${owner}/${repository}/${path}`;
 };
 
+const setLocalStorageObject = <T,>(
+    localStorageKey: string,
+    objectKey: keyof T,
+    objectValue: string,
+) => {
+    let parsed: T = {} as T;
+
+    const pull = localStorage.getItem(localStorageKey);
+    if (pull !== null && pull === '') {
+        parsed = JSON.parse(pull);
+    }
+
+    // TODO(dnguyen00304): Investigate type error.
+    parsed[objectKey] = objectValue;
+    localStorage.setItem(localStorageKey, JSON.stringify(parsed));
+};
+
 const removeLocalStorageObject = <T,>(
     localStorageKey: string,
     objectKey: keyof T,
 ) => {
     const pull = localStorage.getItem(localStorageKey);
     if (pull === null || pull === '') {
-        return
+        return;
     }
     const parsed = JSON.parse(pull) as T;
     // TODO(dnguyen00304): Investigate type error.
@@ -43,5 +60,6 @@ const useRefMeasure = <T extends HTMLElement>(
 export {
     getLocalStorageKey,
     removeLocalStorageObject,
+    setLocalStorageObject,
     useRefMeasure,
 };
