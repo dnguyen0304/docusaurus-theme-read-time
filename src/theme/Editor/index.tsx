@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+import ScheduleIcon from '@mui/icons-material/Schedule';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -10,6 +12,30 @@ interface TabContentProps {
     index: number,
     activeIndex: number,
 }
+
+const StyledTabLabel = styled('span')({
+    'display': 'flex',
+    'justify-content': 'center',
+    'align-items': 'center',
+});
+
+function TabLabel(): JSX.Element {
+
+    const getIcon = (): JSX.Element => {
+        return (
+            <ScheduleIcon
+                fontSize={'inherit'}
+                sx={{ ml: '0.25rem' }}
+            />
+        );
+    };
+
+    return (
+        <StyledTabLabel>
+            default{getIcon()}
+        </StyledTabLabel>
+    );
+};
 
 function TabContent(
     {
@@ -45,7 +71,7 @@ export default function Editor(): JSX.Element {
                     onChange={handleChange}
                     value={activeIndex}
                 >
-                    <Tab label='default' />
+                    <Tab label={<TabLabel />} />
                 </Tabs>
             </Box>
             {tabs.map((tab, index) => {
