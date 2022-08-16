@@ -13,6 +13,7 @@ interface EditorTab {
     tabId: number;
     pull?: PullType;
     setPull: (newValue: PullType) => void;
+    // TODO(dnguyen0304): Investigate moving URL into PullType.
     pullRequestUrl: string;
     setPullRequestUrl: (newValue: string) => void;
 }
