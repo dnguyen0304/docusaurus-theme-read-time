@@ -10,6 +10,7 @@ import {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
+import type { PullType } from '../../../contexts/editor';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
 import type { GithubUser } from '../../../docusaurus-theme-editor';
@@ -33,11 +34,7 @@ interface GithubType {
     readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
-    readonly checkPullStatus: (pullUrl: string) => Promise<{
-        state: 'open' | 'closed';
-        closed_at: string | null;
-        merged_at: string | null;
-    }>;
+    readonly checkPullStatus: (pullUrl: string) => Promise<PullType>;
     readonly createPull: (title: string) => Promise<string>;
     readonly closePull: (pullUrl: string) => Promise<void>;
 }
@@ -362,11 +359,7 @@ export default function Github(
         return html_url;
     };
 
-    const checkPullStatus = async (pullUrl: string): Promise<{
-        state: 'open' | 'closed';
-        closed_at: string | null;
-        merged_at: string | null;
-    }> => {
+    const checkPullStatus = async (pullUrl: string): Promise<PullType> => {
         const pullId = new URI(pullUrl).filename();
 
         if (pullId === '') {
@@ -376,8 +369,8 @@ export default function Github(
         const {
             data: {
                 state,
-                closed_at,
-                merged_at,
+                closed_at: closedAt,
+                merged_at: mergedAt,
             },
         } = await api?.pulls.get({
             owner,
@@ -387,8 +380,8 @@ export default function Github(
 
         return {
             state,
-            closed_at,
-            merged_at,
+            closedAt,
+            mergedAt,
         };
     };
 
