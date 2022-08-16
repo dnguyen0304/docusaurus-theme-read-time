@@ -36,25 +36,21 @@ function TabLabel(
 ): JSX.Element {
 
     const getIcon = (): JSX.Element | null => {
-        if (pullRequestUrl) {
+        if (pullRequestUrl && pull) {
             const fontSize: iconFontSize = 'inherit';
             const iconProps = {
                 fontSize: fontSize,
                 sx: { ml: '0.25rem' },
             };
-            if (pull && pull.state === 'closed') {
-                if (pull.closedAt) {
-                    <ReportOutlinedIcon {...iconProps} />
-                }
-                if (pull.mergedAt) {
-                    return (
-                        <MergeIcon {...iconProps} />
-                    );
-                }
+            if (pull.state === 'open') {
+                return <ScheduleIcon {...iconProps} />;
             }
-            return (
-                <ScheduleIcon {...iconProps} />
-            );
+            if (pull.closedAt) {
+                return <ReportOutlinedIcon {...iconProps} />;
+            }
+            if (pull.mergedAt) {
+                return <MergeIcon {...iconProps} />;
+            }
         }
         return null;
     };
