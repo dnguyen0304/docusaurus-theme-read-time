@@ -125,6 +125,8 @@ export default function Tab(): JSX.Element {
 
     React.useEffect(() => {
         const localStorageKey = getLocalStorageKey(siteContext);
+        // TODO(dnguyen0304): Extract getItem to a centralized location to
+        // facilitate maintenance.
         const savedMarkdown = localStorage.getItem(localStorageKey);
 
         if (savedMarkdown) {
