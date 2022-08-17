@@ -6,11 +6,11 @@ import Box from '@mui/material/Box';
 import type { Theme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { PullType, useEditor } from '../../contexts/editor';
 import EditorContainer from './Container';
 import EditorTab from './Tab';
+import EditorTooltip from './Tooltip';
 
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
@@ -23,8 +23,7 @@ interface StyledTabProps {
 }
 
 interface TabLabelProps {
-    pull: PullType | undefined;
-    pullRequestUrl: string;
+    pullStateIcon: JSX.Element | null;
 }
 
 interface TabContentProps {
@@ -70,14 +69,7 @@ const getIcon = (
         if (icon === undefined) {
             throw new Error('expected icon to be defined');
         }
-        return (
-            <Tooltip
-                title={`${state}: ${pullRequestUrl}`}
-                placement='top'
-            >
-                {icon}
-            </Tooltip>
-        );
+        return icon;
     }
     return null;
 };
@@ -104,12 +96,7 @@ const StyledTab = styled(Tab, {
     },
 }));
 
-const TabLabel = (
-    {
-        pull,
-        pullRequestUrl,
-    }: TabLabelProps
-): JSX.Element => {
+const TabLabel = ({ pullStateIcon }: TabLabelProps): JSX.Element => {
     const StyledTabLabel = styled('span')({
         display: 'flex',
         justifyContent: 'center',
@@ -118,7 +105,7 @@ const TabLabel = (
 
     return (
         <StyledTabLabel>
-            default{getIcon(pull, pullRequestUrl)}
+            default{pullStateIcon}
         </StyledTabLabel>
     );
 };
@@ -160,18 +147,27 @@ export default function Editor(): JSX.Element {
                     pull={tabs[activeIndex].pull}
                     value={activeIndex}
                 >
-                    {tabs.map((tab, index) =>
-                        <StyledTab
-                            key={`tab-${index}`}
-                            label={
-                                <TabLabel
+                    {tabs.map((tab, index) => {
+                        const pullStateIcon = getIcon(
+                            tab.pull,
+                            tab.pullRequestUrl,
+                        );
+                        return (
+                            <EditorTooltip
+                                arrow
+                                placement='left-start'
+                                pullState={tab.pull?.state}
+                                pullStateIcon={pullStateIcon}
+                                pullUrl={tab.pullRequestUrl}
+                            >
+                                <StyledTab
+                                    key={`tab-${index}`}
+                                    label={<TabLabel pullStateIcon={pullStateIcon} />}
                                     pull={tab.pull}
-                                    pullRequestUrl={tab.pullRequestUrl}
                                 />
-                            }
-                            pull={tab.pull}
-                        />
-                    )}
+                            </EditorTooltip>
+                        );
+                    })}
                 </StyledTabs>
             </Box>
             {tabs.map((tab, index) =>

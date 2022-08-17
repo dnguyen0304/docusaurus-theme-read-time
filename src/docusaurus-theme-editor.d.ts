@@ -19,3 +19,5 @@ export interface GithubUser {
     readonly emailAddress?: string;
     readonly fullName?: string;
 }
+
+export type InternalGithubState = 'open' | 'closed' | 'merged' | undefined;
