@@ -62,18 +62,17 @@ const StyledTab = styled(Tab, {
     },
 }));
 
-const StyledTabLabel = styled('span')({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-});
-
-function TabLabel(
+const TabLabel = (
     {
         pull,
         pullRequestUrl,
     }: TabLabelProps
-): JSX.Element {
+): JSX.Element => {
+    const StyledTabLabel = styled('span')({
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    });
 
     const getIcon = (): JSX.Element | null => {
         if (pullRequestUrl && pull) {
@@ -121,12 +120,12 @@ function TabLabel(
     );
 };
 
-function TabContent(
+const TabContent = (
     {
         index,
         activeIndex,
     }: TabContentProps
-): JSX.Element | null {
+): JSX.Element | null => {
     return (
         index === activeIndex
             ? <EditorTab />
