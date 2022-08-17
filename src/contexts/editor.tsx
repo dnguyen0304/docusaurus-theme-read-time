@@ -3,6 +3,9 @@ import { ReactContextError } from './errors';
 
 interface PullType {
     state: 'open' | 'closed';
+    // Gotcha: When a pull request is closed, both closedAt and mergedAt are
+    // updated. Therefore, mergedAt must be directly checked to determine if a
+    // pull request has been merged.
     closedAt: string | null;
     mergedAt: string | null;
 }

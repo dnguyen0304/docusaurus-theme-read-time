@@ -12,6 +12,8 @@ import EditorContainer from './Container';
 import EditorTab from './Tab';
 import EditorTooltip from './Tooltip';
 
+const PURPLE_MERGED: string = '#8250df';
+
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
 interface StyledTabsProps {
@@ -33,8 +35,12 @@ interface TabContentProps {
 
 const getColor = (theme: Theme, pull: PullType | undefined): string => {
     if (pull && pull.state === 'closed') {
-        // TODO(dnguyen0304): Add red color for theme palette.
-        return theme.palette.error.main;
+        if (pull.mergedAt) {
+            return PURPLE_MERGED;
+        } else {
+            // TODO(dnguyen0304): Add red color for theme palette.
+            return theme.palette.error.main;
+        }
     }
     return theme.palette.primary.main;
 };
@@ -51,17 +57,17 @@ const getIcon = (
             fontSize: fontSize,
             sx: { ml: '0.25rem' },
         };
-        if (pull.state === 'open') {
+        if (pull.state === 'closed') {
+            if (pull.mergedAt) {
+                icon = <MergeIcon {...iconProps} />;
+                state = 'Merged';
+            } else {
+                icon = <ReportOutlinedIcon {...iconProps} />;
+                state = 'Closed';
+            }
+        } else {
             icon = <ScheduleIcon {...iconProps} />;
             state = 'Open';
-        }
-        if (pull.closedAt) {
-            icon = <ReportOutlinedIcon {...iconProps} />;
-            state = 'Closed';
-        }
-        if (pull.mergedAt) {
-            icon = <MergeIcon {...iconProps} />;
-            state = 'Merged';
         }
         if (state == undefined) {
             throw new Error('expected state to be defined');
