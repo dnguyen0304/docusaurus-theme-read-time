@@ -14,6 +14,10 @@ import EditorTab from './Tab';
 
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
+interface StyledTabsProps {
+    pull: PullType | undefined;
+}
+
 interface StyledTabProps {
     pull: PullType | undefined;
 }
@@ -35,6 +39,19 @@ const getColor = (theme: Theme, pull: PullType | undefined): string => {
     }
     return theme.palette.primary.main;
 }
+
+const StyledTabs = styled(Tabs, {
+    shouldForwardProp: (prop) => prop !== 'pull',
+})<StyledTabsProps>(({ theme, pull }) => ({
+    '.MuiTabs-indicator': {
+        // TODO(dnguyen0304): Fix type error.
+        backgroundColor: getColor(theme, pull),
+    },
+    '.MuiTouchRipple-child': {
+        // TODO(dnguyen0304): Fix type error.
+        backgroundColor: getColor(theme, pull),
+    },
+}));
 
 const StyledTab = styled(Tab, {
     shouldForwardProp: (prop) => prop !== 'pull',
@@ -136,8 +153,9 @@ export default function Editor(): JSX.Element {
             }}>
                 {/* TODO(dnguyen0304): Set textColor and indicatorColor based on
                     the pull request status. */}
-                <Tabs
+                <StyledTabs
                     onChange={handleChange}
+                    pull={tabs[activeIndex].pull}
                     value={activeIndex}
                 >
                     {tabs.map((tab, index) =>
@@ -152,7 +170,7 @@ export default function Editor(): JSX.Element {
                             pull={tab.pull}
                         />
                     )}
-                </Tabs>
+                </StyledTabs>
             </Box>
             {tabs.map((tab, index) =>
                 <TabContent
