@@ -38,8 +38,8 @@ function TabLabel(
 
     const getIcon = (): JSX.Element | null => {
         if (pullRequestUrl && pull) {
-            let icon: JSX.Element | undefined;
             let state: 'Open' | 'Closed' | 'Merged' | undefined;
+            let icon: JSX.Element | undefined;
             const fontSize: iconFontSize = 'inherit';
             const iconProps = {
                 fontSize: fontSize,
@@ -57,11 +57,11 @@ function TabLabel(
                 icon = <MergeIcon {...iconProps} />;
                 state = 'Merged';
             }
-            if (icon === undefined) {
-                throw new Error('expected icon to be defined');
-            }
             if (state == undefined) {
                 throw new Error('expected state to be defined');
+            }
+            if (icon === undefined) {
+                throw new Error('expected icon to be defined');
             }
             return (
                 <Tooltip
