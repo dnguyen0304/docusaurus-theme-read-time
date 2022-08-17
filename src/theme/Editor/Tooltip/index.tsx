@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import MuiTooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import * as React from 'react';
 import { InternalGithubState } from '../../../docusaurus-theme-editor';
+import { KeyBinding } from '../EditMode/ButtonGroup/DiscardButton';
 
 interface Props extends Pick<TooltipProps, 'arrow' | 'children' | 'placement'> {
     pullUrl: string;
@@ -19,10 +20,11 @@ interface Props extends Pick<TooltipProps, 'arrow' | 'children' | 'placement'> {
 const STATE_TO_DESCRIPTION: Record<NonNullable<InternalGithubState>, string> = {
     'open': 'Your pull request has been sent and is now awaiting review.',
     'closed':
-        'Your pull request has been closed and is now safe to discard locally.',
+        `Your pull request has been closed and is now safe to discard `
+        + `(${KeyBinding.friendlyLabel}) locally.`,
     'merged':
         `Yay! Your pull request has been merged successfully and is now safe ` +
-        `to discard locally.`,
+        `to discard (${KeyBinding.friendlyLabel}) locally.`,
 };
 
 const StyledTooltip = styled(({ className, ...props }: TooltipProps): JSX.Element => (

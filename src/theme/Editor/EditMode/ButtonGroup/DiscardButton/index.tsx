@@ -83,3 +83,7 @@ export default function DiscardButton(
         </React.Fragment>
     );
 }
+
+export {
+    KeyBinding,
+};
