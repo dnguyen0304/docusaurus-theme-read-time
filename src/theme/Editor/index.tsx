@@ -38,7 +38,49 @@ const getColor = (theme: Theme, pull: PullType | undefined): string => {
         return theme.palette.error.main;
     }
     return theme.palette.primary.main;
-}
+};
+
+const getIcon = (
+    pull: PullType | undefined,
+    pullRequestUrl: string,
+): JSX.Element | null => {
+    if (pullRequestUrl && pull) {
+        let state: 'Open' | 'Closed' | 'Merged' | undefined;
+        let icon: JSX.Element | undefined;
+        const fontSize: iconFontSize = 'inherit';
+        const iconProps = {
+            fontSize: fontSize,
+            sx: { ml: '0.25rem' },
+        };
+        if (pull.state === 'open') {
+            icon = <ScheduleIcon {...iconProps} />;
+            state = 'Open';
+        }
+        if (pull.closedAt) {
+            icon = <ReportOutlinedIcon {...iconProps} />;
+            state = 'Closed';
+        }
+        if (pull.mergedAt) {
+            icon = <MergeIcon {...iconProps} />;
+            state = 'Merged';
+        }
+        if (state == undefined) {
+            throw new Error('expected state to be defined');
+        }
+        if (icon === undefined) {
+            throw new Error('expected icon to be defined');
+        }
+        return (
+            <Tooltip
+                title={`${state}: ${pullRequestUrl}`}
+                placement='top'
+            >
+                {icon}
+            </Tooltip>
+        );
+    }
+    return null;
+};
 
 const StyledTabs = styled(Tabs, {
     shouldForwardProp: (prop) => prop !== 'pull',
@@ -74,48 +116,9 @@ const TabLabel = (
         alignItems: 'center',
     });
 
-    const getIcon = (): JSX.Element | null => {
-        if (pullRequestUrl && pull) {
-            let state: 'Open' | 'Closed' | 'Merged' | undefined;
-            let icon: JSX.Element | undefined;
-            const fontSize: iconFontSize = 'inherit';
-            const iconProps = {
-                fontSize: fontSize,
-                sx: { ml: '0.25rem' },
-            };
-            if (pull.state === 'open') {
-                icon = <ScheduleIcon {...iconProps} />;
-                state = 'Open';
-            }
-            if (pull.closedAt) {
-                icon = <ReportOutlinedIcon {...iconProps} />;
-                state = 'Closed';
-            }
-            if (pull.mergedAt) {
-                icon = <MergeIcon {...iconProps} />;
-                state = 'Merged';
-            }
-            if (state == undefined) {
-                throw new Error('expected state to be defined');
-            }
-            if (icon === undefined) {
-                throw new Error('expected icon to be defined');
-            }
-            return (
-                <Tooltip
-                    title={`${state}: ${pullRequestUrl}`}
-                    placement='top'
-                >
-                    {icon}
-                </Tooltip>
-            );
-        }
-        return null;
-    };
-
     return (
         <StyledTabLabel>
-            default{getIcon()}
+            default{getIcon(pull, pullRequestUrl)}
         </StyledTabLabel>
     );
 };
@@ -131,7 +134,7 @@ const TabContent = (
             ? <EditorTab />
             : null
     );
-}
+};
 
 // TODO: Fix inconsistent padding or margin in edit mode.
 export default function Editor(): JSX.Element {
