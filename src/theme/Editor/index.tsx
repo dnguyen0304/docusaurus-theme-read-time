@@ -5,6 +5,7 @@ import ScheduleIcon from '@mui/icons-material/Schedule';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { PullType, useEditor } from '../../contexts/editor';
 import EditorContainer from './Container';
@@ -37,20 +38,33 @@ function TabLabel(
 
     const getIcon = (): JSX.Element | null => {
         if (pullRequestUrl && pull) {
+            let icon;
+            let state;
             const fontSize: iconFontSize = 'inherit';
             const iconProps = {
                 fontSize: fontSize,
                 sx: { ml: '0.25rem' },
             };
             if (pull.state === 'open') {
-                return <ScheduleIcon {...iconProps} />;
+                icon = <ScheduleIcon {...iconProps} />;
+                state = 'Open';
             }
             if (pull.closedAt) {
-                return <ReportOutlinedIcon {...iconProps} />;
+                icon = <ReportOutlinedIcon {...iconProps} />;
+                state = 'Closed';
             }
             if (pull.mergedAt) {
-                return <MergeIcon {...iconProps} />;
+                icon = <MergeIcon {...iconProps} />;
+                state = 'Merged';
             }
+            return (
+                <Tooltip
+                    title={`${state}: ${pullRequestUrl}`}
+                    placement='top'
+                >
+                    {icon}
+                </Tooltip>
+            );
         }
         return null;
     };
