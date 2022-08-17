@@ -15,8 +15,8 @@ import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
-    LocalStoragePullType,
-    LOCAL_STORAGE_KEY_PULL
+    LOCAL_STORAGE_KEY_PULL_TITLE,
+    LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../constants';
 import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
@@ -24,10 +24,6 @@ import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
-import {
-    getLocalStorageObject,
-    setLocalStorageObject
-} from '../../../../Editor/utils';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
@@ -83,12 +79,7 @@ export default function ProposeButton(
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
-    const [title, setTitle] = React.useState<string>(
-        getLocalStorageObject<LocalStoragePullType>(
-            LOCAL_STORAGE_KEY_PULL,
-            'title',
-        )
-    );
+    const [title, setTitle] = React.useState<string>('');
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const checkPullStatusTimerId = React.useRef<number>();
@@ -152,11 +143,7 @@ export default function ProposeButton(
         }
         const pullUrl = await github.createPull(title);
         setPullRequestUrl(pullUrl);
-        setLocalStorageObject<LocalStoragePullType>(
-            LOCAL_STORAGE_KEY_PULL,
-            'url',
-            pullUrl,
-        );
+        localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, pullUrl);
         window.open(pullUrl, '_blank')!.focus();
 
         setIsLoading(false);
@@ -173,9 +160,8 @@ export default function ProposeButton(
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
-        setLocalStorageObject<LocalStoragePullType>(
-            LOCAL_STORAGE_KEY_PULL,
-            'title',
+        localStorage.setItem(
+            LOCAL_STORAGE_KEY_PULL_TITLE,
             event.target.value,
         );
     };
@@ -231,6 +217,17 @@ export default function ProposeButton(
             window.location.replace(externalRedirect);
         }
     }, [externalRedirect]);
+
+    // TODO(dnguyen0304): Extract getItem to a centralized location to
+    // facilitate maintenance.
+    React.useEffect(() => {
+        const item = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
+        if (item === null) {
+            setTitle('');
+            return;
+        }
+        setTitle(item);
+    }, []);
 
     return (
         <React.Fragment>

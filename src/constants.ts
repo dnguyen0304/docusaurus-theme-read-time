@@ -16,6 +16,8 @@ const GITHUB_AUTHORIZATION_CALLBACK_PATH: string = '/editor/callback';
 const SEARCH_PARAM_KEY_IS_LOGGED_IN: string = 'is_logged_in';
 const COOKIE_KEY_SESSION_ID: string = 'session_id';
 const LOCAL_STORAGE_KEY_PULL: string = 'pull';
+const LOCAL_STORAGE_KEY_PULL_TITLE: string = 'pull_title';
+const LOCAL_STORAGE_KEY_PULL_URL: string = 'pull_url';
 
 export {
     LocalStoragePullType,
@@ -24,5 +26,7 @@ export {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH,
     LOCAL_STORAGE_KEY_PULL,
+    LOCAL_STORAGE_KEY_PULL_TITLE,
+    LOCAL_STORAGE_KEY_PULL_URL,
     SEARCH_PARAM_KEY_IS_LOGGED_IN,
 };
