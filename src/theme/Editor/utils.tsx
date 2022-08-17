@@ -21,7 +21,14 @@ const getLocalStorageObject = <T,>(
     }
     const parsed = JSON.parse(item) as T;
     // TODO(dnguyen00304): Investigate type error.
-    return parsed[objectKey];
+    const objectValue = parsed[objectKey];
+    if (objectValue === undefined) {
+        throw new Error(
+            `key "${String(objectKey)}" not found for local storage item `
+            + `"${localStorageKey}"`
+        );
+    }
+    return objectValue;
 };
 
 const setLocalStorageObject = <T,>(
