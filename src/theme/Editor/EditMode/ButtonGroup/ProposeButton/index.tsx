@@ -152,11 +152,11 @@ export default function ProposeButton(
         }
         const pullUrl = await github.createPull(title);
         setPullRequestUrl(pullUrl);
-        localStorage.setItem(LOCAL_STORAGE_KEY_PULL, JSON.stringify(
-            {
-                url: pullUrl,
-            } as LocalStoragePullType
-        ));
+        setLocalStorageObject<LocalStoragePullType>(
+            LOCAL_STORAGE_KEY_PULL,
+            'url',
+            pullUrl,
+        );
         window.open(pullUrl, '_blank')!.focus();
 
         setIsLoading(false);
