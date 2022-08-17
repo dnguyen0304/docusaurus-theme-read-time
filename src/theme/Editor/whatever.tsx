@@ -3,7 +3,7 @@ import MergeIcon from '@mui/icons-material/Merge';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import Box from '@mui/material/Box';
-import type { Theme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Tooltip from '@mui/material/Tooltip';
@@ -13,10 +13,6 @@ import EditorContainer from './Container';
 import EditorTab from './Tab';
 
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
-
-interface StyledTabProps {
-    pull: PullType | undefined;
-}
 
 interface TabLabelProps {
     pull: PullType | undefined;
@@ -28,19 +24,17 @@ interface TabContentProps {
     activeIndex: number,
 }
 
-const getColor = (theme: Theme, pull: PullType | undefined): string => {
-    if (pull && pull.state === 'closed') {
-        // TODO(dnguyen0304): Add red color for theme palette.
-        return theme.palette.error.main;
-    }
-    return theme.palette.primary.main;
-}
+const StyledTabs = styled(Tabs)(({ theme, pull }) => ({
+    '.MuiTouchRipple-child': {
+        backgroundColor: getColor(theme, pull),
+    },
+    '.MuiTabs-indicator': {
+        backgroundColor: getColor(theme, pull),
+    },
+}));
 
-const StyledTab = styled(Tab, {
-    shouldForwardProp: (prop) => prop !== 'pull',
-})<StyledTabProps>(({ theme, pull }) => ({
+const StyledTab = styled(Tab)(({ theme, pull }) => ({
     '& > span:first-of-type': {
-        // TODO(dnguyen0304): Fix type error.
         color: getColor(theme, pull),
     },
 }));
@@ -117,8 +111,16 @@ function TabContent(
     );
 }
 
+function getColor(theme, pull: PullType | undefined) {
+    if (pull && pull.state === 'closed') {
+        return 'red';
+    }
+    return theme.palette.primary;
+}
+
 // TODO: Fix inconsistent padding or margin in edit mode.
 export default function Editor(): JSX.Element {
+    const theme = useTheme();
     const { tabs } = useEditor();
     const [activeIndex, setActiveIndex] = React.useState<number>(0);
 
@@ -136,23 +138,24 @@ export default function Editor(): JSX.Element {
             }}>
                 {/* TODO(dnguyen0304): Set textColor and indicatorColor based on
                     the pull request status. */}
-                <Tabs
+                <StyledTabs
                     onChange={handleChange}
                     value={activeIndex}
+                    pull={tabs[activeIndex].pull}
                 >
                     {tabs.map((tab, index) =>
                         <StyledTab
                             key={`tab-${index}`}
+                            pull={tab.pull}
                             label={
                                 <TabLabel
                                     pull={tab.pull}
                                     pullRequestUrl={tab.pullRequestUrl}
                                 />
                             }
-                            pull={tab.pull}
                         />
                     )}
-                </Tabs>
+                </StyledTabs>
             </Box>
             {tabs.map((tab, index) =>
                 <TabContent
