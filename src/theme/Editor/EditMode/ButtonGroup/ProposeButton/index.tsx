@@ -180,6 +180,30 @@ export default function ProposeButton(
         return pullRequestUrl ? 'Sync' : 'Propose';
     }
 
+    const checkPullStatus = async () => {
+        // TODO(dnguyen0304): Fix duplicated auth code.
+        const {
+            authRedirectUrl,
+            github,
+        } = await initializeAuth(
+            githubContext,
+            siteContext,
+            currentPath,
+        );
+
+        if (authRedirectUrl) {
+            setExternalRedirect(authRedirectUrl);
+            return;
+        }
+        if (!github) {
+            throw new Error('expected Github service to be defined');
+        }
+
+        const { setPull } = tabs[activeTabId];
+        const status = await github.checkPullStatus(pullRequestUrl);
+        setPull(status);
+    };
+
     // Support syncing local changes.
     useHotkeys(
         KeyBinding.key,
@@ -191,28 +215,9 @@ export default function ProposeButton(
             return;
         }
 
+        checkPullStatus();
         checkPullStatusTimerId.current = window.setInterval(async () => {
-            // TODO(dnguyen0304): Fix duplicated auth code.
-            const {
-                authRedirectUrl,
-                github,
-            } = await initializeAuth(
-                githubContext,
-                siteContext,
-                currentPath,
-            );
-
-            if (authRedirectUrl) {
-                setExternalRedirect(authRedirectUrl);
-                return;
-            }
-            if (!github) {
-                throw new Error('expected Github service to be defined');
-            }
-
-            const { setPull } = tabs[activeTabId];
-            const status = await github.checkPullStatus(pullRequestUrl);
-            setPull(status);
+            await checkPullStatus();
         }, 60 * 1000);
 
         return () => {
