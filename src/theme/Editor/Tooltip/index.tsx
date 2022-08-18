@@ -37,7 +37,7 @@ const StyledTooltip = styled(({ className, ...props }: TooltipProps): JSX.Elemen
         },
     },
     // Override Docusaurus Infima background-color style.
-    'table tr:nth-child(2n)': {
+    'table tr:nth-of-type(2n)': {
         backgroundColor: 'inherit',
     },
 }));
@@ -72,7 +72,7 @@ export default function Tooltip(
                 // styles.
                 <Table sx={{
                     mb: 0,
-                    '& tr:first-child': {
+                    '& tr:first-of-type': {
                         borderTop: 'inherit',
                     },
                 }}>
