@@ -2,7 +2,7 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 import {
     COOKIE_KEY_SESSION_ID,
-    // LOCAL_STORAGE_KEY_PULL_URL,
+    LOCAL_STORAGE_KEY_PULL_URL,
     SEARCH_PARAM_KEY_IS_LOGGED_IN
 } from '../../../constants';
 import { useEditor } from '../../../contexts/editor';
@@ -10,7 +10,7 @@ import { useSnackbar } from '../../../contexts/snackbar';
 
 export default function App(): null {
     const {
-        // activeTabId,
+        activeTabId,
         tabs,
         addTab,
     } = useEditor();
@@ -44,14 +44,10 @@ export default function App(): null {
     }, []);
 
     React.useEffect(() => {
+        const pullRequestUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
         if (tabs.length === 0) {
-            addTab();
+            addTab(pullRequestUrl ? pullRequestUrl : '');
         }
-        // const { setPullRequestUrl } = tabs[activeTabId];
-        // const pullRequestUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
-        // if (pullRequestUrl) {
-        //     setPullRequestUrl(pullRequestUrl);
-        // }
     }, []);
 
     return null;
