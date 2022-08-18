@@ -1,14 +1,6 @@
 import * as React from 'react';
+import { PullType } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
-
-interface PullType {
-    state: 'open' | 'closed';
-    // Gotcha: When a pull request is closed, both closedAt and mergedAt are
-    // updated. Therefore, mergedAt must be directly checked to determine if a
-    // pull request has been merged.
-    closedAt: string | null;
-    mergedAt: string | null;
-}
 
 // TODO(dnguyen0304): Support setState setStatefunctional updates.
 // TODO(dnguyen0304): Add lastUpdatedAt.
@@ -132,6 +124,5 @@ function useEditor(): ContextValue {
 export {
     EditorProvider,
     EditorTab,
-    PullType,
     useEditor,
 };

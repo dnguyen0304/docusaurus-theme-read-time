@@ -10,10 +10,9 @@ import {
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_CALLBACK_PATH
 } from '../../../constants';
-import type { PullType } from '../../../contexts/editor';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
-import type { GithubUser } from '../../../docusaurus-theme-editor';
+import type { GithubUser, PullType } from '../../../docusaurus-theme-editor';
 
 interface ParseCallbackUrlType {
     authorizationCode: string;

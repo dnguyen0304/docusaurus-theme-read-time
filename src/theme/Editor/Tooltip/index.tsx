@@ -91,6 +91,7 @@ export default function Tooltip(
                                     alignItems: 'center',
                                     textTransform: 'capitalize',
                                 }}>
+                                    {/* broken state */}
                                     <span>{pullState}</span>{pullStateIcon}
                                 </Box>
                             </TableCell>
@@ -121,6 +122,7 @@ export default function Tooltip(
                         </TableRow>
                         <TableRow {...tableRowProps}>
                             <TableCell colSpan={2}>
+                                {/* broken */}
                                 {STATE_TO_DESCRIPTION[pullState]}
                             </TableCell>
                         </TableRow>
