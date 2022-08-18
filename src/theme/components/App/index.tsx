@@ -2,11 +2,18 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 import {
     COOKIE_KEY_SESSION_ID,
+    // LOCAL_STORAGE_KEY_PULL_URL,
     SEARCH_PARAM_KEY_IS_LOGGED_IN
 } from '../../../constants';
+import { useEditor } from '../../../contexts/editor';
 import { useSnackbar } from '../../../contexts/snackbar';
 
 export default function App(): null {
+    const {
+        // activeTabId,
+        tabs,
+        addTab,
+    } = useEditor();
     const { snackbar } = useSnackbar();
 
     const [haveShownWelcome, setHaveShownWelcome] =
@@ -34,6 +41,17 @@ export default function App(): null {
             (previous) => previous * 1.5,
         );
         setHaveShownWelcome(true);
+    }, []);
+
+    React.useEffect(() => {
+        if (tabs.length === 0) {
+            addTab();
+        }
+        // const { setPullRequestUrl } = tabs[activeTabId];
+        // const pullRequestUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
+        // if (pullRequestUrl) {
+        //     setPullRequestUrl(pullRequestUrl);
+        // }
     }, []);
 
     return null;
