@@ -1,5 +1,5 @@
 import { useLocation } from '@docusaurus/router';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -180,6 +180,7 @@ export default function ProposeButton(
         return pullRequestUrl ? 'Sync' : 'Propose';
     }
 
+    // Support syncing local changes.
     useHotkeys(
         KeyBinding.key,
         toggleConfirmation,
@@ -247,10 +248,11 @@ export default function ProposeButton(
                 placement='top'
             >
                 <Button
+                    // Support syncing local changes.
                     onClick={toggleConfirmation}
                     startIcon={
                         pullRequestUrl
-                            ? <CloudUploadIcon />
+                            ? <CloudUploadOutlinedIcon />
                             : <SendIcon />
                     }
                     variant='contained'
