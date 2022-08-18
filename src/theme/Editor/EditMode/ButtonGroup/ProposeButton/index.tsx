@@ -1,4 +1,5 @@
 import { useLocation } from '@docusaurus/router';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -173,6 +174,10 @@ export default function ProposeButton(
         }
     };
 
+    const getLabel = (pullRequestUrl: string): string => {
+        return pullRequestUrl ? 'Sync' : 'Propose';
+    }
+
     useHotkeys(
         KeyBinding.key,
         toggleConfirmation,
@@ -234,15 +239,21 @@ export default function ProposeButton(
             {/* TODO(dnguyen0304): Extract to a centralized location to
                 facilitate maintenance. */}
             <Tooltip
-                title={`Propose (${KeyBinding.friendlyLabel})`}
+                title={
+                    `${getLabel(pullRequestUrl)} (${KeyBinding.friendlyLabel})`
+                }
                 placement='top'
             >
                 <Button
                     onClick={toggleConfirmation}
-                    startIcon={<SendIcon />}
+                    startIcon={
+                        pullRequestUrl
+                            ? <CloudUploadIcon />
+                            : <SendIcon />
+                    }
                     variant='contained'
                 >
-                    Propose
+                    {getLabel(pullRequestUrl)}
                 </Button>
             </Tooltip>
             <StyledDialog
