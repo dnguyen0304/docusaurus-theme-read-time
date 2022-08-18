@@ -18,7 +18,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
     readonly tabs: EditorTab[];
-    readonly addTab: () => EditorTab;
+    readonly addTab: (pullRequestUrl?: string) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -38,7 +38,7 @@ function useContextValue(): ContextValue {
         return nextTabId;
     };
 
-    const addTab = (): EditorTab => {
+    const addTab = (pullRequestUrl: string = ''): EditorTab => {
         const tabId = getNextTabId();
         const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
@@ -65,7 +65,7 @@ function useContextValue(): ContextValue {
         const newTab = {
             tabId,
             setPull,
-            pullRequestUrl: '',
+            pullRequestUrl: pullRequestUrl,
             setPullRequestUrl,
         };
 
