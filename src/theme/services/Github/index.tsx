@@ -12,7 +12,7 @@ import {
 } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
-import type { GithubUser, GithubPull } from '../../../docusaurus-theme-editor';
+import type { GithubPull, GithubUser, InternalGithubState } from '../../../docusaurus-theme-editor';
 
 interface ParseCallbackUrlType {
     authorizationCode: string;
@@ -224,6 +224,20 @@ const doAuthenticate = async (
     };
 }
 
+const convertToInternalState = (
+    state: 'open' | 'closed',
+    mergedAt: string | null,
+): InternalGithubState => {
+    if (state === 'open') {
+        return state;
+    }
+    if (mergedAt) {
+        return 'merged';
+    } else {
+        return 'closed';
+    }
+};
+
 export default function Github(
     githubContext: AuthenticateType,
     siteContext: SiteContextValue,
@@ -378,7 +392,7 @@ export default function Github(
         });
 
         return {
-            state,
+            state: convertToInternalState(state, mergedAt),
             closedAt,
             mergedAt,
         };
