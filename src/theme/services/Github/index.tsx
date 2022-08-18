@@ -32,7 +32,11 @@ interface GithubType {
     readonly getUser: () => GithubUser;
     readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
-    readonly createCommit: (content: string, message: string) => Promise<void>;
+    readonly createCommit: (
+        content: string,
+        message: string,
+        branchName?: string,
+    ) => Promise<void>;
     readonly checkPullStatus: (pullUrl: string) => Promise<GithubPull>;
     readonly createPull: (title: string) => Promise<string>;
     readonly closePull: (pullUrl: string) => Promise<void>;
@@ -253,7 +257,7 @@ export default function Github(
     } = siteContext;
 
     let defaultBranch = '';
-    let branchName = '';
+    let _branchName = '';
     let commitExists = false;
 
     const getDefaultBranch = async (): Promise<string> => {
@@ -280,8 +284,8 @@ export default function Github(
     };
 
     const createBranch = async (name: string): Promise<void> => {
-        if (branchName) {
-            throw new Error(`branch "${branchName}" already exists`);
+        if (_branchName) {
+            throw new Error(`branch "${_branchName}" already exists`);
         }
         if (!defaultBranch) {
             await getDefaultBranch();
@@ -318,11 +322,17 @@ export default function Github(
             }
         }
 
-        branchName = name;
+        _branchName = name;
     }
 
-    const createCommit = async (content: string, message: string) => {
-        if (!branchName) {
+    const createCommit = async (
+        content: string,
+        message: string,
+        branchName: string = '',
+    ) => {
+        const targetBranchName = branchName || _branchName;
+
+        if (!targetBranchName) {
             throw new Error('branch not found');
         }
 
@@ -335,13 +345,13 @@ export default function Github(
             owner,
             repo: repository,
             path: path,
-            ref: `${GITHUB_REF_PREFIX}${branchName}`,
+            ref: `${GITHUB_REF_PREFIX}${targetBranchName}`,
         });
 
         await api?.repos.createOrUpdateFileContents({
             owner,
             repo: repository,
-            branch: branchName,
+            branch: targetBranchName,
             path: path,
             sha: contentSha,
             content: encode(content),
@@ -365,7 +375,7 @@ export default function Github(
             owner,
             repo: repository,
             base: defaultBranch,
-            head: `${user?.username}:${branchName}`,
+            head: `${user?.username}:${_branchName}`,
             title: title,
         });
 
