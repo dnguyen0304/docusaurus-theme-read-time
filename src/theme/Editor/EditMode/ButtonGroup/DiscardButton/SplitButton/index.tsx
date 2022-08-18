@@ -10,7 +10,11 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import { LOCAL_STORAGE_KEY_PULL_TITLE } from '../../../../../../constants';
+import {
+    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
+    LOCAL_STORAGE_KEY_PULL_TITLE,
+    LOCAL_STORAGE_KEY_PULL_URL
+} from '../../../../../../constants';
 import { useEditor } from '../../../../../../contexts/editor';
 import { useGithub } from '../../../../../../contexts/github';
 import { useSite } from '../../../../../../contexts/site';
@@ -100,6 +104,8 @@ export default function SplitButton(
             }
 
             await github.closePull(pullRequestUrl);
+            localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
+            localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
             setPullRequestUrl('');
             setIsLoading(false);
         }
