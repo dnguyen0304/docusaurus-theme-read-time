@@ -11,7 +11,7 @@ import * as React from 'react';
 import { InternalGithubState } from '../../../docusaurus-theme-editor';
 import { KeyBinding } from '../EditMode/ButtonGroup/DiscardButton';
 
-interface Props extends Pick<TooltipProps, 'arrow' | 'children' | 'placement'> {
+interface Props extends Omit<TooltipProps, 'title'> {
     pullUrl: string;
     pullState: InternalGithubState;
     pullStateIcon: JSX.Element | null;
