@@ -97,7 +97,6 @@ const TabLabel = ({ pullStateIcon }: TabLabelProps): JSX.Element => {
         justifyContent: 'center',
         alignItems: 'center',
     });
-
     return (
         <StyledTabLabel>
             default{pullStateIcon}
