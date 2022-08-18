@@ -35,12 +35,13 @@ interface TabContentProps {
 }
 
 const getColor = (theme: Theme, pull: GithubPull | undefined): string => {
-    if (pull && pull.state === 'closed') {
-        if (pull.mergedAt) {
-            return PURPLE_MERGED;
-        } else {
+    if (pull) {
+        if (pull.state === 'closed') {
             // TODO(dnguyen0304): Add red color for theme palette.
             return theme.palette.error.main;
+        }
+        if (pull.state === 'merged') {
+            return PURPLE_MERGED;
         }
     }
     return theme.palette.primary.main;
