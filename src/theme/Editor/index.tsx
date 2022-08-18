@@ -146,6 +146,7 @@ export default function Editor(): JSX.Element {
                         );
                         return (
                             <EditorTooltip
+                                key={'tab-tooltip-${index}'}
                                 arrow
                                 leaveDelay={500}
                                 placement='left-start'
@@ -154,7 +155,6 @@ export default function Editor(): JSX.Element {
                                 pullUrl={tab.pullRequestUrl}
                             >
                                 <StyledTab
-                                    key={`tab-${index}`}
                                     label={<TabLabel pullStateIcon={pullStateIcon} />}
                                     pull={tab.pull}
                                 />
