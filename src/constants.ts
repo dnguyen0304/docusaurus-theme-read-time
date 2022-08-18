@@ -1,3 +1,5 @@
+// TODO(dnguyen0304): Extract to a centralized location to facilitate
+// maintenance.
 interface LocalStoragePullType {
     url: string;
     title: string;
