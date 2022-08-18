@@ -52,25 +52,19 @@ const getIcon = (
     pullRequestUrl: string,
 ): JSX.Element | null => {
     if (pullRequestUrl && pull) {
-        let icon: JSX.Element | undefined;
-        const fontSize: iconFontSize = 'inherit';
         const iconProps = {
-            fontSize: fontSize,
+            fontSize: 'inherit' as iconFontSize,
             sx: { ml: '0.25rem' },
         };
+        if (pull.state === 'open') {
+            return <ScheduleIcon {...iconProps} />;
+        }
         if (pull.state === 'closed') {
-            if (pull.mergedAt) {
-                icon = <MergeIcon {...iconProps} />;
-            } else {
-                icon = <ReportOutlinedIcon {...iconProps} />;
-            }
-        } else {
-            icon = <ScheduleIcon {...iconProps} />;
+            return <ReportOutlinedIcon {...iconProps} />;
         }
-        if (icon === undefined) {
-            throw new Error('expected icon to be defined');
+        if (pull.state === 'merged') {
+            return <MergeIcon {...iconProps} />;
         }
-        return icon;
     }
     return null;
 };
