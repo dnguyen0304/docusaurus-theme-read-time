@@ -161,6 +161,7 @@ export default function Editor(): JSX.Element {
                         return (
                             <EditorTooltip
                                 arrow
+                                leaveDelay={500}
                                 placement='left-start'
                                 pullState={tab.pull?.state}
                                 pullStateIcon={pullStateIcon}
