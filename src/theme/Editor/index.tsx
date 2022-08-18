@@ -48,8 +48,8 @@ const getColor = (theme: Theme, pull: GithubPull | undefined): string => {
 };
 
 const getIcon = (
-    pull: GithubPull | undefined,
     pullRequestUrl: string,
+    pull: GithubPull | undefined,
 ): JSX.Element | null => {
     if (pullRequestUrl && pull) {
         const iconProps = {
@@ -143,8 +143,8 @@ export default function Editor(): JSX.Element {
                 >
                     {tabs.map((tab, index) => {
                         const pullStateIcon = getIcon(
-                            tab.pull,
                             tab.pullRequestUrl,
+                            tab.pull,
                         );
                         return (
                             <EditorTooltip
