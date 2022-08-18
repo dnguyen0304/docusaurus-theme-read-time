@@ -16,6 +16,7 @@ import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
+    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../constants';
@@ -116,11 +117,12 @@ export default function ProposeButton(
             throw new Error('expected Github service to be defined');
         }
 
-        await github.createBranch(
+        const branchName =
             `docusaurus-theme-editor`
             + `-${github.getUser().username}`
             + `-${Math.floor(Date.now() / 1000)}`
-        );
+        await github.createBranch(branchName);
+        localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, branchName);
         try {
             await github.createCommit(
                 getMarkdown(),
