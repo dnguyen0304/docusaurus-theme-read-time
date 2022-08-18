@@ -134,8 +134,6 @@ export default function Editor(): JSX.Element {
                 borderBottom: 1,
                 borderColor: 'divider',
             }}>
-                {/* TODO(dnguyen0304): Set textColor and indicatorColor based on
-                    the pull request status. */}
                 <StyledTabs
                     onChange={handleChange}
                     pull={tabs[activeIndex].pull}
