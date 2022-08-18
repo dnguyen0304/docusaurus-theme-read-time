@@ -10,7 +10,6 @@ import { useSnackbar } from '../../../contexts/snackbar';
 
 export default function App(): null {
     const {
-        activeTabId,
         tabs,
         addTab,
     } = useEditor();
