@@ -20,7 +20,7 @@ export interface GithubUser {
     readonly fullName?: string;
 }
 
-export type InternalGithubState = 'open' | 'closed' | 'merged' | undefined;
+export type InternalGithubState = 'open' | 'closed' | 'merged';
 
 export interface GithubPull {
     state: 'open' | 'closed';
