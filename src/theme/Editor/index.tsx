@@ -52,7 +52,6 @@ const getIcon = (
     pullRequestUrl: string,
 ): JSX.Element | null => {
     if (pullRequestUrl && pull) {
-        let state: 'Open' | 'Closed' | 'Merged' | undefined;
         let icon: JSX.Element | undefined;
         const fontSize: iconFontSize = 'inherit';
         const iconProps = {
@@ -62,17 +61,11 @@ const getIcon = (
         if (pull.state === 'closed') {
             if (pull.mergedAt) {
                 icon = <MergeIcon {...iconProps} />;
-                state = 'Merged';
             } else {
                 icon = <ReportOutlinedIcon {...iconProps} />;
-                state = 'Closed';
             }
         } else {
             icon = <ScheduleIcon {...iconProps} />;
-            state = 'Open';
-        }
-        if (state == undefined) {
-            throw new Error('expected state to be defined');
         }
         if (icon === undefined) {
             throw new Error('expected icon to be defined');
