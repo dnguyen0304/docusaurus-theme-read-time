@@ -13,7 +13,7 @@ import { KeyBinding } from '../EditMode/ButtonGroup/DiscardButton';
 
 interface Props extends Omit<TooltipProps, 'title'> {
     pullUrl: string;
-    pullState: InternalGithubState;
+    pullState: InternalGithubState | undefined;
     pullStateIcon: JSX.Element | null;
 }
 
