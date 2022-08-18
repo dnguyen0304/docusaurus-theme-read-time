@@ -8,7 +8,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
-import { PullType } from '../../docusaurus-theme-editor';
+import { GithubPull } from '../../docusaurus-theme-editor';
 import EditorContainer from './Container';
 import EditorTab from './Tab';
 import EditorTooltip from './Tooltip';
@@ -18,11 +18,11 @@ const PURPLE_MERGED: string = '#8250df';
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
 interface StyledTabsProps {
-    pull: PullType | undefined;
+    pull: GithubPull | undefined;
 }
 
 interface StyledTabProps {
-    pull: PullType | undefined;
+    pull: GithubPull | undefined;
 }
 
 interface TabLabelProps {
@@ -34,7 +34,7 @@ interface TabContentProps {
     activeIndex: number,
 }
 
-const getColor = (theme: Theme, pull: PullType | undefined): string => {
+const getColor = (theme: Theme, pull: GithubPull | undefined): string => {
     if (pull && pull.state === 'closed') {
         if (pull.mergedAt) {
             return PURPLE_MERGED;
@@ -47,7 +47,7 @@ const getColor = (theme: Theme, pull: PullType | undefined): string => {
 };
 
 const getIcon = (
-    pull: PullType | undefined,
+    pull: GithubPull | undefined,
     pullRequestUrl: string,
 ): JSX.Element | null => {
     if (pullRequestUrl && pull) {

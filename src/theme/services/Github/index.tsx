@@ -12,7 +12,7 @@ import {
 } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
-import type { GithubUser, PullType } from '../../../docusaurus-theme-editor';
+import type { GithubUser, GithubPull } from '../../../docusaurus-theme-editor';
 
 interface ParseCallbackUrlType {
     authorizationCode: string;
@@ -33,7 +33,7 @@ interface GithubType {
     readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (content: string, message: string) => Promise<void>;
-    readonly checkPullStatus: (pullUrl: string) => Promise<PullType>;
+    readonly checkPullStatus: (pullUrl: string) => Promise<GithubPull>;
     readonly createPull: (title: string) => Promise<string>;
     readonly closePull: (pullUrl: string) => Promise<void>;
 }
@@ -358,7 +358,7 @@ export default function Github(
         return html_url;
     };
 
-    const checkPullStatus = async (pullUrl: string): Promise<PullType> => {
+    const checkPullStatus = async (pullUrl: string): Promise<GithubPull> => {
         const pullId = new URI(pullUrl).filename();
 
         if (pullId === '') {

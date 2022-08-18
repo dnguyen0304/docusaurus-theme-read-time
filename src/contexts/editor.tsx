@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { PullType } from '../docusaurus-theme-editor';
+import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Support setState setStatefunctional updates.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
-    pull?: PullType;
-    setPull: (newValue: PullType) => void;
-    // TODO(dnguyen0304): Investigate moving URL into PullType.
+    pull?: GithubPull;
+    setPull: (newValue: GithubPull) => void;
+    // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullRequestUrl: string;
     setPullRequestUrl: (newValue: string) => void;
 }
@@ -40,7 +40,7 @@ function useContextValue(): ContextValue {
 
     const addTab = (): EditorTab => {
         const tabId = getNextTabId();
-        const setPull = (newValue: PullType) => {
+        const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
                     return tab;
