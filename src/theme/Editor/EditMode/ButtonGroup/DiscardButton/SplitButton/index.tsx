@@ -71,7 +71,7 @@ export default function SplitButton(
     // TODO(dnguyen0304): Remove duplicated active tab code.
     const {
         pullUrl,
-        setPullRequestUrl,
+        setPullUrl,
     } = tabs[activeTabId];
 
     const handleClick = async () => {
@@ -106,7 +106,7 @@ export default function SplitButton(
             await github.closePull(pullUrl);
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
-            setPullRequestUrl('');
+            setPullUrl('');
             setIsLoading(false);
         }
 

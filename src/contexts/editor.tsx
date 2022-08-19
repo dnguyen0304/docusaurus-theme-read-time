@@ -10,7 +10,7 @@ interface EditorTab {
     setPull: (newValue: GithubPull) => void;
     // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullUrl: string;
-    setPullRequestUrl: (newValue: string) => void;
+    setPullUrl: (newValue: string) => void;
 }
 
 // aliases: table of contents
@@ -51,7 +51,7 @@ function useContextValue(): ContextValue {
                 }
             }));
         };
-        const setPullRequestUrl = (newValue: string) => {
+        const setPullUrl = (newValue: string) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
                     return tab;
@@ -66,7 +66,7 @@ function useContextValue(): ContextValue {
             tabId,
             setPull,
             pullUrl: pullUrl,
-            setPullRequestUrl,
+            setPullUrl,
         };
 
         setTabs(prev => [

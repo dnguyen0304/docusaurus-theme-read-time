@@ -97,7 +97,7 @@ export default function ProposeButton(
         // TODO(dnguyen0304): Investigate if an explicit save is required.
         saveMarkdown();
 
-        const { setPullRequestUrl } = tabs[activeTabId];
+        const { setPullUrl } = tabs[activeTabId];
 
         // TODO(dnguyen0304): Fix duplicated auth code.
         const {
@@ -145,7 +145,7 @@ export default function ProposeButton(
             }
         }
         const pullUrl = await github.createPull(title);
-        setPullRequestUrl(pullUrl);
+        setPullUrl(pullUrl);
         localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, pullUrl);
         window.open(pullUrl, '_blank')!.focus();
 
