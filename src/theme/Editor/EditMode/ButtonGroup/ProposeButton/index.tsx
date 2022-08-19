@@ -240,9 +240,9 @@ export default function ProposeButton(
         const item = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
         if (item === null) {
             setPullTitle('');
-            return;
+        } else {
+            setPullTitle(item);
         }
-        setPullTitle(item);
     }, []);
 
     return (
