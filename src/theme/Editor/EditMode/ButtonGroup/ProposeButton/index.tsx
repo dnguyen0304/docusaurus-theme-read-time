@@ -83,6 +83,7 @@ export default function ProposeButton(
         pullTitle,
         pullUrl,
         setPullTitle,
+        setPullBranchName,
     } = tabs[activeTabId];
 
     const [confirmationIsOpen, setConfirmationIsOpen] =
@@ -125,6 +126,7 @@ export default function ProposeButton(
             + `-${github.getUser().username}`
             + `-${Math.floor(Date.now() / 1000)}`
         await github.createBranch(branchName);
+        setPullBranchName(branchName);
         localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, branchName);
         try {
             await github.createCommit(

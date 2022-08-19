@@ -73,6 +73,7 @@ export default function SplitButton(
         pullUrl,
         setPullTitle,
         setPullUrl,
+        setPullBranchName,
     } = tabs[activeTabId];
 
     const handleClick = async () => {
@@ -107,6 +108,7 @@ export default function SplitButton(
 
             await github.closePull(pullUrl);
             setPullUrl('');
+            setPullBranchName('');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
             setIsLoading(false);

@@ -2,6 +2,7 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 import {
     COOKIE_KEY_SESSION_ID,
+    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL,
     SEARCH_PARAM_KEY_IS_LOGGED_IN
@@ -46,11 +47,13 @@ export default function App(): null {
     React.useEffect(() => {
         const pullTitle = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
         const pullUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
+        const pullBranchName =
+            localStorage.getItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME);
         if (tabs.length === 0) {
             addTab({
                 pullTitle: pullTitle ? pullTitle : '',
                 pullUrl: pullUrl ? pullUrl : '',
-                pullBranchName: '',
+                pullBranchName: pullBranchName ? pullBranchName : '',
             });
         }
     }, []);
