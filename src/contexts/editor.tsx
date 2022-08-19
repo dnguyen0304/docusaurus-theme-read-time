@@ -20,7 +20,10 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
     readonly tabs: EditorTab[];
-    readonly addTab: (pullUrl?: string) => EditorTab;
+    readonly addTab: (
+        pullTitle?: string,
+        pullUrl?: string,
+    ) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -40,7 +43,10 @@ function useContextValue(): ContextValue {
         return nextTabId;
     };
 
-    const addTab = (pullUrl: string = ''): EditorTab => {
+    const addTab = (
+        pullTitle: string = '',
+        pullUrl: string = '',
+    ): EditorTab => {
         const tabId = getNextTabId();
         const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
@@ -78,7 +84,7 @@ function useContextValue(): ContextValue {
         const newTab = {
             tabId,
             setPull,
-            pullTitle: '',
+            pullTitle,
             setPullTitle,
             pullUrl,
             setPullUrl,
