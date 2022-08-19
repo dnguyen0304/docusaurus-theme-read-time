@@ -13,6 +13,8 @@ interface EditorTab {
     // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullUrl: string;
     setPullUrl: (newValue: string) => void;
+    pullBranchName: string;
+    setPullBranchName: (newValue: string) => void;
 }
 
 // aliases: table of contents
@@ -23,6 +25,7 @@ interface ContextValue {
     readonly addTab: (
         pullTitle?: string,
         pullUrl?: string,
+        pullBranchName?: string,
     ) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
@@ -46,8 +49,10 @@ function useContextValue(): ContextValue {
     const addTab = (
         pullTitle: string = '',
         pullUrl: string = '',
+        pullBranchName: string = '',
     ): EditorTab => {
         const tabId = getNextTabId();
+        // TODO(dnguyen0304): Refactor duplicated code.
         const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
@@ -81,6 +86,17 @@ function useContextValue(): ContextValue {
                 }
             }));
         };
+        const setPullBranchName = (newValue: string) => {
+            setTabs(tabs => tabs.map(tab => {
+                if (tab.tabId !== tabId) {
+                    return tab;
+                }
+                return {
+                    ...tab,
+                    pullBranchName: newValue,
+                }
+            }));
+        };
         const newTab = {
             tabId,
             setPull,
@@ -88,6 +104,8 @@ function useContextValue(): ContextValue {
             setPullTitle,
             pullUrl,
             setPullUrl,
+            pullBranchName,
+            setPullBranchName,
         };
 
         setTabs(prev => [
