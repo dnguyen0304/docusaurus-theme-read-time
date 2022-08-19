@@ -79,14 +79,17 @@ export default function ProposeButton(
     const githubContext = useGithub();
     const siteContext = useSite();
 
+    const {
+        pullTitle,
+        pullUrl,
+        setPullTitle,
+    } = tabs[activeTabId];
+
     const [confirmationIsOpen, setConfirmationIsOpen] =
         React.useState<boolean>(false);
-    const [title, setTitle] = React.useState<string>('');
     const [externalRedirect, setExternalRedirect] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const checkPullStatusTimerId = React.useRef<number>();
-
-    const { pullUrl } = tabs[activeTabId];
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
@@ -144,25 +147,25 @@ export default function ProposeButton(
                 throw error;
             }
         }
-        const pullUrl = await github.createPull(title);
+        const pullUrl = await github.createPull(pullTitle);
         setPullUrl(pullUrl);
         localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, pullUrl);
         window.open(pullUrl, '_blank')!.focus();
 
         setIsLoading(false);
 
-        // TODO(dnguyen0304): Add validation for title text field.
+        // TODO(dnguyen0304): Add validation for pullTitle text field.
         // TODO(dnguyen0304): Investigate adding delay to wait for the
         // transition animation.
         snackbar.sendSuccessAlert(
-            `Successfully proposed changes for "${title}".`
+            `Successfully proposed changes for "${pullTitle}".`
         );
         toggleConfirmation();
         closeEditor();
     };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value);
+        setPullTitle(event.target.value);
         localStorage.setItem(
             LOCAL_STORAGE_KEY_PULL_TITLE,
             event.target.value,
@@ -236,10 +239,10 @@ export default function ProposeButton(
     React.useEffect(() => {
         const item = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
         if (item === null) {
-            setTitle('');
+            setPullTitle('');
             return;
         }
-        setTitle(item);
+        setPullTitle(item);
     }, []);
 
     return (
@@ -289,7 +292,7 @@ export default function ProposeButton(
                                 label='Title'
                                 onChange={handleTitleChange}
                                 onKeyUp={handleTitleKeyUp}
-                                value={title}
+                                value={pullTitle}
                             />
                         </Stack>
                     </DialogContent>
