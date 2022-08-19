@@ -71,12 +71,14 @@ export default function SplitButton(
     // TODO(dnguyen0304): Remove duplicated active tab code.
     const {
         pullUrl,
+        setPullTitle,
         setPullUrl,
     } = tabs[activeTabId];
 
     const handleClick = async () => {
         const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
 
+        setPullTitle('');
         localStorage.setItem(LOCAL_STORAGE_KEY_PULL_TITLE, '');
 
         if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
@@ -104,9 +106,9 @@ export default function SplitButton(
             }
 
             await github.closePull(pullUrl);
+            setPullUrl('');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
-            setPullUrl('');
             setIsLoading(false);
         }
 

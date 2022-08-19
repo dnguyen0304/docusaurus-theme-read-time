@@ -234,17 +234,6 @@ export default function ProposeButton(
         }
     }, [externalRedirect]);
 
-    // TODO(dnguyen0304): Extract getItem to a centralized location to
-    // facilitate maintenance.
-    React.useEffect(() => {
-        const item = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
-        if (item === null) {
-            setPullTitle('');
-        } else {
-            setPullTitle(item);
-        }
-    }, []);
-
     return (
         <React.Fragment>
             {/* TODO(dnguyen0304): Extract to a centralized location to
