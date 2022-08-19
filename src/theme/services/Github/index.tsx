@@ -376,7 +376,7 @@ export default function Github(
             repo: repository,
             base: defaultBranch,
             head: `${user?.username}:${_branchName}`,
-            title: title,
+            title,
         });
 
         return html_url;
