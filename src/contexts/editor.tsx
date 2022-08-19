@@ -2,6 +2,12 @@ import * as React from 'react';
 import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
+interface AddTabProps {
+    pullTitle: string,
+    pullUrl: string,
+    pullBranchName: string,
+}
+
 // TODO(dnguyen0304): Support setState setStatefunctional updates.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
@@ -22,11 +28,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
     readonly tabs: EditorTab[];
-    readonly addTab: (
-        pullTitle?: string,
-        pullUrl?: string,
-        pullBranchName?: string,
-    ) => EditorTab;
+    readonly addTab: (props: AddTabProps) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -47,9 +49,11 @@ function useContextValue(): ContextValue {
     };
 
     const addTab = (
-        pullTitle: string = '',
-        pullUrl: string = '',
-        pullBranchName: string = '',
+        {
+            pullTitle = '',
+            pullUrl = '',
+            pullBranchName = '',
+        }: AddTabProps
     ): EditorTab => {
         const tabId = getNextTabId();
         // TODO(dnguyen0304): Refactor duplicated code.

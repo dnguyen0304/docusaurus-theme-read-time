@@ -47,10 +47,11 @@ export default function App(): null {
         const pullTitle = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
         const pullUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
         if (tabs.length === 0) {
-            addTab(
-                pullTitle ? pullTitle : '',
-                pullUrl ? pullUrl : '',
-            );
+            addTab({
+                pullTitle: pullTitle ? pullTitle : '',
+                pullUrl: pullUrl ? pullUrl : '',
+                pullBranchName: '',
+            });
         }
     }, []);
 
