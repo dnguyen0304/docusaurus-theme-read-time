@@ -65,7 +65,7 @@ function useContextValue(): ContextValue {
         const newTab = {
             tabId,
             setPull,
-            pullUrl: pullUrl,
+            pullUrl,
             setPullUrl,
         };
 
