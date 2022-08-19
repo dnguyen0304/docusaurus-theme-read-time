@@ -70,7 +70,7 @@ export default function SplitButton(
 
     // TODO(dnguyen0304): Remove duplicated active tab code.
     const {
-        pullRequestUrl,
+        pullUrl,
         setPullRequestUrl,
     } = tabs[activeTabId];
 
@@ -103,7 +103,7 @@ export default function SplitButton(
                 throw new Error('expected Github service to be defined');
             }
 
-            await github.closePull(pullRequestUrl);
+            await github.closePull(pullUrl);
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
             setPullRequestUrl('');
@@ -152,7 +152,7 @@ export default function SplitButton(
     const getText = (text: string): string => {
         // TODO(dnguyen0304): Investigate if there is a use case for discarding
         // local changes without closing the remote pull.
-        if (text.includes(MENU_ITEM_OPTION_DISCARD) && pullRequestUrl) {
+        if (text.includes(MENU_ITEM_OPTION_DISCARD) && pullUrl) {
             return `${MENU_ITEM_OPTION_DISCARD} and ${MENU_ITEM_OPTION_CLOSE}`;
         }
         return text;
@@ -235,7 +235,7 @@ export default function SplitButton(
                                             key={`${MENU_ITEM_KEY_PREFIX}-${option}`}
                                             disabled={
                                                 option.includes(MENU_ITEM_OPTION_CLOSE)
-                                                && !pullRequestUrl
+                                                && !pullUrl
                                             }
                                             onClick={event => handleMenuItemClick(event, index)}
                                             selected={index === menuItemIndex}

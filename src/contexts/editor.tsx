@@ -9,7 +9,7 @@ interface EditorTab {
     pull?: GithubPull;
     setPull: (newValue: GithubPull) => void;
     // TODO(dnguyen0304): Investigate moving URL into GithubPull.
-    pullRequestUrl: string;
+    pullUrl: string;
     setPullRequestUrl: (newValue: string) => void;
 }
 
@@ -18,7 +18,7 @@ interface ContextValue {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
     readonly tabs: EditorTab[];
-    readonly addTab: (pullRequestUrl?: string) => EditorTab;
+    readonly addTab: (pullUrl?: string) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
     readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
@@ -38,7 +38,7 @@ function useContextValue(): ContextValue {
         return nextTabId;
     };
 
-    const addTab = (pullRequestUrl: string = ''): EditorTab => {
+    const addTab = (pullUrl: string = ''): EditorTab => {
         const tabId = getNextTabId();
         const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
@@ -58,14 +58,14 @@ function useContextValue(): ContextValue {
                 }
                 return {
                     ...tab,
-                    pullRequestUrl: newValue,
+                    pullUrl: newValue,
                 }
             }));
         };
         const newTab = {
             tabId,
             setPull,
-            pullRequestUrl: pullRequestUrl,
+            pullUrl: pullUrl,
             setPullRequestUrl,
         };
 

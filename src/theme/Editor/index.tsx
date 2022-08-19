@@ -48,10 +48,10 @@ const getColor = (theme: Theme, pull: GithubPull | undefined): string => {
 };
 
 const getIcon = (
-    pullRequestUrl: string,
+    pullUrl: string,
     pull: GithubPull | undefined,
 ): JSX.Element | null => {
-    if (pullRequestUrl && pull) {
+    if (pullUrl && pull) {
         const iconProps = {
             fontSize: 'inherit' as iconFontSize,
             sx: { ml: '0.25rem' },
@@ -141,7 +141,7 @@ export default function Editor(): JSX.Element {
                 >
                     {tabs.map((tab, index) => {
                         const pullStateIcon = getIcon(
-                            tab.pullRequestUrl,
+                            tab.pullUrl,
                             tab.pull,
                         );
                         return (
@@ -152,7 +152,7 @@ export default function Editor(): JSX.Element {
                                 placement='left-start'
                                 pullState={tab.pull?.state}
                                 pullStateIcon={pullStateIcon}
-                                pullUrl={tab.pullRequestUrl}
+                                pullUrl={tab.pullUrl}
                             >
                                 <StyledTab
                                     label={<TabLabel pullStateIcon={pullStateIcon} />}

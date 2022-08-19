@@ -43,9 +43,9 @@ export default function App(): null {
     }, []);
 
     React.useEffect(() => {
-        const pullRequestUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
+        const pullUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
         if (tabs.length === 0) {
-            addTab(pullRequestUrl ? pullRequestUrl : '');
+            addTab(pullUrl ? pullUrl : '');
         }
     }, []);
 

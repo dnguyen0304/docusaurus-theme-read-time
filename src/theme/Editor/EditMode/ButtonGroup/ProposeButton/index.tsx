@@ -86,7 +86,7 @@ export default function ProposeButton(
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const checkPullStatusTimerId = React.useRef<number>();
 
-    const { pullRequestUrl } = tabs[activeTabId];
+    const { pullUrl } = tabs[activeTabId];
 
     const toggleConfirmation = () => {
         setConfirmationIsOpen(prev => !prev);
@@ -176,8 +176,8 @@ export default function ProposeButton(
         }
     };
 
-    const getLabel = (pullRequestUrl: string): string => {
-        return pullRequestUrl ? 'Sync' : 'Propose';
+    const getLabel = (pullUrl: string): string => {
+        return pullUrl ? 'Sync' : 'Propose';
     }
 
     const checkPullStatus = async () => {
@@ -200,7 +200,7 @@ export default function ProposeButton(
         }
 
         const { setPull } = tabs[activeTabId];
-        const status = await github.checkPullStatus(pullRequestUrl);
+        const status = await github.checkPullStatus(pullUrl);
         setPull(status);
     };
 
@@ -211,7 +211,7 @@ export default function ProposeButton(
     );
 
     React.useEffect(() => {
-        if (!pullRequestUrl) {
+        if (!pullUrl) {
             return;
         }
 
@@ -223,7 +223,7 @@ export default function ProposeButton(
         return () => {
             clearTimeout(checkPullStatusTimerId.current);
         };
-    }, [pullRequestUrl]);
+    }, [pullUrl]);
 
     React.useEffect(() => {
         if (externalRedirect) {
@@ -248,7 +248,7 @@ export default function ProposeButton(
                 facilitate maintenance. */}
             <Tooltip
                 title={
-                    `${getLabel(pullRequestUrl)} (${KeyBinding.friendlyLabel})`
+                    `${getLabel(pullUrl)} (${KeyBinding.friendlyLabel})`
                 }
                 placement='top'
             >
@@ -256,13 +256,13 @@ export default function ProposeButton(
                     // Support syncing local changes.
                     onClick={toggleConfirmation}
                     startIcon={
-                        pullRequestUrl
+                        pullUrl
                             ? <CloudUploadOutlinedIcon />
                             : <SendIcon />
                     }
                     variant='contained'
                 >
-                    {getLabel(pullRequestUrl)}
+                    {getLabel(pullUrl)}
                 </Button>
             </Tooltip>
             <StyledDialog
