@@ -1,10 +1,3 @@
-// TODO(dnguyen0304): Extract to a centralized location to facilitate
-// maintenance.
-interface LocalStoragePullType {
-    url: string;
-    title: string;
-}
-
 // See https://github.com/facebook/docusaurus/blob/01ac2e0fcaccaf469992f93a0e8bf04e61cf850e/packages/docusaurus-utils/src/pathUtils.ts#L93
 const DOCUSAURUS_ALIASED_SITE_PATH_PREFIX: string = '@site';
 
@@ -23,7 +16,6 @@ const LOCAL_STORAGE_KEY_PULL_TITLE: string = 'pull_title';
 const LOCAL_STORAGE_KEY_PULL_URL: string = 'pull_url';
 
 export {
-    LocalStoragePullType,
     COOKIE_KEY_SESSION_ID,
     DOCUSAURUS_ALIASED_SITE_PATH_PREFIX,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
