@@ -8,6 +8,8 @@ interface EditorTab {
     tabId: number;
     pull?: GithubPull;
     setPull: (newValue: GithubPull) => void;
+    pullTitle: string;
+    setPullTitle: (newValue: string) => void;
     // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullUrl: string;
     setPullUrl: (newValue: string) => void;
@@ -51,6 +53,17 @@ function useContextValue(): ContextValue {
                 }
             }));
         };
+        const setPullTitle = (newValue: string) => {
+            setTabs(tabs => tabs.map(tab => {
+                if (tab.tabId !== tabId) {
+                    return tab;
+                }
+                return {
+                    ...tab,
+                    pullTitle: newValue,
+                }
+            }));
+        };
         const setPullUrl = (newValue: string) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
@@ -65,6 +78,8 @@ function useContextValue(): ContextValue {
         const newTab = {
             tabId,
             setPull,
+            pullTitle: '',
+            setPullTitle,
             pullUrl,
             setPullUrl,
         };
