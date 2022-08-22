@@ -24,20 +24,11 @@ const KEY_CODE_ESCAPE: number = 27;
 
 // TODO: Fix inconsistent padding or margin in edit mode.
 export default function Tab(): JSX.Element {
-    const {
-        activeTabId,
-        tabs,
-        setEditorIsOpen,
-    } = useEditor();
+    const { setEditorIsOpen } = useEditor();
     const { rawContent } = useRawContent();
     const { pathname } = useLocation();
     const { snackbar } = useSnackbar();
     const siteContext = useSite();
-
-    const {
-        markdown,
-        setMarkdown,
-    } = tabs[activeTabId];
 
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
@@ -87,11 +78,9 @@ export default function Tab(): JSX.Element {
     };
 
     const saveMarkdown = (state?: draft.EditorState) => {
-        const currentMarkdown = getMarkdown(state);
-        setMarkdown(currentMarkdown);
         localStorage.setItem(
             getLocalStorageKey(siteContext),
-            currentMarkdown,
+            getMarkdown(state),
         );
     };
 
