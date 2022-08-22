@@ -3,6 +3,7 @@ import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Support setState setStatefunctional updates.
+// TODO(dnguyen0304): Add markdown and setMarkdown.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
