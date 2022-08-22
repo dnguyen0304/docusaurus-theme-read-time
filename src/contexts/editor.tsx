@@ -2,12 +2,6 @@ import * as React from 'react';
 import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
-interface AddTabProps {
-    pullTitle: string,
-    pullUrl: string,
-    pullBranchName: string,
-}
-
 // TODO(dnguyen0304): Support setState setStatefunctional updates.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
@@ -21,6 +15,12 @@ interface EditorTab {
     setPullUrl: (newValue: string) => void;
     pullBranchName: string;
     setPullBranchName: (newValue: string) => void;
+}
+
+interface AddTabProps {
+    pullTitle: string;
+    pullUrl: string;
+    pullBranchName: string;
 }
 
 // aliases: table of contents
