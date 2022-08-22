@@ -279,7 +279,7 @@ export default function ProposeButton(
                             </DialogContentText>
                             {/* TODO(dnguyen0304): Add autoFocus. */}
                             <StyledTextField
-                                helperText={<>Press <b>↩︎ Enter</b> to send</>}
+                                helperText={<>Press <kbd>↩︎ Enter</kbd> to send</>}
                                 label='Title'
                                 onChange={handleTitleChange}
                                 onKeyUp={handleTitleKeyUp}
