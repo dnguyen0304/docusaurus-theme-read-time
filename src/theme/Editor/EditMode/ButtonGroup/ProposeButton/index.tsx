@@ -16,7 +16,6 @@ import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
-    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../constants';
@@ -126,8 +125,7 @@ export default function ProposeButton(
             + `-${github.getUser().username}`
             + `-${Math.floor(Date.now() / 1000)}`
         await github.createBranch(branchName);
-        setPullBranchName(branchName);
-        localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, branchName);
+        setPullBranchName(branchName, true);
         try {
             await github.createCommit(
                 getMarkdown(),

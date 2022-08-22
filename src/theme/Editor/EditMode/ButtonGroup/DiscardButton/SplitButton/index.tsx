@@ -11,7 +11,6 @@ import Popper from '@mui/material/Popper';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import {
-    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../../constants';
@@ -108,9 +107,8 @@ export default function SplitButton(
 
             await github.closePull(pullUrl);
             setPullUrl('');
-            setPullBranchName('');
+            setPullBranchName('', true);
             localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, '');
-            localStorage.setItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME, '');
             setIsLoading(false);
         }
 
