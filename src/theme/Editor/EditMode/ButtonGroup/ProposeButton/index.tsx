@@ -16,7 +16,6 @@ import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
-    LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../constants';
 import { useEditor } from '../../../../../contexts/editor';
@@ -165,11 +164,7 @@ export default function ProposeButton(
     };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPullTitle(event.target.value);
-        localStorage.setItem(
-            LOCAL_STORAGE_KEY_PULL_TITLE,
-            event.target.value,
-        );
+        setPullTitle(event.target.value, true);
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {

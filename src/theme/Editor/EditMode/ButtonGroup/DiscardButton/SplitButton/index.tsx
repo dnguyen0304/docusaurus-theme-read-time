@@ -11,7 +11,6 @@ import Popper from '@mui/material/Popper';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import {
-    LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../../../../constants';
 import { useEditor } from '../../../../../../contexts/editor';
@@ -78,8 +77,7 @@ export default function SplitButton(
     const handleClick = async () => {
         const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
 
-        setPullTitle('');
-        localStorage.setItem(LOCAL_STORAGE_KEY_PULL_TITLE, '');
+        setPullTitle('', true);
 
         if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
             resetMarkdown();
