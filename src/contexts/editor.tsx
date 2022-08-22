@@ -9,13 +9,13 @@ import { ReactContextError } from './errors';
 interface EditorTab {
     tabId: number;
     pull?: GithubPull;
-    setPull: (newValue: GithubPull) => void;
     pullTitle: string;
-    setPullTitle: (newValue: string) => void;
     // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullUrl: string;
-    setPullUrl: (newValue: string) => void;
     pullBranchName: string;
+    setPull: (newValue: GithubPull) => void;
+    setPullTitle: (newValue: string) => void;
+    setPullUrl: (newValue: string) => void;
     setPullBranchName: (
         newValue: string,
         includeLocalStorage: boolean,
