@@ -6,8 +6,6 @@ import { ReactContextError } from './errors';
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
-    markdown: string;
-    setMarkdown: (newValue: string) => void;
     pull?: GithubPull;
     setPull: (newValue: GithubPull) => void;
     pullTitle: string;
@@ -20,7 +18,6 @@ interface EditorTab {
 }
 
 interface AddTabProps {
-    markdown: string;
     pullTitle: string;
     pullUrl: string;
     pullBranchName: string;
@@ -53,7 +50,6 @@ function useContextValue(): ContextValue {
 
     const addTab = (
         {
-            markdown = '',
             pullTitle = '',
             pullUrl = '',
             pullBranchName = '',
@@ -61,17 +57,6 @@ function useContextValue(): ContextValue {
     ): EditorTab => {
         const tabId = getNextTabId();
         // TODO(dnguyen0304): Refactor duplicated code.
-        const setMarkdown = (newValue: string) => {
-            setTabs(tabs => tabs.map(tab => {
-                if (tab.tabId !== tabId) {
-                    return tab;
-                }
-                return {
-                    ...tab,
-                    markdown: newValue,
-                }
-            }));
-        };
         const setPull = (newValue: GithubPull) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
@@ -118,8 +103,6 @@ function useContextValue(): ContextValue {
         };
         const newTab = {
             tabId,
-            markdown,
-            setMarkdown,
             setPull,
             pullTitle,
             setPullTitle,
