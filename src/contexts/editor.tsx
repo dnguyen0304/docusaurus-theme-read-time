@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {
     LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
-    LOCAL_STORAGE_KEY_PULL_TITLE
+    LOCAL_STORAGE_KEY_PULL_TITLE,
+    LOCAL_STORAGE_KEY_PULL_URL
 } from '../constants';
 import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
@@ -21,7 +22,10 @@ interface EditorTab {
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
-    setPullUrl: (newValue: string) => void;
+    setPullUrl: (
+        newValue: string,
+        includeLocalStorage: boolean,
+    ) => void;
     setPullBranchName: (
         newValue: string,
         includeLocalStorage: boolean,
@@ -99,7 +103,10 @@ function useContextValue(): ContextValue {
                 );
             }
         };
-        const setPullUrl = (newValue: string) => {
+        const setPullUrl = (
+            newValue: string,
+            includeLocalStorage: boolean,
+        ) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
                     return tab;
@@ -109,6 +116,12 @@ function useContextValue(): ContextValue {
                     pullUrl: newValue,
                 }
             }));
+            if (includeLocalStorage) {
+                localStorage.setItem(
+                    LOCAL_STORAGE_KEY_PULL_URL,
+                    newValue,
+                );
+            }
         };
         const setPullBranchName = (
             newValue: string,

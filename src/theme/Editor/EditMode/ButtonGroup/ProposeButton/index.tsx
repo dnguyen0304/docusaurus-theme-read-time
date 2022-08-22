@@ -15,9 +15,6 @@ import { RequestError } from '@octokit/request-error';
 import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import {
-    LOCAL_STORAGE_KEY_PULL_URL
-} from '../../../../../constants';
 import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
 import { useSite } from '../../../../../contexts/site';
@@ -147,8 +144,7 @@ export default function ProposeButton(
             }
         }
         const pullUrl = await github.createPull(pullTitle);
-        setPullUrl(pullUrl);
-        localStorage.setItem(LOCAL_STORAGE_KEY_PULL_URL, pullUrl);
+        setPullUrl(pullUrl, true);
         window.open(pullUrl, '_blank')!.focus();
 
         setIsLoading(false);
