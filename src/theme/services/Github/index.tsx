@@ -366,17 +366,30 @@ export default function Github(
             pullUrl,
         );
 
-        // TODO(dnguyen0304): Add retry for HTTP 409 errors when the GitHub API
-        // is not yet consistent with content SHAs.
-        await api?.repos.createOrUpdateFileContents({
-            owner,
-            repo: repository,
-            branch: targetBranchName,
-            path,
-            sha: contentSha,
-            content: encode(content),
-            message,
-        });
+        try {
+            await api?.repos.createOrUpdateFileContents({
+                owner,
+                repo: repository,
+                branch: targetBranchName,
+                path,
+                sha: contentSha,
+                content: encode(content),
+                message,
+            });
+        } catch (error) {
+            if (error instanceof RequestError
+                && error.status === 409
+                && error.message.includes('does not match')
+            ) {
+                throw new Error(
+                    `GitHub API not yet propagated: please try again in ~60 `
+                    + `seconds when the content SHA conflict has been `
+                    + `resolved: ${error.message}`
+                );
+            } else {
+                throw error;
+            }
+        }
 
         commitExists = true;
     };
