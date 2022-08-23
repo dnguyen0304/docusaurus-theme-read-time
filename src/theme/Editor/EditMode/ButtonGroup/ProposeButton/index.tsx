@@ -99,7 +99,8 @@ export default function ProposeButton(
 
         const { setPullUrl } = tabs[activeTabId];
 
-        // TODO(dnguyen0304): Fix duplicated auth code.
+        // TODO(dnguyen0304): Fix duplicated auth code by decoupling
+        // GithubContext and SiteContext.
         const {
             authRedirectUrl,
             github,
@@ -175,7 +176,8 @@ export default function ProposeButton(
     }
 
     const syncLocalChanges = async () => {
-        // TODO(dnguyen0304): Fix duplicated auth code.
+        // TODO(dnguyen0304): Fix duplicated auth code by decoupling
+        // GithubContext and SiteContext.
         const {
             authRedirectUrl,
             github,
@@ -201,7 +203,8 @@ export default function ProposeButton(
     };
 
     const checkPullStatus = async () => {
-        // TODO(dnguyen0304): Fix duplicated auth code.
+        // TODO(dnguyen0304): Fix duplicated auth code by decoupling
+        // GithubContext and SiteContext.
         const {
             authRedirectUrl,
             github,
