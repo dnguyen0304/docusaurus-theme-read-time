@@ -108,7 +108,6 @@ export default function ProposeButton(
             siteContext,
             currentPath,
         );
-
         if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);
             return;
@@ -211,7 +210,6 @@ export default function ProposeButton(
             siteContext,
             currentPath,
         );
-
         if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);
             return;
