@@ -35,6 +35,7 @@ interface GithubType {
         content: string,
         message: string,
         branchName?: string,
+        pullUrl?: string,
     ) => Promise<void>;
     readonly checkPullStatus: (pullUrl: string) => Promise<GithubPull>;
     readonly createPull: (title: string) => Promise<string>;
@@ -274,9 +275,22 @@ export default function Github(
         return defaultBranch;
     };
 
-    const getContentSha = async (branchName: string): Promise<string> => {
-        if (!branchName) {
-            throw new Error('branch not found');
+    const getContentSha = async (
+        branchName: string,
+        pullUrl: string,
+    ): Promise<string> => {
+        let ref: string = '';
+
+        if (pullUrl) {
+            const pullId = new URI(pullUrl).filename();
+            if (pullId === '') {
+                throw new Error(`failed to parse pull number from ${pullUrl}`);
+            }
+            ref = `refs/pull/${pullId}/head`;
+        } else if (branchName) {
+            ref = `${GITHUB_REF_PREFIX}${branchName}`;
+        } else {
+            throw new Error('branch not found and pull not found');
         }
 
         const {
@@ -288,17 +302,10 @@ export default function Github(
             owner,
             repo: repository,
             path,
-            ref: `${GITHUB_REF_PREFIX}${branchName}`,
+            ref,
         });
 
         return sha;
-        // const pullId = new URI(pullUrl).filename();
-
-        // if (pullId === '') {
-        //     throw new Error(`failed to parse pull number from ${pullUrl}`);
-        // }
-
-        // ref: 'refs/pull/${pullId}/head',
     }
 
     const getUser = (): GithubUser => {
@@ -351,10 +358,16 @@ export default function Github(
         content: string,
         message: string,
         branchName: string = '',
+        pullUrl: string = '',
     ) => {
         const targetBranchName = branchName || _branchName;
-        const contentSha = await getContentSha(targetBranchName);
+        const contentSha = await getContentSha(
+            targetBranchName,
+            pullUrl,
+        );
 
+        // TODO(dnguyen0304): Add retry for HTTP 409 errors when the GitHub API
+        // is not yet consistent with content SHAs.
         await api?.repos.createOrUpdateFileContents({
             owner,
             repo: repository,

@@ -77,6 +77,7 @@ export default function ProposeButton(
     const {
         pullTitle,
         pullUrl,
+        pullBranchName,
         setPullTitle,
         setPullBranchName,
     } = tabs[activeTabId];
@@ -174,6 +175,32 @@ export default function ProposeButton(
         return pullUrl ? 'Sync' : 'Propose';
     }
 
+    const syncLocalChanges = async () => {
+        // TODO(dnguyen0304): Fix duplicated auth code.
+        const {
+            authRedirectUrl,
+            github,
+        } = await initializeAuth(
+            githubContext,
+            siteContext,
+            currentPath,
+        );
+        if (authRedirectUrl) {
+            setExternalRedirect(authRedirectUrl);
+            return;
+        }
+        if (!github) {
+            throw new Error('expected Github service to be defined');
+        }
+
+        await github.createCommit(
+            getMarkdown(),
+            '[Auto-generated] [docusaurus-theme-editor] Partial save.',
+            pullBranchName,
+            pullUrl,
+        );
+    };
+
     const checkPullStatus = async () => {
         // TODO(dnguyen0304): Fix duplicated auth code.
         const {
@@ -236,8 +263,11 @@ export default function ProposeButton(
                 placement='top'
             >
                 <Button
-                    // Support syncing local changes.
-                    onClick={toggleConfirmation}
+                    onClick={
+                        pullUrl
+                            ? syncLocalChanges
+                            : toggleConfirmation
+                    }
                     startIcon={
                         pullUrl
                             ? <CloudUploadOutlinedIcon />
