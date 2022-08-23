@@ -30,7 +30,6 @@ interface GetAccessTokenResponse {
 
 interface GithubType {
     readonly getUser: () => GithubUser;
-    readonly getApi: () => RestEndpointMethods;
     readonly createBranch: (name: string) => Promise<void>;
     readonly createCommit: (
         content: string,
@@ -279,10 +278,6 @@ export default function Github(
         return user;
     };
 
-    const getApi = (): RestEndpointMethods => {
-        return api;
-    };
-
     const createBranch = async (name: string): Promise<void> => {
         if (_branchName) {
             throw new Error(`branch "${_branchName}" already exists`);
@@ -425,7 +420,6 @@ export default function Github(
 
     return {
         getUser,
-        getApi,
         createBranch,
         createCommit,
         createPull,
