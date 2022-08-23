@@ -360,6 +360,11 @@ export default function Github(
         branchName: string = '',
         pullUrl: string = '',
     ) => {
+        if (!content) {
+            throw new Error(
+                `creating a commit with no content is not yet supported`
+            );
+        }
         const targetBranchName = branchName || _branchName;
         const contentSha = await getContentSha(
             targetBranchName,
