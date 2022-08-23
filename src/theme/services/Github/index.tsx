@@ -344,7 +344,7 @@ export default function Github(
         } = await api?.repos.getContent({
             owner,
             repo: repository,
-            path: path,
+            path,
             ref: `${GITHUB_REF_PREFIX}${targetBranchName}`,
         });
 
@@ -352,7 +352,7 @@ export default function Github(
             owner,
             repo: repository,
             branch: targetBranchName,
-            path: path,
+            path,
             sha: contentSha,
             content: encode(content),
             message,
