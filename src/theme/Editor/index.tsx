@@ -18,10 +18,12 @@ const PURPLE_MERGED: string = '#8250df';
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
 interface StyledTabsProps {
+    pullUrl: string;
     pull: GithubPull | undefined;
 }
 
 interface StyledTabProps {
+    pullUrl: string;
     pull: GithubPull | undefined;
 }
 
@@ -34,13 +36,26 @@ interface TabContentProps {
     activeIndex: number,
 }
 
-const getColor = (theme: Theme, pull: GithubPull | undefined): string => {
-    if (pull) {
-        if (pull.state === 'closed') {
+const checkPullExists = (
+    pullUrl: string,
+    pull: GithubPull | undefined,
+): boolean => {
+    // If a pull request is closed remotely, check the pull URL locally as a
+    // proxy for whether the pull exists.
+    return [pullUrl, pull].every(Boolean);
+}
+
+const getColor = (
+    pullUrl: string,
+    pull: GithubPull | undefined,
+    theme: Theme,
+): string => {
+    if (checkPullExists(pullUrl, pull)) {
+        if (pull!.state === 'closed') {
             // TODO(dnguyen0304): Add red color for theme palette.
             return theme.palette.error.main;
         }
-        if (pull.state === 'merged') {
+        if (pull!.state === 'merged') {
             return PURPLE_MERGED;
         }
     }
@@ -51,18 +66,18 @@ const getIcon = (
     pullUrl: string,
     pull: GithubPull | undefined,
 ): JSX.Element | null => {
-    if (pullUrl && pull) {
+    if (checkPullExists(pullUrl, pull)) {
         const iconProps = {
             fontSize: 'inherit' as iconFontSize,
             sx: { ml: '0.25rem' },
         };
-        if (pull.state === 'open') {
+        if (pull!.state === 'open') {
             return <ScheduleIcon {...iconProps} />;
         }
-        if (pull.state === 'closed') {
+        if (pull!.state === 'closed') {
             return <ReportOutlinedIcon {...iconProps} />;
         }
-        if (pull.state === 'merged') {
+        if (pull!.state === 'merged') {
             return <MergeIcon {...iconProps} />;
         }
     }
@@ -70,24 +85,24 @@ const getIcon = (
 };
 
 const StyledTabs = styled(Tabs, {
-    shouldForwardProp: (prop) => prop !== 'pull',
-})<StyledTabsProps>(({ theme, pull }) => ({
+    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
+})<StyledTabsProps>(({ theme, pullUrl, pull }) => ({
     '.MuiTabs-indicator': {
         // TODO(dnguyen0304): Fix type error.
-        backgroundColor: getColor(theme, pull),
+        backgroundColor: getColor(pullUrl, pull, theme),
     },
     '.MuiTouchRipple-child': {
         // TODO(dnguyen0304): Fix type error.
-        backgroundColor: getColor(theme, pull),
+        backgroundColor: getColor(pullUrl, pull, theme),
     },
 }));
 
 const StyledTab = styled(Tab, {
-    shouldForwardProp: (prop) => prop !== 'pull',
-})<StyledTabProps>(({ theme, pull }) => ({
+    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
+})<StyledTabProps>(({ theme, pullUrl, pull }) => ({
     '& > span:first-of-type': {
         // TODO(dnguyen0304): Fix type error.
-        color: getColor(theme, pull),
+        color: getColor(pullUrl, pull, theme),
     },
 }));
 
@@ -136,6 +151,7 @@ export default function Editor(): JSX.Element {
             }}>
                 <StyledTabs
                     onChange={handleChange}
+                    pullUrl={tabs[activeIndex].pullUrl}
                     pull={tabs[activeIndex].pull}
                     value={activeIndex}
                 >
@@ -156,6 +172,7 @@ export default function Editor(): JSX.Element {
                             >
                                 <StyledTab
                                     label={<TabLabel pullStateIcon={pullStateIcon} />}
+                                    pullUrl={tab.pullUrl}
                                     pull={tab.pull}
                                 />
                             </EditorTooltip>
