@@ -225,10 +225,11 @@ export default function ProposeButton(
         setPull(status);
     };
 
-    // Support syncing local changes.
     useHotkeys(
         KeyBinding.key,
-        toggleConfirmation,
+        pullUrl
+            ? syncLocalChanges
+            : toggleConfirmation,
     );
 
     React.useEffect(() => {
