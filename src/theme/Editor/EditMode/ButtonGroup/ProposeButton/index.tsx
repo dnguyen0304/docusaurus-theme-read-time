@@ -313,7 +313,6 @@ export default function ProposeButton(
                         <LoadingButton
                             onClick={handleClick}
                             isLoading={isLoading}
-                            setIsLoading={setIsLoading}
                             variant='outlined'
                         >
                             Propose

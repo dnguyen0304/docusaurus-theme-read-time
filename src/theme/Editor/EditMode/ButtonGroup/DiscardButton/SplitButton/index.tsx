@@ -174,7 +174,6 @@ export default function SplitButton(
                 <LoadingButton
                     onClick={handleClick}
                     isLoading={isLoading}
-                    setIsLoading={setIsLoading}
                 >
                     {getText(MENU_ITEM_OPTIONS[menuItemIndex])}
                 </LoadingButton>

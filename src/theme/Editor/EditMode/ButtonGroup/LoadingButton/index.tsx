@@ -10,13 +10,11 @@ const LOADING_ICON_WIDTH: number = 24;
 
 interface Props extends ButtonProps {
     readonly isLoading: boolean;
-    readonly setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function LoadingButton(
     {
         isLoading,
-        setIsLoading,
         children,
         ...buttonProps
     }: Props
