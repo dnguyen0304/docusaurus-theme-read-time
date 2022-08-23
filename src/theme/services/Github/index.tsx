@@ -274,6 +274,33 @@ export default function Github(
         return defaultBranch;
     };
 
+    const getContentSha = async (branchName: string): Promise<string> => {
+        if (!branchName) {
+            throw new Error('branch not found');
+        }
+
+        const {
+            // TODO(dnguyen0304): Fix missing type declaration.
+            data: {
+                sha,
+            },
+        } = await api?.repos.getContent({
+            owner,
+            repo: repository,
+            path,
+            ref: `${GITHUB_REF_PREFIX}${branchName}`,
+        });
+
+        return sha;
+        // const pullId = new URI(pullUrl).filename();
+
+        // if (pullId === '') {
+        //     throw new Error(`failed to parse pull number from ${pullUrl}`);
+        // }
+
+        // ref: 'refs/pull/${pullId}/head',
+    }
+
     const getUser = (): GithubUser => {
         return user;
     };
@@ -326,22 +353,7 @@ export default function Github(
         branchName: string = '',
     ) => {
         const targetBranchName = branchName || _branchName;
-
-        if (!targetBranchName) {
-            throw new Error('branch not found');
-        }
-
-        const {
-            // TODO(dnguyen0304): Fix missing type declaration.
-            data: {
-                sha: contentSha,
-            },
-        } = await api?.repos.getContent({
-            owner,
-            repo: repository,
-            path,
-            ref: `${GITHUB_REF_PREFIX}${targetBranchName}`,
-        });
+        const contentSha = await getContentSha(targetBranchName);
 
         await api?.repos.createOrUpdateFileContents({
             owner,
