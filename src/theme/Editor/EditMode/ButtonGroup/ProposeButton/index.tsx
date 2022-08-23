@@ -126,7 +126,7 @@ export default function ProposeButton(
         try {
             await github.createCommit(
                 getMarkdown(),
-                '[Auto-generated] [docusaurus-theme-editor] Partial save.',
+                '[Auto-generated] [docusaurus-editor] Partial save.',
             );
         } catch (error) {
             if (error instanceof RequestError
@@ -195,7 +195,7 @@ export default function ProposeButton(
 
         await github.createCommit(
             getMarkdown(),
-            '[Auto-generated] [docusaurus-theme-editor] Partial save.',
+            '[Auto-generated] [docusaurus-editor] Partial save.',
             pullBranchName,
             pullUrl,
         );
