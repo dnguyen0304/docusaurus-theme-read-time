@@ -114,8 +114,7 @@ export const initializeAuth = async (
                 client_id: APP_CLIENT_ID,
                 scope: GITHUB_AUTHORIZATION_SCOPES,
                 redirect_uri: GITHUB_AUTHORIZATION_REDIRECT_URL,
-                // TODO(dnguyen0304): Investigate if path() is redundant.
-                state: new URI().path(currentPath),
+                state: new URI(),
             })
             .toString()
     );
