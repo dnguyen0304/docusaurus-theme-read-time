@@ -71,7 +71,7 @@ export const initializeAuth = async (
     const accessToken = cookies.get(COOKIE_KEY_SESSION_ID);
     if (accessToken) {
         try {
-            const newAuth = await doAuthenticate(accessToken);
+            const newAuth = await authenticate(accessToken);
 
             setUser(newAuth.user)
             setApi(newAuth.api)
@@ -114,7 +114,7 @@ export const initializeAuth = async (
     };
 };
 
-const doAuthenticate = async (
+const authenticate = async (
     accessToken: string,
 ): Promise<AuthenticateType> => {
     const OctokitRest = Octokit.plugin(restEndpointMethods);
