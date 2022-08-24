@@ -27,8 +27,9 @@ function updateSearchParams(uri, accessToken) {
         'auth',
         Buffer.from(JSON.stringify({ accessToken })).toString('base64'),
     );
-    parsedUri.search = searchParams.toString();
-    return parsedUri.href;
+    parsedUri.search = searchParams;
+    // TODO(dnguyen0304): Fix deprecation warning.
+    return url.format(parsedUri);
 }
 
 async function httpPost(url, options) {
