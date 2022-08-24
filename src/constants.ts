@@ -6,7 +6,6 @@ const DOCUSAURUS_ALIASED_SITE_PATH_PREFIX: string = '@site';
 // TODO(dnguyen0304): Extract as a configuration option.
 const GITHUB_AUTHORIZATION_REDIRECT_URL: string = 'https://kgevadn5a2.execute-api.us-east-1.amazonaws.com/production/DocusaurusEditor_handleOAuthRedirect';
 const SEARCH_PARAM_KEY_AUTH: string = 'auth';
-const SEARCH_PARAM_KEY_IS_LOGGED_IN: string = 'is_logged_in';
 const COOKIE_KEY_SESSION_ID: string = 'session_id';
 const LOCAL_STORAGE_KEY_PULL: string = 'pull';
 const LOCAL_STORAGE_KEY_PULL_BRANCH_NAME: string = 'pull_branch_name';
@@ -22,5 +21,4 @@ export {
     LOCAL_STORAGE_KEY_PULL_URL,
     LOCAL_STORAGE_KEY_PULL,
     SEARCH_PARAM_KEY_AUTH,
-    SEARCH_PARAM_KEY_IS_LOGGED_IN,
 };
