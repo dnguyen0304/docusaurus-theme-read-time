@@ -8,7 +8,7 @@ import URI from 'urijs';
 import {
     COOKIE_KEY_SESSION_ID,
     ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
-    GITHUB_AUTHORIZATION_CALLBACK_PATH
+    GITHUB_AUTHORIZATION_REDIRECT_URL
 } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
@@ -113,9 +113,9 @@ export const initializeAuth = async (
             .query({
                 client_id: APP_CLIENT_ID,
                 scope: GITHUB_AUTHORIZATION_SCOPES,
-                redirect_uri:
-                    new URI().path(GITHUB_AUTHORIZATION_CALLBACK_PATH),
-                state: currentPath,
+                redirect_uri: GITHUB_AUTHORIZATION_REDIRECT_URL,
+                // TODO(dnguyen0304): Investigate if path() is redundant.
+                state: new URI().path(currentPath),
             })
             .toString()
     );
