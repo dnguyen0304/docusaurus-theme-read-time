@@ -26,7 +26,15 @@ export default function App(): null {
         }
         const cookies = new Cookies();
         const auth = JSON.parse(atob(encodedAuth));
-        cookies.set(COOKIE_KEY_SESSION_ID, auth.accessToken);
+        cookies.set(
+            COOKIE_KEY_SESSION_ID,
+            auth.accessToken,
+            // TODO(dnguyen0304): Investigate if path is necessary.
+            {
+                maxAge: 28 * 24 * 60 * 60,  // 28 days in seconds
+                secure: true,
+            },
+        );
         window.location.href =
             new URI()
                 .removeSearch(SEARCH_PARAM_KEY_AUTH)

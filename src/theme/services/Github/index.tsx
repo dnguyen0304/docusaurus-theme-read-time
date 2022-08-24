@@ -7,25 +7,15 @@ import Cookies from 'universal-cookie';
 import URI from 'urijs';
 import {
     COOKIE_KEY_SESSION_ID,
-    ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
     GITHUB_AUTHORIZATION_REDIRECT_URL
 } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
 import type { GithubPull, GithubUser, InternalGithubState } from '../../../docusaurus-theme-editor';
 
-interface ParseCallbackUrlType {
-    authorizationCode: string;
-    redirectPath: string;
-}
-
 interface AuthenticateType {
     user: GithubUser;
     api: RestEndpointMethods;
-}
-
-interface GetAccessTokenResponse {
-    accessToken: string;
 }
 
 interface GithubType {
@@ -122,72 +112,6 @@ export const initializeAuth = async (
         authRedirectUrl,
         github: undefined,
     };
-};
-
-export const parseCallbackUrl = (url: URI): ParseCallbackUrlType => {
-    const { code, state } = URI.parseQuery(url.query());
-    if (!code || !state) {
-        // TODO(dnguyen0304): Add error handling.
-        return {
-            authorizationCode: '',
-            redirectPath: '',
-        };
-    }
-    return {
-        authorizationCode: code,
-        redirectPath: state,
-    };
-};
-
-export const authenticate = async (
-    authorizationCode: string,
-    cookiePath: string,
-): Promise<AuthenticateType> => {
-    const cookies = new Cookies();
-
-    // TODO(dnguyen0304): Implement exchanging session ID for access token.
-    let accessToken = cookies.get(COOKIE_KEY_SESSION_ID);
-    if (!accessToken) {
-        try {
-            ({ accessToken } =
-                await exchangeCodeToToken(authorizationCode));
-        } catch (error) {
-            throw new Error(
-                `Failed to exchange code for token: ${error.message}.`
-            );
-        }
-    }
-
-    cookies.set(
-        COOKIE_KEY_SESSION_ID,
-        accessToken,
-        {
-            path: cookiePath,
-            maxAge: 28 * 24 * 60 * 60,  // 28 days in seconds
-            secure: true,
-        },
-    );
-
-    return doAuthenticate(accessToken);
-};
-
-const exchangeCodeToToken = async (
-    authorizationCode: string,
-): Promise<GetAccessTokenResponse> => {
-    const rawResponse = await fetch(
-        ENDPOINT_EXCHANGE_CODE_TO_TOKEN,
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ authorizationCode }),
-        });
-    if (rawResponse.status === 400) {
-        throw new Error(await rawResponse.text())
-    }
-    return rawResponse.json();
 };
 
 const doAuthenticate = async (
