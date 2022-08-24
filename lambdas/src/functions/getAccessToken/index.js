@@ -46,17 +46,14 @@ async function httpPost(url, options) {
     });
 }
 
-async function main(event) {
-    console.log(`Started getAccessToken: ${toStringDeep(event)}`);
-
+async function getAccessToken(authorizationCode) {
     const clientId = process.env.CLIENT_ID;
     const clientSecret = process.env.CLIENT_SECRET;
-    const parsedRequestBody = JSON.parse(event.body);
 
     const url = githubEndpoint + '?' + new URLSearchParams({
         client_id: clientId,
         client_secret: clientSecret,
-        code: parsedRequestBody.authorizationCode,
+        code: authorizationCode,
     });
     const options = {
         port: defaultPort,
@@ -67,28 +64,53 @@ async function main(event) {
         },
     };
 
-    try {
-        const { body } = await httpPost(url, options);
-        // TODO(dnguyen0304): Handle non-JSON content-type such as "Cookies must
-        // be enabled to use GitHub".
-        const parsedResponseBody = JSON.parse(body);
+    const { body } = await httpPost(url, options);
+    // TODO(dnguyen0304): Handle non-JSON content-type such as "Cookies must
+    // be enabled to use GitHub".
+    const parsedResponseBody = JSON.parse(body);
 
-        if ('error' in parsedResponseBody) {
-            return {
-                statusCode: 400,
-                headers: defaultHeadersResponse,
-                body,
-            };
-        }
+    if ('error' in parsedResponseBody) {
         return {
-            statusCode: 200,
+            statusCode: 400,
+            headers: defaultHeadersResponse,
+            body,
+        };
+    }
+    return {
+        statusCode: 200,
+        headers: defaultHeadersResponse,
+        body: JSON.stringify({
+            accessToken: parsedResponseBody.access_token,
+        }),
+    };
+}
+
+async function main(event) {
+    console.log(`Started handleOAuthRedirect: ${toStringDeep(event)}`);
+
+    const refererAllowlist = process.env.REFERER_ALLOWLIST.split(',');
+    const authorizationCode = event.queryStringParameters.code;
+    const state = event.queryStringParameters.state;
+
+    const refererFound =
+        refererAllowlist
+        && refererAllowlist.includes(event.headers.referer);
+    const isExistingUser = state.includes(event.headers.referer);
+
+    if (!event.headers.referer && !refererFound && !isExistingUser) {
+        return {
+            statusCode: 400,
             headers: defaultHeadersResponse,
             body: JSON.stringify({
-                accessToken: parsedResponseBody.access_token,
+                errorMessage: `Referer not allowed: ${event.headers.referer}`,
             }),
         };
+    }
+
+    try {
+        return getAccessToken(authorizationCode);
     } catch (error) {
-        console.log(`Failed getAccessToken: ${error}`);
+        console.log(`Failed handleOAuthRedirect: ${error}`);
     }
 }
 
@@ -102,14 +124,14 @@ exports.handler = async (event) => {
                 'Access-Control-Allow-Headers': 'Accept, Content-Type',
             },
         };
-    } else if (event.httpMethod === 'POST') {
+    } else if (event.httpMethod === 'GET') {
         return main(event);
     } else {
         return {
             statusCode: 405,
             headers: {
                 ...defaultHeaders,
-                'Allow': 'POST, OPTIONS',
+                'Allow': 'GET, OPTIONS',
             },
         };
     }
