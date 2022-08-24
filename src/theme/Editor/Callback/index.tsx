@@ -9,8 +9,11 @@ import { authenticate, parseCallbackUrl } from '../../services/Github';
 export default function Callback(): JSX.Element | null {
     const { path: docsPath } = useContentDocs();
     const { user, setUser, setApi } = useGithub();
+    // const { snackbar } = useSnackbar();
 
     const [redirectPath, setRedirectPath] = React.useState<string>('');
+    // const [haveShownWelcome, setHaveShownWelcome] =
+    //     React.useState<boolean>(false);
 
     React.useEffect(() => {
         const doAuthenticate = async () => {
@@ -29,6 +32,30 @@ export default function Callback(): JSX.Element | null {
         };
         doAuthenticate();
     }, []);
+
+    // React.useEffect(() => {
+    //     if (haveShownWelcome) {
+    //         return;
+    //     }
+
+    //     const cookies = new Cookies();
+    //     const param =
+    //         new URLSearchParams(window.location.search)
+    //             .get(SEARCH_PARAM_KEY_IS_LOGGED_IN);
+    //     const justRedirectedFromAuthWorkflow = param !== null;
+    //     const isReturningAuthenticatedUser =
+    //         cookies.get(COOKIE_KEY_SESSION_ID) !== undefined;
+
+    //     if (!justRedirectedFromAuthWorkflow || isReturningAuthenticatedUser) {
+    //         return;
+    //     }
+
+    //     snackbar.sendSuccessAlert(
+    //         'Welcome back! You\'re all logged in now.',
+    //         (previous) => previous * 1.5,
+    //     );
+    //     setHaveShownWelcome(true);
+    // }, []);
 
     return (
         user
