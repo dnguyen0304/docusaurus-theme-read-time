@@ -1,4 +1,5 @@
 const https = require('https');
+const url = require('node:url');
 const util = require('util');
 
 const githubEndpoint = 'https://github.com/login/oauth/access_token';
@@ -17,6 +18,17 @@ function toStringDeep(object) {
         depth: null,
         colors: false,
     });
+}
+
+function updateSearchParams(uri, accessToken) {
+    const parsedUri = url.parse(uri);
+    const searchParams = new URLSearchParams(parsedUri.search);
+    searchParams.set(
+        'auth',
+        Buffer.from(JSON.stringify({ accessToken })).toString('base64'),
+    );
+    parsedUri.search = searchParams.toString();
+    return parsedUri.href;
 }
 
 async function httpPost(url, options) {
@@ -90,12 +102,12 @@ async function main(event) {
 
     const refererAllowlist = process.env.REFERER_ALLOWLIST.split(',');
     const authorizationCode = event.queryStringParameters.code;
-    const state = event.queryStringParameters.state;
+    const siteRedirectUrl = event.queryStringParameters.state;
 
     const refererFound =
         refererAllowlist
         && refererAllowlist.includes(event.headers.referer);
-    const isExistingUser = state.includes(event.headers.referer);
+    const isExistingUser = siteRedirectUrl.includes(event.headers.referer);
 
     if (!event.headers.referer && !refererFound && !isExistingUser) {
         return {
@@ -108,7 +120,23 @@ async function main(event) {
     }
 
     try {
-        return getAccessToken(authorizationCode);
+        const response = await getAccessToken(authorizationCode);
+        if (response.statusCode === 200) {
+            const location = updateSearchParams(
+                siteRedirectUrl,
+                JSON.parse(response.body).accessToken,
+            );
+            return {
+                statusCode: 303,
+                headers: {
+                    ...response.headers,
+                    Location: location,
+                },
+            };
+        }
+        if (response.statusCode === 400) {
+            return response;
+        }
     } catch (error) {
         console.log(`Failed handleOAuthRedirect: ${error}`);
     }
