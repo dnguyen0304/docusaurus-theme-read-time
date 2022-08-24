@@ -17,14 +17,20 @@ interface Props extends Omit<TooltipProps, 'title'> {
     pullStateIcon: JSX.Element | null;
 }
 
-const STATE_TO_DESCRIPTION: Record<InternalGithubState, string> = {
+const STATE_TO_DESCRIPTION: Record<InternalGithubState, React.ReactNode> = {
     'open': 'Your pull request has been sent and is now awaiting review.',
-    'closed':
-        `Your pull request has been closed and is now safe to discard `
-        + `(${KeyBinding.friendlyLabel}) locally.`,
-    'merged':
-        `Yay! Your pull request has been merged successfully and is now safe ` +
-        `to discard (${KeyBinding.friendlyLabel}) locally.`,
+    'closed': (
+        <>
+            Your pull request has been closed and is now safe to discard
+            (<kbd>{KeyBinding.friendlyLabel}</kbd>) locally.
+        </>
+    ),
+    'merged': (
+        <>
+            Yay! Your pull request has been merged successfully and is now safe
+            to discard (<kbd>{KeyBinding.friendlyLabel}</kbd>) locally.
+        </>
+    ),
 };
 
 const StyledTooltip = styled(({ className, ...props }: TooltipProps): JSX.Element => (
