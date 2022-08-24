@@ -21,15 +21,14 @@ function toStringDeep(object) {
 }
 
 function updateSearchParams(uri, accessToken) {
-    const parsedUri = url.parse(uri);
+    const parsedUri = new url.URL(uri);
     const searchParams = new URLSearchParams(parsedUri.search);
     searchParams.set(
         'auth',
         Buffer.from(JSON.stringify({ accessToken })).toString('base64'),
     );
-    parsedUri.search = searchParams;
-    // TODO(dnguyen0304): Fix deprecation warning.
-    return url.format(parsedUri);
+    parsedUri.search = searchParams.toString();
+    return parsedUri.toString();
 }
 
 async function httpPost(url, options) {
