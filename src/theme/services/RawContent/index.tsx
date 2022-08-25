@@ -5,11 +5,6 @@ function getRawContent(
     rawContent: { [key: string]: string },
     trailingSlash: boolean | undefined,
 ): string | undefined {
-    console.log({
-        pathname,
-        rawContent,
-        trailingSlash,
-    })
     let processed = trailingSlash ? pathname.slice(0, -1) : pathname;
     return (
         processed in rawContent === false
