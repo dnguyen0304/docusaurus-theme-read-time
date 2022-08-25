@@ -10,14 +10,7 @@ function getRawContent(
         rawContent,
         trailingSlash,
     })
-    let processed = pathname;
-
-    if (trailingSlash && !pathname.endsWith('/')) {
-        processed = pathname + '/';
-    }
-    if (!trailingSlash && pathname.endsWith('/')) {
-        processed = pathname.slice(0, -1);
-    }
+    let processed = trailingSlash ? pathname.slice(0, -1) : pathname;
     return (
         processed in rawContent === false
             ? undefined
