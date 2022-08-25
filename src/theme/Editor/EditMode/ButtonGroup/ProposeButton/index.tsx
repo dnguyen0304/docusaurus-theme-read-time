@@ -171,6 +171,8 @@ export default function ProposeButton(
         }
     };
 
+    // TODO(dnguyen0304): Add button loading animation or add centralized button
+    // group loading animation.
     const getLabel = (pullUrl: string): string => {
         return pullUrl ? 'Sync' : 'Propose';
     }
