@@ -8,6 +8,7 @@ import { GithubPull } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Refactor to useReducer, which supports functional updates.
+// TODO(dnguyen0304): Investigate visibility: hidden to persist state.
 // TODO(dnguyen0304): Add markdown and setMarkdown.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
