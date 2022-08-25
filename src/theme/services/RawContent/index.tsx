@@ -5,6 +5,11 @@ function getRawContent(
     rawContent: { [key: string]: string },
     trailingSlash: boolean | undefined,
 ): string | undefined {
+    console.log({
+        pathname,
+        rawContent,
+        trailingSlash,
+    })
     let processed = pathname;
 
     if (trailingSlash && !pathname.endsWith('/')) {
