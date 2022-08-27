@@ -1,4 +1,3 @@
-import { useLocation } from '@docusaurus/router';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
@@ -69,7 +68,6 @@ export default function ProposeButton(
         activeTabId,
         tabs,
     } = useEditor();
-    const { pathname: currentPath } = useLocation();
     const { snackbar } = useSnackbar();
     const githubContext = useGithub();
     const siteContext = useSite();
@@ -107,7 +105,6 @@ export default function ProposeButton(
         } = await initializeAuth(
             githubContext,
             siteContext,
-            currentPath,
         );
         if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);
@@ -186,7 +183,6 @@ export default function ProposeButton(
         } = await initializeAuth(
             githubContext,
             siteContext,
-            currentPath,
         );
         if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);
@@ -213,7 +209,6 @@ export default function ProposeButton(
         } = await initializeAuth(
             githubContext,
             siteContext,
-            currentPath,
         );
         if (authRedirectUrl) {
             setExternalRedirect(authRedirectUrl);

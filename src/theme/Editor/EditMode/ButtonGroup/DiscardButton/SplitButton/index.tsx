@@ -1,4 +1,3 @@
-import { useLocation } from '@docusaurus/router';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -49,7 +48,6 @@ export default function SplitButton(
     }: Props
 ): JSX.Element {
     const { snackbar } = useSnackbar();
-    const { pathname: currentPath } = useLocation();
     const githubContext = useGithub();
     const siteContext = useSite();
     const {
@@ -89,7 +87,6 @@ export default function SplitButton(
             } = await initializeAuth(
                 githubContext,
                 siteContext,
-                currentPath,
             );
 
             if (authRedirectUrl) {

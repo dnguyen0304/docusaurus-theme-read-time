@@ -42,7 +42,6 @@ const GITHUB_REF_PREFIX = 'refs/heads/';
 export const initializeAuth = async (
     githubContext: GithubContextValue,
     siteContext: SiteContextValue,
-    currentPath: string,
 ): Promise<{
     authRedirectUrl: string,
     github: GithubType | undefined,
@@ -92,7 +91,6 @@ export const initializeAuth = async (
                 initializeAuth(
                     githubContext,
                     siteContext,
-                    currentPath,
                 );
             }
         }
