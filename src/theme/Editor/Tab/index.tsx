@@ -1,9 +1,9 @@
-import { useLocation } from '@docusaurus/router';
 import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
 import { useEditor } from '../../../contexts/editor';
 import { useRawContent } from '../../../contexts/rawContent';
+import { useLocation } from '../../../contexts/router';
 import { useSite } from '../../../contexts/site';
 import { useSnackbar } from '../../../contexts/snackbar';
 import EditModeButtonGroup from '../EditMode/ButtonGroup';
@@ -26,14 +26,14 @@ const KEY_CODE_ESCAPE: number = 27;
 export default function Tab(): JSX.Element {
     const { setEditorIsOpen } = useEditor();
     const { rawContent } = useRawContent();
-    const { pathname } = useLocation();
+    const { currentPath } = useLocation();
     const { snackbar } = useSnackbar();
     const siteContext = useSite();
 
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
     );
-    const originalMarkdown = React.useRef<string>(rawContent[pathname]);
+    const originalMarkdown = React.useRef<string>(rawContent[currentPath]);
 
     const closeEditor = () => {
         setEditorIsOpen(false);
@@ -87,6 +87,10 @@ export default function Tab(): JSX.Element {
     const resetMarkdown = () => {
         const localStorageKey = getLocalStorageKey(siteContext);
         localStorage.removeItem(localStorageKey);
+
+        if (!originalMarkdown.current) {
+            throw new Error('expected originalMarkdown to be defined');
+        }
 
         setEditorState(
             draft.EditorState.createWithContent(
