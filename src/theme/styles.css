@@ -36,6 +36,7 @@ main[class*='docMainContainer'] > div.container > div.row > div.col.col--3 {
 
     main[class*='docMainContainer'] > div.container > div.row > div.col[class*='docItemCol'] {
         margin: 0 auto;
+        /* Set the !important flag to have higher specificity than Infima. */
         max-width: 50% !important;
     }
 
