@@ -19,7 +19,7 @@ nav[class*='breadcrumbsWrapper_container'] > nav[class*='DocBreadcrumbs-styles-m
     margin-bottom: initial;
 }
 
-main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
+main[class*='docMainContainer'] > div.container > div.row > div.col.col--3 {
     max-width: 40%;
 }
 
@@ -34,10 +34,11 @@ main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
         margin: initial;
     }
 
-    main[class*='docMainContainer'] > div.container > div.row > div.col[class*='docItemCol']{
+    main[class*='docMainContainer'] > div.container > div.row > div.col[class*='docItemCol'] {
         margin: 0 auto;
         max-width: 50% !important;
     }
+
 }
 
 .DraftEditor-root {
