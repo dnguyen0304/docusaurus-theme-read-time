@@ -218,9 +218,9 @@ export default function ProposeButton(
             throw new Error('expected Github service to be defined');
         }
 
-        const { setPull } = tabs[activeTabId];
+        const { setPullStatus } = tabs[activeTabId];
         const status = await github.checkPullStatus(pullUrl);
-        setPull(status);
+        setPullStatus(status);
     };
 
     useHotkeys(

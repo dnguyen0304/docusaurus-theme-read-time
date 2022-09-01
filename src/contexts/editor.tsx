@@ -17,7 +17,6 @@ interface EditorTab {
     pullTitle: string;
     pullUrl: string;
     pullBranchName: string;
-    setPull: (newValue: GithubPullState) => void;
     setPullTitle: (
         newValue: string,
         includeLocalStorage: boolean,
@@ -30,6 +29,7 @@ interface EditorTab {
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
+    setPullStatus: (newValue: GithubPullState) => void;
 }
 
 interface AddTabProps {
