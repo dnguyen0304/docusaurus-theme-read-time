@@ -11,7 +11,11 @@ import {
 } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
-import type { GithubPullState, GithubUser, InternalGithubState } from '../../../docusaurus-theme-editor';
+import type {
+    GithubPullStatus,
+    GithubUser,
+    InternalGithubState
+} from '../../../docusaurus-theme-editor';
 
 interface AuthenticateType {
     user: GithubUser;
@@ -27,7 +31,7 @@ interface GithubType {
         branchName?: string,
         pullUrl?: string,
     ) => Promise<void>;
-    readonly checkPullStatus: (pullUrl: string) => Promise<GithubPullState>;
+    readonly checkPullStatus: (pullUrl: string) => Promise<GithubPullStatus>;
     readonly createPull: (title: string) => Promise<string>;
     readonly closePull: (pullUrl: string) => Promise<void>;
 }
@@ -341,7 +345,7 @@ export default function Github(
         return html_url;
     };
 
-    const checkPullStatus = async (pullUrl: string): Promise<GithubPullState> => {
+    const checkPullStatus = async (pullUrl: string): Promise<GithubPullStatus> => {
         const pullId = new URI(pullUrl).filename();
 
         if (pullId === '') {

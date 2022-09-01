@@ -4,7 +4,7 @@ import {
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../constants';
-import { GithubPullState } from '../docusaurus-theme-editor';
+import { GithubPullStatus } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
 // TODO(dnguyen0304): Refactor to useReducer, which supports functional updates.
@@ -13,7 +13,7 @@ import { ReactContextError } from './errors';
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
-    pull?: GithubPullState;
+    pull?: GithubPullStatus;
     pullTitle: string;
     pullUrl: string;
     pullBranchName: string;
@@ -29,7 +29,7 @@ interface EditorTab {
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
-    setPullStatus: (newValue: GithubPullState) => void;
+    setPullStatus: (newValue: GithubPullStatus) => void;
 }
 
 interface AddTabProps {
@@ -71,7 +71,7 @@ function useContextValue(): ContextValue {
     ): EditorTab => {
         const tabId = getNextTabId();
         // TODO(dnguyen0304): Refactor duplicated code.
-        const setPull = (newValue: GithubPullState) => {
+        const setPull = (newValue: GithubPullStatus) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
                     return tab;
