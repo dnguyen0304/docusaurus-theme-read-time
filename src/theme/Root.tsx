@@ -6,7 +6,7 @@ import { SnackbarProvider } from '../contexts/snackbar';
 import App from '../theme/components/App';
 import Snackbar from '../theme/services/Snackbar';
 
-interface Props {
+type Props = {
     readonly children: React.ReactNode;
 }
 
