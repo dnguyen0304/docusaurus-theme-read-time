@@ -144,13 +144,13 @@ function useContextValue(): ContextValue {
         };
         const newTab = {
             tabId,
-            setPullStatus,
             pullTitle,
-            setPullTitle,
             pullUrl,
-            setPullUrl,
             pullBranchName,
+            setPullTitle,
+            setPullUrl,
             setPullBranchName,
+            setPullStatus,
         };
 
         setTabs(prev => [
