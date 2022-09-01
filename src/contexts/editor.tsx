@@ -15,7 +15,6 @@ interface EditorTab {
     tabId: number;
     pull?: GithubPull;
     pullTitle: string;
-    // TODO(dnguyen0304): Investigate moving URL into GithubPull.
     pullUrl: string;
     pullBranchName: string;
     setPull: (newValue: GithubPull) => void;
