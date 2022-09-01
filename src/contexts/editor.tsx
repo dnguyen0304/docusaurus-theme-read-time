@@ -13,10 +13,10 @@ import { ReactContextError } from './errors';
 // TODO(dnguyen0304): Add lastUpdatedAt.
 interface EditorTab {
     tabId: number;
-    pull?: GithubPullStatus;
     pullTitle: string;
     pullUrl: string;
     pullBranchName: string;
+    pullStatus?: GithubPullStatus;
     setPullTitle: (
         newValue: string,
         includeLocalStorage: boolean,
@@ -78,7 +78,7 @@ function useContextValue(): ContextValue {
                 }
                 return {
                     ...tab,
-                    pull: newValue,
+                    pullStatus: newValue,
                 }
             }));
         };

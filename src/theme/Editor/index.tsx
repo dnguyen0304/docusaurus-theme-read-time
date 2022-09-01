@@ -152,13 +152,13 @@ export default function Editor(): JSX.Element {
                 <StyledTabs
                     onChange={handleChange}
                     pullUrl={tabs[activeIndex].pullUrl}
-                    pullStatus={tabs[activeIndex].pull}
+                    pullStatus={tabs[activeIndex].pullStatus}
                     value={activeIndex}
                 >
                     {tabs.map((tab, index) => {
                         const pullStateIcon = getIcon(
                             tab.pullUrl,
-                            tab.pull,
+                            tab.pullStatus,
                         );
                         return (
                             <EditorTooltip
@@ -166,14 +166,14 @@ export default function Editor(): JSX.Element {
                                 arrow
                                 leaveDelay={500}
                                 placement='left-start'
-                                pullState={tab.pull?.state}
+                                pullState={tab.pullStatus?.state}
                                 pullStateIcon={pullStateIcon}
                                 pullUrl={tab.pullUrl}
                             >
                                 <StyledTab
                                     label={<TabLabel pullStateIcon={pullStateIcon} />}
                                     pullUrl={tab.pullUrl}
-                                    pullStatus={tab.pull}
+                                    pullStatus={tab.pullStatus}
                                 />
                             </EditorTooltip>
                         );
