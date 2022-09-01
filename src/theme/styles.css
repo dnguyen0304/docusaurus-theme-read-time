@@ -1,8 +1,8 @@
-main[class*='DocPage-Layout-Main'] > div.padding-top--md.padding-bottom--lg {
-    /* While DocPage/Layout/Main includes the table of contents (TOC), changing
-       padding-top doesn't affect the TOC because the TOC's top position is
-       already greater than the padding-top. Therefore, there is no visual
-       difference.
+main[class*='docMainContainer'] > div.container {
+    /* While DocPage/Layout/Main ("docMainContainer") includes the table of
+       contents (TOC), changing padding-top doesn't affect the TOC because the
+       TOC's top position is already greater than the padding-top. Therefore,
+       there is no visual difference.
 
        Set the !important flag to have higher specificity than Infima. */
     padding: initial !important;
@@ -23,7 +23,7 @@ main[class*='docMainContainer'] > div.container > div.row > div.col.col--3 {
     max-width: 40%;
 }
 
-/* Use the same Docusaurus Infima min-width breakpoint. */
+/* Use the same Infima min-width breakpoint. */
 @media (min-width: 1440px) {
     main[class*='docMainContainer'] > div.container {
         max-width: initial;
