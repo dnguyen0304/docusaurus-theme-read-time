@@ -22,7 +22,7 @@ export interface GithubUser {
 
 export type InternalGithubState = 'open' | 'closed' | 'merged';
 
-export interface GithubPull {
+export interface GithubPullState {
     state: InternalGithubState;
     // Gotcha: When a pull request is closed, both closedAt and mergedAt are
     // updated. Therefore, mergedAt must be directly checked to determine if a

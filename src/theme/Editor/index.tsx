@@ -8,7 +8,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import * as React from 'react';
 import { useEditor } from '../../contexts/editor';
-import { GithubPull } from '../../docusaurus-theme-editor';
+import { GithubPullState } from '../../docusaurus-theme-editor';
 import EditorContainer from './Container';
 import EditorTab from './Tab';
 import EditorTooltip from './Tooltip';
@@ -19,12 +19,12 @@ type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
 interface StyledTabsProps {
     pullUrl: string;
-    pull: GithubPull | undefined;
+    pull: GithubPullState | undefined;
 }
 
 interface StyledTabProps {
     pullUrl: string;
-    pull: GithubPull | undefined;
+    pull: GithubPullState | undefined;
 }
 
 interface TabLabelProps {
@@ -38,7 +38,7 @@ interface TabContentProps {
 
 const checkPullExists = (
     pullUrl: string,
-    pull: GithubPull | undefined,
+    pull: GithubPullState | undefined,
 ): boolean => {
     // If a pull request is closed remotely, check the pull URL locally as a
     // proxy for whether the pull exists.
@@ -47,7 +47,7 @@ const checkPullExists = (
 
 const getColor = (
     pullUrl: string,
-    pull: GithubPull | undefined,
+    pull: GithubPullState | undefined,
     theme: Theme,
 ): string => {
     if (checkPullExists(pullUrl, pull)) {
@@ -64,7 +64,7 @@ const getColor = (
 
 const getIcon = (
     pullUrl: string,
-    pull: GithubPull | undefined,
+    pull: GithubPullState | undefined,
 ): JSX.Element | null => {
     if (checkPullExists(pullUrl, pull)) {
         const iconProps = {
