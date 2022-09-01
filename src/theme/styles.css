@@ -1,3 +1,25 @@
+main[class*='DocPage-Layout-Main'] > div.padding-top--md.padding-bottom--lg {
+    /* While DocPage/Layout/Main includes the table of contents (TOC), changing
+       padding-top doesn't affect the TOC because the TOC's top position is
+       already greater than the padding-top. Therefore, there is no visual
+       difference.
+
+       Set the !important flag to have higher specificity than Infima. */
+    padding-top: initial !important;
+    padding-bottom: initial !important;
+}
+
+/* The comment above does not apply to padding-bottom. For backwards
+   compatibility, reapply the padding-bottom style but in a smaller scope. The
+   scope must exclude the TOC. */
+main[class*='DocPage-Layout-Main'] div[class*='DocItem-Layout'] {
+    padding-bottom: 2rem;
+}
+
+nav[class*='breadcrumbsWrapper_container'] > nav[class*='DocBreadcrumbs-styles-module'] {
+    margin-bottom: initial;
+}
+
 main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
     max-width: 50%;
 }
