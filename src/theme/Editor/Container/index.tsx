@@ -3,8 +3,8 @@ import * as React from 'react';
 import EditorHandle, { WIDTH_PX } from '../Handle';
 import styles from './styles.module.css';
 
-interface Props {
-    children: React.ReactNode;
+type Props = {
+    readonly children: React.ReactNode;
 }
 
 export default function Container({ children }: Props): JSX.Element {
