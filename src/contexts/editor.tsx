@@ -71,17 +71,6 @@ function useContextValue(): ContextValue {
     ): EditorTab => {
         const tabId = getNextTabId();
         // TODO(dnguyen0304): Refactor duplicated code.
-        const setPullStatus = (newValue: GithubPullStatus) => {
-            setTabs(tabs => tabs.map(tab => {
-                if (tab.tabId !== tabId) {
-                    return tab;
-                }
-                return {
-                    ...tab,
-                    pullStatus: newValue,
-                }
-            }));
-        };
         const setPullTitle = (
             newValue: string,
             includeLocalStorage: boolean,
@@ -141,6 +130,17 @@ function useContextValue(): ContextValue {
                     newValue,
                 );
             }
+        };
+        const setPullStatus = (newValue: GithubPullStatus) => {
+            setTabs(tabs => tabs.map(tab => {
+                if (tab.tabId !== tabId) {
+                    return tab;
+                }
+                return {
+                    ...tab,
+                    pullStatus: newValue,
+                }
+            }));
         };
         const newTab = {
             tabId,
