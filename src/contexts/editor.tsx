@@ -71,7 +71,7 @@ function useContextValue(): ContextValue {
     ): EditorTab => {
         const tabId = getNextTabId();
         // TODO(dnguyen0304): Refactor duplicated code.
-        const setPull = (newValue: GithubPullStatus) => {
+        const setPullStatus = (newValue: GithubPullStatus) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
                     return tab;
@@ -144,7 +144,7 @@ function useContextValue(): ContextValue {
         };
         const newTab = {
             tabId,
-            setPull,
+            setPullStatus,
             pullTitle,
             setPullTitle,
             pullUrl,
