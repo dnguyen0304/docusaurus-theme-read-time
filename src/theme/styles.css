@@ -5,8 +5,7 @@ main[class*='DocPage-Layout-Main'] > div.padding-top--md.padding-bottom--lg {
        difference.
 
        Set the !important flag to have higher specificity than Infima. */
-    padding-top: initial !important;
-    padding-bottom: initial !important;
+    padding: initial !important;
 }
 
 /* The comment above does not apply to padding-bottom. For backwards
@@ -21,7 +20,24 @@ nav[class*='breadcrumbsWrapper_container'] > nav[class*='DocBreadcrumbs-styles-m
 }
 
 main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
-    max-width: 50%;
+    max-width: 40%;
+}
+
+/* Use the same Docusaurus Infima min-width breakpoint. */
+@media (min-width: 1440px) {
+    main[class*='docMainContainer'] > div.container {
+        max-width: initial;
+    }
+
+    main[class*='docMainContainer'] > div.container > div.row {
+        /* TODO(dnguyen0304): Investigate why a negative margin was used. */
+        margin: initial;
+    }
+
+    main[class*='docMainContainer'] > div.container > div.row > div.col[class*='docItemCol']{
+        margin: 0 auto;
+        max-width: 50% !important;
+    }
 }
 
 .DraftEditor-root {
