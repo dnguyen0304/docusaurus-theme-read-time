@@ -5,6 +5,7 @@ import { GithubProvider } from '../contexts/github';
 import { SnackbarProvider } from '../contexts/snackbar';
 import App from '../theme/components/App';
 import Snackbar from '../theme/services/Snackbar';
+import './styles.css';
 
 type Props = {
     readonly children: React.ReactNode;

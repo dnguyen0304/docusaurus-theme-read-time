@@ -1,7 +1,3 @@
-:global main[class*='DocPage-Layout-Main'] div.row > div.col.col--3 {
-    max-width: 50%;
-}
-
 .editorResizableContainer {
     /* TODO(dnguyen0304): Investigate why this adds horizontal visual
        stuttering. The width is relative to the content. */
