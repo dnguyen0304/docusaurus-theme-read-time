@@ -47,7 +47,6 @@ interface ContextValue {
     readonly addTab: (props: AddTabProps) => EditorTab;
     readonly setEditorIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     readonly setActiveTabId: React.Dispatch<React.SetStateAction<number>>
-    readonly setTabs: React.Dispatch<React.SetStateAction<EditorTab[]>>
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
@@ -171,7 +170,6 @@ function useContextValue(): ContextValue {
             addTab,
             setEditorIsOpen,
             setActiveTabId,
-            setTabs,
         }),
         [
             editorIsOpen,
@@ -180,7 +178,6 @@ function useContextValue(): ContextValue {
             addTab,
             setEditorIsOpen,
             setActiveTabId,
-            setTabs,
         ],
     );
 }
