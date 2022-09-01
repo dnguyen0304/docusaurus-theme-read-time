@@ -19,12 +19,12 @@ type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
 interface StyledTabsProps {
     pullUrl: string;
-    pull: GithubPullStatus | undefined;
+    pullStatus: GithubPullStatus | undefined;
 }
 
 interface StyledTabProps {
     pullUrl: string;
-    pull: GithubPullStatus | undefined;
+    pullStatus: GithubPullStatus | undefined;
 }
 
 interface TabLabelProps {
@@ -38,24 +38,24 @@ interface TabContentProps {
 
 const checkPullExists = (
     pullUrl: string,
-    pull: GithubPullStatus | undefined,
+    pullStatus: GithubPullStatus | undefined,
 ): boolean => {
     // If a pull request is closed remotely, check the pull URL locally as a
     // proxy for whether the pull exists.
-    return [pullUrl, pull].every(Boolean);
+    return [pullUrl, pullStatus].every(Boolean);
 }
 
 const getColor = (
     pullUrl: string,
-    pull: GithubPullStatus | undefined,
+    pullStatus: GithubPullStatus | undefined,
     theme: Theme,
 ): string => {
-    if (checkPullExists(pullUrl, pull)) {
-        if (pull!.state === 'closed') {
+    if (checkPullExists(pullUrl, pullStatus)) {
+        if (pullStatus!.state === 'closed') {
             // TODO(dnguyen0304): Add red color for theme palette.
             return theme.palette.error.main;
         }
-        if (pull!.state === 'merged') {
+        if (pullStatus!.state === 'merged') {
             return PURPLE_MERGED;
         }
     }
@@ -64,20 +64,20 @@ const getColor = (
 
 const getIcon = (
     pullUrl: string,
-    pull: GithubPullStatus | undefined,
+    pullStatus: GithubPullStatus | undefined,
 ): JSX.Element | null => {
-    if (checkPullExists(pullUrl, pull)) {
+    if (checkPullExists(pullUrl, pullStatus)) {
         const iconProps = {
             fontSize: 'inherit' as iconFontSize,
             sx: { ml: '0.25rem' },
         };
-        if (pull!.state === 'open') {
+        if (pullStatus!.state === 'open') {
             return <ScheduleIcon {...iconProps} />;
         }
-        if (pull!.state === 'closed') {
+        if (pullStatus!.state === 'closed') {
             return <ReportOutlinedIcon {...iconProps} />;
         }
-        if (pull!.state === 'merged') {
+        if (pullStatus!.state === 'merged') {
             return <MergeIcon {...iconProps} />;
         }
     }
@@ -86,23 +86,23 @@ const getIcon = (
 
 const StyledTabs = styled(Tabs, {
     shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
-})<StyledTabsProps>(({ theme, pullUrl, pull }) => ({
+})<StyledTabsProps>(({ theme, pullUrl, pullStatus }) => ({
     '.MuiTabs-indicator': {
         // TODO(dnguyen0304): Fix type error.
-        backgroundColor: getColor(pullUrl, pull, theme),
+        backgroundColor: getColor(pullUrl, pullStatus, theme),
     },
     '.MuiTouchRipple-child': {
         // TODO(dnguyen0304): Fix type error.
-        backgroundColor: getColor(pullUrl, pull, theme),
+        backgroundColor: getColor(pullUrl, pullStatus, theme),
     },
 }));
 
 const StyledTab = styled(Tab, {
     shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
-})<StyledTabProps>(({ theme, pullUrl, pull }) => ({
+})<StyledTabProps>(({ theme, pullUrl, pullStatus }) => ({
     '& > span:first-of-type': {
         // TODO(dnguyen0304): Fix type error.
-        color: getColor(pullUrl, pull, theme),
+        color: getColor(pullUrl, pullStatus, theme),
     },
 }));
 
@@ -152,7 +152,7 @@ export default function Editor(): JSX.Element {
                 <StyledTabs
                     onChange={handleChange}
                     pullUrl={tabs[activeIndex].pullUrl}
-                    pull={tabs[activeIndex].pull}
+                    pullStatus={tabs[activeIndex].pull}
                     value={activeIndex}
                 >
                     {tabs.map((tab, index) => {
@@ -173,7 +173,7 @@ export default function Editor(): JSX.Element {
                                 <StyledTab
                                     label={<TabLabel pullStateIcon={pullStateIcon} />}
                                     pullUrl={tab.pullUrl}
-                                    pull={tab.pull}
+                                    pullStatus={tab.pull}
                                 />
                             </EditorTooltip>
                         );
