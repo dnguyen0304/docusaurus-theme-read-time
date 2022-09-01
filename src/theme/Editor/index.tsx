@@ -162,7 +162,7 @@ export default function Editor(): JSX.Element {
                         );
                         return (
                             <EditorTooltip
-                                key={'tab-tooltip-${index}'}
+                                key={`tab-tooltip-${index}`}
                                 arrow
                                 leaveDelay={500}
                                 placement='left-start'
