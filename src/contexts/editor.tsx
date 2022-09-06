@@ -11,7 +11,7 @@ import { ReactContextError } from './errors';
 // TODO(dnguyen0304): Investigate visibility: hidden to persist state.
 // TODO(dnguyen0304): Add markdown and setMarkdown.
 // TODO(dnguyen0304): Add lastUpdatedAt.
-interface EditorTab {
+type EditorTab = {
     tabId: number;
     pullTitle: string;
     pullUrl: string;
@@ -32,14 +32,14 @@ interface EditorTab {
     setPullStatus: (newValue: GithubPullStatus) => void;
 }
 
-interface AddTabProps {
+type AddTabProps = {
     pullTitle: string;
     pullUrl: string;
     pullBranchName: string;
 }
 
 // aliases: table of contents
-interface ContextValue {
+type ContextValue = {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
     readonly tabs: EditorTab[];
@@ -181,7 +181,7 @@ function useContextValue(): ContextValue {
     );
 }
 
-interface Props {
+type Props = {
     readonly children: React.ReactNode;
 };
 
