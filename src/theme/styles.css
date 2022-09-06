@@ -1,11 +1,11 @@
 /* The comment above does not apply to padding-bottom. For backwards
    compatibility, reapply the padding-bottom style but in a smaller scope. The
    scope must exclude the TOC. */
-main[class*='DocPage-Layout-Main'] div[class*='DocItem-Layout'] {
+main[class*='docMainContainer'] div.col[class*='docItemCol'] {
     padding-bottom: 2rem;
 }
 
-nav[class*='breadcrumbsWrapper_container'] > nav[class*='DocBreadcrumbs-styles-module'] {
+nav[class*='breadcrumbsWrapper_container'] > nav[class*='breadcrumbsContainer'] {
     margin-bottom: initial;
 }
 
@@ -44,7 +44,6 @@ main[class*='docMainContainer'] > div.container > div.row > div.col.col--3 {
         /* Set the !important flag to have higher specificity than Infima. */
         max-width: 50% !important;
     }
-
 }
 
 .DraftEditor-root {
