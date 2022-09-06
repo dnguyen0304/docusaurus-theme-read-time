@@ -38,7 +38,6 @@ type AddTabProps = {
     readonly pullBranchName: string;
 }
 
-// aliases: table of contents
 type ContextValue = {
     readonly editorIsOpen: boolean;
     readonly activeTabId: number;
