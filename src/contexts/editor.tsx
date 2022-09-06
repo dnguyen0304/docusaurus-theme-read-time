@@ -12,30 +12,30 @@ import { ReactContextError } from './errors';
 // TODO(dnguyen0304): Add markdown and setMarkdown.
 // TODO(dnguyen0304): Add lastUpdatedAt.
 type EditorTab = {
-    tabId: number;
-    pullTitle: string;
-    pullUrl: string;
-    pullBranchName: string;
-    pullStatus?: GithubPullStatus;
-    setPullTitle: (
+    readonly tabId: number;
+    readonly pullTitle: string;
+    readonly pullUrl: string;
+    readonly pullBranchName: string;
+    readonly pullStatus?: GithubPullStatus;
+    readonly setPullTitle: (
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
-    setPullUrl: (
+    readonly setPullUrl: (
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
-    setPullBranchName: (
+    readonly setPullBranchName: (
         newValue: string,
         includeLocalStorage: boolean,
     ) => void;
-    setPullStatus: (newValue: GithubPullStatus) => void;
+    readonly setPullStatus: (newValue: GithubPullStatus) => void;
 }
 
 type AddTabProps = {
-    pullTitle: string;
-    pullUrl: string;
-    pullBranchName: string;
+    readonly pullTitle: string;
+    readonly pullUrl: string;
+    readonly pullBranchName: string;
 }
 
 // aliases: table of contents
