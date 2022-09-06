@@ -85,7 +85,7 @@ const getIcon = (
 };
 
 const StyledTabs = styled(Tabs, {
-    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
+    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pullStatus',
 })<StyledTabsProps>(({ theme, pullUrl, pullStatus }) => ({
     '.MuiTabs-indicator': {
         // TODO(dnguyen0304): Fix type error.
@@ -98,7 +98,7 @@ const StyledTabs = styled(Tabs, {
 }));
 
 const StyledTab = styled(Tab, {
-    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pull',
+    shouldForwardProp: (prop) => prop !== 'pullUrl' && prop !== 'pullStatus',
 })<StyledTabProps>(({ theme, pullUrl, pullStatus }) => ({
     '& > span:first-of-type': {
         // TODO(dnguyen0304): Fix type error.
