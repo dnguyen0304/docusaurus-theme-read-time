@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { LOCAL_STORAGE_KEYS } from '../../constants';
 import { ContextValue } from '../../contexts/site';
 
 const getLocalStorageKey = (
@@ -6,9 +7,10 @@ const getLocalStorageKey = (
         owner,
         repository,
         path,
-    }: ContextValue
+    }: ContextValue,
+    key: LOCAL_STORAGE_KEYS,
 ): string => {
-    return `${owner}/${repository}/${path}`;
+    return `${owner}/${repository}/${path}/${key}`;
 };
 
 const useRefMeasure = <T extends HTMLElement>(

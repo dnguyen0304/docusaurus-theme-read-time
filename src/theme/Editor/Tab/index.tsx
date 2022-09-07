@@ -1,6 +1,7 @@
 import type { DraftHandleValue, EditorState } from 'draft-js';
 import draft, { convertToRaw } from 'draft-js';
 import * as React from 'react';
+import { LOCAL_STORAGE_KEY_MARKDOWN } from '../../../constants';
 import { useEditor } from '../../../contexts/editor';
 import { useRawContent } from '../../../contexts/rawContent';
 import { useLocation } from '../../../contexts/router';
@@ -79,13 +80,14 @@ export default function Tab(): JSX.Element {
 
     const saveMarkdown = (state?: draft.EditorState) => {
         localStorage.setItem(
-            getLocalStorageKey(siteContext),
+            getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN),
             getMarkdown(state),
         );
     };
 
     const resetMarkdown = () => {
-        const localStorageKey = getLocalStorageKey(siteContext);
+        const localStorageKey =
+            getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
         localStorage.removeItem(localStorageKey);
 
         if (!originalMarkdown.current) {
@@ -128,7 +130,8 @@ export default function Tab(): JSX.Element {
     }
 
     React.useEffect(() => {
-        const localStorageKey = getLocalStorageKey(siteContext);
+        const localStorageKey =
+            getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
         // TODO(dnguyen0304): Extract getItem to a centralized location to
         // facilitate maintenance.
         const savedMarkdown = localStorage.getItem(localStorageKey);
