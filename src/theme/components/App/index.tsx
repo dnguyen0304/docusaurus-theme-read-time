@@ -20,6 +20,14 @@ export default function App(): null {
         }
         const cookies = new Cookies();
         const auth = JSON.parse(atob(encodedAuth));
+        // Set the cookie twice. First without options and second with them.
+        // This fallback is necessary for hosting providers such as AWS S3 that
+        // do not support cookie attributes (reproduced but no source
+        // documentation). For example:
+        //
+        //   document.cookie = 'this=works'
+        //   document.cookie = 'this=does_not_work;Secure'
+        cookies.set(COOKIE_KEY_SESSION_ID, auth.accessToken);
         cookies.set(
             COOKIE_KEY_SESSION_ID,
             auth.accessToken,
