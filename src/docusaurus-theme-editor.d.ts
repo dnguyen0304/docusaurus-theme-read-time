@@ -1,5 +1,16 @@
 /// <reference types="@docusaurus/module-type-aliases" />
 
+declare module '@mui/material/styles' {
+    interface BreakpointOverrides {
+        xs: false;
+        sm: false;
+        md: false;
+        lg: false;
+        xl: false;
+        mobile: true;
+    }
+}
+
 declare module '@theme/DocBreadcrumbs'
 
 declare module '@theme-init/DocBreadcrumbs' {
