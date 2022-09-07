@@ -7,7 +7,6 @@ const DOCUSAURUS_ALIASED_SITE_PATH_PREFIX: string = '@site';
 const GITHUB_AUTHORIZATION_REDIRECT_URL: string = 'https://kgevadn5a2.execute-api.us-east-1.amazonaws.com/production/DocusaurusEditor_handleOAuthRedirect';
 const SEARCH_PARAM_KEY_AUTH: string = 'auth';
 const COOKIE_KEY_SESSION_ID: string = 'session_id';
-const LOCAL_STORAGE_KEY_PULL: string = 'pull';
 const LOCAL_STORAGE_KEY_PULL_BRANCH_NAME: string = 'pull_branch_name';
 const LOCAL_STORAGE_KEY_PULL_TITLE: string = 'pull_title';
 const LOCAL_STORAGE_KEY_PULL_URL: string = 'pull_url';
@@ -19,6 +18,5 @@ export {
     LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL,
-    LOCAL_STORAGE_KEY_PULL,
     SEARCH_PARAM_KEY_AUTH,
 };
