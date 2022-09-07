@@ -16,9 +16,11 @@ export default function App(): null {
             new URLSearchParams(window.location.search)
                 .get(SEARCH_PARAM_KEY_AUTH);
         if (!encodedAuth) {
+            console.log('no encoded auth');
             return;
         }
         const cookies = new Cookies();
+        cookies.addChangeListener((options) => console.log(options));
         const auth = JSON.parse(atob(encodedAuth));
         cookies.set(
             COOKIE_KEY_SESSION_ID,
