@@ -7,9 +7,9 @@ import { useRawContent } from '../../../contexts/rawContent';
 import { useLocation } from '../../../contexts/router';
 import { useSite } from '../../../contexts/site';
 import { useSnackbar } from '../../../contexts/snackbar';
+import { getLocalStorageKey } from '../../services/utils';
 import EditModeButtonGroup from '../EditMode/ButtonGroup';
 import EditorLine from '../Line';
-import { getLocalStorageKey } from '../utils';
 import './styles.module.css';
 
 // TODO(dnguyen0304): Extract to a centralized location to facilitate
