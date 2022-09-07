@@ -86,11 +86,13 @@ function useContextValue(): ContextValue {
                     }
                 }));
                 if (includeLocalStorage) {
-                    localStorage.setItem(
-                        getLocalStorageKey(siteContext, localStorageKey),
-                        newValue,
-                    );
-                    // localStorage.removeItem(localStorageKey);
+                    const key =
+                        getLocalStorageKey(siteContext, localStorageKey);
+                    if (newValue) {
+                        localStorage.setItem(key, newValue);
+                    } else {
+                        localStorage.removeItem(key);
+                    }
                 }
             };
             return setter;
