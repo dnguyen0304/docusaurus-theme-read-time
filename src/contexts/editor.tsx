@@ -7,6 +7,8 @@ import {
 import { GithubPullStatus } from '../docusaurus-theme-editor';
 import { ReactContextError } from './errors';
 
+type TabSetter = (newValue: string, includeLocalStorage: boolean) => void;
+
 // TODO(dnguyen0304): Investigate refactoring to useReducer, which supports
 //   functional updates (unconfirmed requirement).
 // TODO(dnguyen0304): Add markdown and setMarkdown.
@@ -17,18 +19,9 @@ type EditorTab = {
     readonly pullUrl: string;
     readonly pullBranchName: string;
     readonly pullStatus?: GithubPullStatus;
-    readonly setPullTitle: (
-        newValue: string,
-        includeLocalStorage: boolean,
-    ) => void;
-    readonly setPullUrl: (
-        newValue: string,
-        includeLocalStorage: boolean,
-    ) => void;
-    readonly setPullBranchName: (
-        newValue: string,
-        includeLocalStorage: boolean,
-    ) => void;
+    readonly setPullTitle: TabSetter;
+    readonly setPullUrl: TabSetter;
+    readonly setPullBranchName: TabSetter;
     readonly setPullStatus: (newValue: GithubPullStatus) => void;
 }
 
@@ -55,12 +48,6 @@ function useContextValue(): ContextValue {
     const [tabs, setTabs] = React.useState<EditorTab[]>([]);
     const [tabIdCounter, setTabIdCounter] = React.useState<number>(0);
 
-    const getNextTabId = (): number => {
-        const nextTabId = tabIdCounter;
-        setTabIdCounter(nextTabId + 1);
-        return nextTabId;
-    };
-
     const addTab = (
         {
             pullTitle = '',
@@ -68,68 +55,34 @@ function useContextValue(): ContextValue {
             pullBranchName = '',
         }: AddTabProps
     ): EditorTab => {
-        const tabId = getNextTabId();
+        // Get the next tab ID.
+        const tabId = tabIdCounter;
+        setTabIdCounter(prev => prev + 1);
+
+        const createSetter = (
+            objectKey: string,
+            localStorageKey: string,
+        ): TabSetter => {
+            const setter = (
+                newValue: string,
+                includeLocalStorage: boolean,
+            ) => {
+                setTabs(tabs => tabs.map(tab => {
+                    if (tab.tabId !== tabId) {
+                        return tab;
+                    }
+                    return {
+                        ...tab,
+                        [objectKey]: newValue,
+                    }
+                }));
+                if (includeLocalStorage) {
+                    localStorage.setItem(localStorageKey, newValue);
+                }
+            };
+            return setter;
+        };
         // TODO(dnguyen0304): Refactor duplicated code.
-        const setPullTitle = (
-            newValue: string,
-            includeLocalStorage: boolean,
-        ) => {
-            setTabs(tabs => tabs.map(tab => {
-                if (tab.tabId !== tabId) {
-                    return tab;
-                }
-                return {
-                    ...tab,
-                    pullTitle: newValue,
-                }
-            }));
-            if (includeLocalStorage) {
-                localStorage.setItem(
-                    LOCAL_STORAGE_KEY_PULL_TITLE,
-                    newValue,
-                );
-            }
-        };
-        const setPullUrl = (
-            newValue: string,
-            includeLocalStorage: boolean,
-        ) => {
-            setTabs(tabs => tabs.map(tab => {
-                if (tab.tabId !== tabId) {
-                    return tab;
-                }
-                return {
-                    ...tab,
-                    pullUrl: newValue,
-                }
-            }));
-            if (includeLocalStorage) {
-                localStorage.setItem(
-                    LOCAL_STORAGE_KEY_PULL_URL,
-                    newValue,
-                );
-            }
-        };
-        const setPullBranchName = (
-            newValue: string,
-            includeLocalStorage: boolean,
-        ) => {
-            setTabs(tabs => tabs.map(tab => {
-                if (tab.tabId !== tabId) {
-                    return tab;
-                }
-                return {
-                    ...tab,
-                    pullBranchName: newValue,
-                }
-            }));
-            if (includeLocalStorage) {
-                localStorage.setItem(
-                    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
-                    newValue,
-                );
-            }
-        };
         const setPullStatus = (newValue: GithubPullStatus) => {
             setTabs(tabs => tabs.map(tab => {
                 if (tab.tabId !== tabId) {
@@ -146,9 +99,12 @@ function useContextValue(): ContextValue {
             pullTitle,
             pullUrl,
             pullBranchName,
-            setPullTitle,
-            setPullUrl,
-            setPullBranchName,
+            setPullTitle:
+                createSetter('pullTitle', LOCAL_STORAGE_KEY_PULL_TITLE),
+            setPullUrl:
+                createSetter('pullUrl', LOCAL_STORAGE_KEY_PULL_URL),
+            setPullBranchName:
+                createSetter('pullBranchName', LOCAL_STORAGE_KEY_PULL_BRANCH_NAME),
             setPullStatus,
         };
 
@@ -156,7 +112,6 @@ function useContextValue(): ContextValue {
             ...prev,
             newTab,
         ]);
-
         return newTab;
     };
 
