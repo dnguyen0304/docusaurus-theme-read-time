@@ -58,6 +58,11 @@ export default function Snackbar(): SnackbarType {
                 autoHideDuration={duration}
                 onClose={close}
                 open={isOpen}
+                sx={{
+                    // Prevent the snackbar, with its high z-index, blocking
+                    // users from interacting with elements beneath it.
+                    width: 'fit-content'
+                }}
             >
                 {content}
             </MuiSnackbar>
