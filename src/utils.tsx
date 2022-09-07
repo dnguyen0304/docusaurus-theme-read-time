@@ -1,5 +1,5 @@
-import type { LOCAL_STORAGE_KEYS } from '../../constants';
-import { ContextValue } from '../../contexts/site';
+import type { LOCAL_STORAGE_KEYS } from './constants';
+import { ContextValue } from './contexts/site';
 
 const getLocalStorageKey = (
     {

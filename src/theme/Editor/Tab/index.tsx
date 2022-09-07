@@ -7,7 +7,7 @@ import { useRawContent } from '../../../contexts/rawContent';
 import { useLocation } from '../../../contexts/router';
 import { useSite } from '../../../contexts/site';
 import { useSnackbar } from '../../../contexts/snackbar';
-import { getLocalStorageKey } from '../../services/utils';
+import { getLocalStorageKey } from '../../../utils';
 import EditModeButtonGroup from '../EditMode/ButtonGroup';
 import EditorLine from '../Line';
 
