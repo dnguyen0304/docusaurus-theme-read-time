@@ -47,6 +47,19 @@ export default function LayoutWrapper(props: Props): JSX.Element {
         }
     }, []);
 
+    React.useEffect(() => {
+        document
+            .querySelector(`main[class*='docMainContainer']`)
+            ?.classList
+            .add('editorDocItemContainer');
+
+        return () =>
+            document
+                .querySelector(`main[class*='docMainContainer']`)
+                ?.classList
+                .remove('editorDocItemContainer');
+    }, []);
+
     return (
         <>
             <Layout {...props} />
