@@ -1,13 +1,21 @@
 import * as React from 'react';
 import {
+    LOCAL_STORAGE_KEYS,
     LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../constants';
 import { GithubPullStatus } from '../docusaurus-theme-editor';
+import { getLocalStorageKey } from '../utils';
 import { ReactContextError } from './errors';
+import { ContextValue as SiteContextValue } from './site';
 
-type TabSetter = (newValue: string, includeLocalStorage: boolean) => void;
+// TODO(dnguyen0304): Add function overloading when not including local storage.
+type TabSetter = (
+    newValue: string,
+    includeLocalStorage: boolean,
+    siteContext: SiteContextValue,
+) => void;
 
 // TODO(dnguyen0304): Investigate refactoring to useReducer, which supports
 //   functional updates (unconfirmed requirement).
@@ -61,11 +69,12 @@ function useContextValue(): ContextValue {
 
         const createSetter = (
             objectKey: string,
-            localStorageKey: string,
+            localStorageKey: LOCAL_STORAGE_KEYS,
         ): TabSetter => {
             const setter = (
                 newValue: string,
                 includeLocalStorage: boolean,
+                siteContext: SiteContextValue,
             ) => {
                 setTabs(tabs => tabs.map(tab => {
                     if (tab.tabId !== tabId) {
@@ -77,7 +86,11 @@ function useContextValue(): ContextValue {
                     }
                 }));
                 if (includeLocalStorage) {
-                    localStorage.setItem(localStorageKey, newValue);
+                    localStorage.setItem(
+                        getLocalStorageKey(siteContext, localStorageKey),
+                        newValue,
+                    );
+                    // localStorage.removeItem(localStorageKey);
                 }
             };
             return setter;

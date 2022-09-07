@@ -8,7 +8,8 @@ import {
     LOCAL_STORAGE_KEY_PULL_URL
 } from '../../../constants';
 import { useEditor } from '../../../contexts/editor';
-// import { useSite } from '../../../contexts/site';
+import { useSite } from '../../../contexts/site';
+import { getLocalStorageKey } from '../../../utils';
 
 type Props = WrapperProps<typeof LayoutType>;
 
@@ -17,14 +18,27 @@ export default function LayoutWrapper(props: Props): JSX.Element {
         tabs,
         addTab,
     } = useEditor();
-    // const siteContext = useSite();
+    const siteContext = useSite();
 
     React.useEffect(() => {
-        const pullTitle = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_TITLE);
-        const pullUrl = localStorage.getItem(LOCAL_STORAGE_KEY_PULL_URL);
+        const pullTitle =
+            localStorage.getItem(
+                getLocalStorageKey(
+                    siteContext,
+                    LOCAL_STORAGE_KEY_PULL_TITLE));
+        const pullUrl =
+            localStorage.getItem(
+                getLocalStorageKey(
+                    siteContext,
+                    LOCAL_STORAGE_KEY_PULL_URL));
         const pullBranchName =
-            localStorage.getItem(LOCAL_STORAGE_KEY_PULL_BRANCH_NAME);
+            localStorage.getItem(
+                getLocalStorageKey(
+                    siteContext,
+                    LOCAL_STORAGE_KEY_PULL_BRANCH_NAME));
         if (tabs.length === 0) {
+            // TODO(dnguyen0304): Investigate if the empty string fallback is
+            // necessary.
             addTab({
                 pullTitle: pullTitle ? pullTitle : '',
                 pullUrl: pullUrl ? pullUrl : '',

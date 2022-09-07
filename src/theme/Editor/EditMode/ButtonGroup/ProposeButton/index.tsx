@@ -119,7 +119,7 @@ export default function ProposeButton(
             + `-${github.getUser().username}`
             + `-${Math.floor(Date.now() / 1000)}`
         await github.createBranch(branchName);
-        setPullBranchName(branchName, true);
+        setPullBranchName(branchName, true, siteContext);
         try {
             await github.createCommit(
                 getMarkdown(),
@@ -142,7 +142,7 @@ export default function ProposeButton(
             }
         }
         const pullUrl = await github.createPull(pullTitle);
-        setPullUrl(pullUrl, true);
+        setPullUrl(pullUrl, true, siteContext);
         window.open(pullUrl, '_blank')!.focus();
 
         setIsLoading(false);
@@ -158,7 +158,7 @@ export default function ProposeButton(
     };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPullTitle(event.target.value, true);
+        setPullTitle(event.target.value, true, siteContext);
     };
 
     const handleTitleKeyUp = (event: React.KeyboardEvent) => {

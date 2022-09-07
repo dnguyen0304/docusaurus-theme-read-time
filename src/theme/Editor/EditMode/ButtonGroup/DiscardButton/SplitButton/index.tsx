@@ -72,7 +72,7 @@ export default function SplitButton(
     const handleClick = async () => {
         const text = getText(MENU_ITEM_OPTIONS[menuItemIndex]);
 
-        setPullTitle('', true);
+        setPullTitle('', true, siteContext);
 
         if (text.includes(MENU_ITEM_OPTION_DISCARD)) {
             resetMarkdown();
@@ -98,8 +98,8 @@ export default function SplitButton(
             }
 
             await github.closePull(pullUrl);
-            setPullUrl('', true);
-            setPullBranchName('', true);
+            setPullUrl('', true, siteContext);
+            setPullBranchName('', true, siteContext);
             setIsLoading(false);
         }
 
