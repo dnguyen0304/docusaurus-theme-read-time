@@ -59,6 +59,8 @@ export default function Snackbar(): SnackbarType {
                 onClose={close}
                 open={isOpen}
                 sx={{
+                    left: 24,
+                    bottom: 20,
                     // Prevent the snackbar, with its high z-index, blocking
                     // users from interacting with elements beneath it.
                     width: 'fit-content'
