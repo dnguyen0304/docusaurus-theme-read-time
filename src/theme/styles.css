@@ -5,7 +5,7 @@ main[class*='docMainContainer'] div.col[class*='docItemCol'] {
     padding-bottom: 2rem;
 }
 
-nav[class*='breadcrumbsWrapper_container'] > nav[class*='breadcrumbsContainer'] {
+main[class*='docMainContainer'] nav[class*='breadcrumbsWrapper_container'] > nav[class*='breadcrumbsContainer'] {
     margin-bottom: initial;
 }
 
