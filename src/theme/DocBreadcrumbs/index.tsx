@@ -1,5 +1,7 @@
 import type { WrapperProps } from '@docusaurus/types';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import DocBreadcrumbs from '@theme-init/DocBreadcrumbs';
 import type DocBreadcrumbsType from '@theme/DocBreadcrumbs';
 import React from 'react';
@@ -24,6 +26,8 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     } = useEditor();
     const { rawContent } = useRawContent();
     const { currentPath } = useLocation();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('mobile'));
 
     // TODO(dnguyen0304): Set editor focus.
     const toggleEditorIsOpen = () => { setEditorIsOpen(prev => !prev) };
@@ -41,7 +45,7 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     return (
         <nav className={`${styles.breadcrumbsWrapper_container}`}>
             <DocBreadcrumbs {...props} />
-            {getButton()}
+            {matches && getButton()}
         </nav>
     );
 }
