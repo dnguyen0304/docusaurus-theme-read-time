@@ -34,6 +34,7 @@ export default function Tab(): JSX.Element {
         () => draft.EditorState.createEmpty(),
     );
     const originalMarkdown = React.useRef<string>(rawContent[currentPath]);
+    const editorRef = React.useRef<draft.Editor>();
 
     const closeEditor = () => {
         setEditorIsOpen(false);
@@ -129,6 +130,12 @@ export default function Tab(): JSX.Element {
     }
 
     React.useEffect(() => {
+        if (editorRef.current) {
+            editorRef.current.focus();
+        }
+    }, []);
+
+    React.useEffect(() => {
         const localStorageKey =
             getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
         // TODO(dnguyen0304): Extract getItem to a centralized location to
@@ -152,6 +159,7 @@ export default function Tab(): JSX.Element {
                 handleKeyCommand={handleKeyCommand}
                 keyBindingFn={handleKeyboardEvent}
                 onChange={handleChange}
+                ref={editorRef}
             />
             <EditModeButtonGroup
                 closeEditor={closeEditor}
