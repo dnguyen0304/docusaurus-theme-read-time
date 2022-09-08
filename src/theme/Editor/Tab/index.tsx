@@ -34,7 +34,7 @@ export default function Tab(): JSX.Element {
         () => draft.EditorState.createEmpty(),
     );
     const originalMarkdown = React.useRef<string>(rawContent[currentPath]);
-    const editorRef = React.useRef<draft.Editor>();
+    const editorRef = React.useRef<draft.Editor>(null);
 
     const closeEditor = () => {
         setEditorIsOpen(false);
