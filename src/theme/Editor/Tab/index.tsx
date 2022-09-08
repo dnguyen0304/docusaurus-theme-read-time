@@ -33,7 +33,7 @@ export default function Tab(): JSX.Element {
     const [editorState, setEditorState] = React.useState<draft.EditorState>(
         () => draft.EditorState.createEmpty(),
     );
-    const originalMarkdown = React.useRef<string>(rawContent[currentPath]);
+    const originalMarkdownRef = React.useRef<string>(rawContent[currentPath]);
     const editorRef = React.useRef<draft.Editor>(null);
 
     const closeEditor = () => {
@@ -90,13 +90,14 @@ export default function Tab(): JSX.Element {
             getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
         localStorage.removeItem(localStorageKey);
 
-        if (!originalMarkdown.current) {
-            throw new Error('expected originalMarkdown to be defined');
+        if (!originalMarkdownRef.current) {
+            throw new Error('expected originalMarkdownRef to be defined');
         }
 
         setEditorState(
             draft.EditorState.createWithContent(
-                draft.ContentState.createFromText(originalMarkdown.current)));
+                draft.ContentState.createFromText(
+                    originalMarkdownRef.current)));
     };
 
     const handleChange = (editorState: draft.EditorState) => {
