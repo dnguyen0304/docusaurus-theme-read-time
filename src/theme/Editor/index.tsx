@@ -17,23 +17,23 @@ const PURPLE_MERGED: string = '#8250df';
 
 type iconFontSize = 'small' | 'inherit' | 'large' | 'medium' | undefined;
 
-interface StyledTabsProps {
-    pullUrl: string;
-    pullStatus: GithubPullStatus | undefined;
+type StyledTabsProps = {
+    readonly pullUrl: string;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
-interface StyledTabProps {
-    pullUrl: string;
-    pullStatus: GithubPullStatus | undefined;
+type StyledTabProps = {
+    readonly pullUrl: string;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
-interface TabLabelProps {
-    pullStateIcon: JSX.Element | null;
+type TabLabelProps = {
+    readonly pullStateIcon: JSX.Element | null;
 }
 
-interface TabContentProps {
-    index: number,
-    activeIndex: number,
+type TabContentProps = {
+    readonly index: number,
+    readonly activeIndex: number,
 }
 
 const checkPullExists = (

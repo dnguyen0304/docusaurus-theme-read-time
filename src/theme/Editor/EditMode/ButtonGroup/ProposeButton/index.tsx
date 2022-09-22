@@ -24,7 +24,7 @@ import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
 
-interface Props {
+type Props = {
     readonly closeEditor: () => void;
     readonly getMarkdown: (state?: draft.EditorState) => string;
     readonly saveMarkdown: (state?: draft.EditorState) => void;

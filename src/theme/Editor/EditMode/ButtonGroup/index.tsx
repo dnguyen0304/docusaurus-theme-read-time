@@ -6,7 +6,7 @@ import ProposeButton from './ProposeButton';
 import SaveButton from './SaveButton';
 import styles from './styles.module.css';
 
-interface Props {
+type Props = {
     readonly closeEditor: () => void;
     readonly getMarkdown: (state?: draft.EditorState) => string;
     readonly saveMarkdown: (state?: draft.EditorState) => void;

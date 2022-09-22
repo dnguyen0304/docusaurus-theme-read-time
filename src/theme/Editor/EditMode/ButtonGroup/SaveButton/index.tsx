@@ -9,7 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
 import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
 
-interface Props {
+type Props = {
     readonly onClick: (state?: draft.EditorState) => void;
     readonly editorState: draft.EditorState;
 }
