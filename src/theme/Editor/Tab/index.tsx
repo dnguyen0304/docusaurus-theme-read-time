@@ -39,11 +39,21 @@ export default function Tab(
     const { snackbar } = useSnackbar();
     const siteContext = useSite();
 
-    const [editorState, setEditorState] = React.useState<draft.EditorState>(
-        () => draft.EditorState.createEmpty(),
-    );
     const originalMarkdownRef = React.useRef<string>(rawContent[currentPath]);
     const editorRef = React.useRef<draft.Editor>(null);
+    const [editorState, setEditorState] = React.useState<draft.EditorState>(
+        () => {
+            const localStorageKey =
+                getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
+            const savedMarkdown = localStorage.getItem(localStorageKey);
+            const text =
+                savedMarkdown
+                    ? savedMarkdown
+                    : originalMarkdownRef.current;
+            return draft.EditorState.createWithContent(
+                draft.ContentState.createFromText(text));
+        },
+    );
 
     const closeEditor = () => {
         setEditorIsOpen(false);
@@ -142,22 +152,6 @@ export default function Tab(
     React.useEffect(() => {
         if (editorRef.current) {
             editorRef.current.focus();
-        }
-    }, []);
-
-    React.useEffect(() => {
-        const localStorageKey =
-            getLocalStorageKey(siteContext, LOCAL_STORAGE_KEY_MARKDOWN);
-        // TODO(dnguyen0304): Extract getItem to a centralized location to
-        // facilitate maintenance.
-        const savedMarkdown = localStorage.getItem(localStorageKey);
-
-        if (savedMarkdown) {
-            setEditorState(
-                draft.EditorState.createWithContent(
-                    draft.ContentState.createFromText(savedMarkdown)));
-        } else {
-            resetMarkdown();
         }
     }, []);
 
