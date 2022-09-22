@@ -31,6 +31,8 @@ export interface GithubUser {
     readonly fullName?: string;
 }
 
+// TODO(dnguyen0304): Consider adding a null option to represent a pull request
+// does not exist.
 export type InternalGithubState = 'open' | 'closed' | 'merged';
 
 export interface GithubPullStatus {
