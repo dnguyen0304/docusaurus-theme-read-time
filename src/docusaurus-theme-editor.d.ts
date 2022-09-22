@@ -14,18 +14,18 @@ declare module '@mui/material/styles' {
 declare module '@theme/DocBreadcrumbs'
 
 declare module '@theme-init/DocBreadcrumbs' {
-    export interface Props {
+    export type Props = {
         readonly children: JSX.Element;
     }
     export default function DocBreadcrumbs(props: Props): JSX.Element;
 }
 
-export interface KeyBinding {
-    key: string;
-    friendlyLabel: string;
+export type KeyBinding = {
+    readonly key: string;
+    readonly friendlyLabel: string;
 }
 
-export interface GithubUser {
+export type GithubUser = {
     readonly username: string;
     readonly emailAddress?: string;
     readonly fullName?: string;
@@ -35,11 +35,11 @@ export interface GithubUser {
 // does not exist.
 export type InternalGithubState = 'open' | 'closed' | 'merged';
 
-export interface GithubPullStatus {
-    state: InternalGithubState;
+export type GithubPullStatus = {
+    readonly state: InternalGithubState;
     // Gotcha: When a pull request is closed, both closedAt and mergedAt are
     // updated. Therefore, mergedAt must be directly checked to determine if a
     // pull request has been merged.
-    closedAt: string | null;
-    mergedAt: string | null;
+    readonly closedAt: string | null;
+    readonly mergedAt: string | null;
 }
