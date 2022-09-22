@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import draft from 'draft-js';
 import * as React from 'react';
+import type { GithubPullStatus } from '../../../../docusaurus-theme-editor';
 import DiscardButton from './DiscardButton';
 import ProposeButton from './ProposeButton';
 import SaveButton from './SaveButton';
@@ -12,6 +13,7 @@ type Props = {
     readonly saveMarkdown: (state?: draft.EditorState) => void;
     readonly resetMarkdown: () => void;
     readonly editorState: draft.EditorState;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
 export default function EditModeButtonGroup(
@@ -21,6 +23,7 @@ export default function EditModeButtonGroup(
         saveMarkdown,
         resetMarkdown,
         editorState,
+        pullStatus,
     }: Props
 ): JSX.Element {
     return (
@@ -36,11 +39,13 @@ export default function EditModeButtonGroup(
                 <SaveButton
                     onClick={saveMarkdown}
                     editorState={editorState}
+                    pullStatus={pullStatus}
                 />
                 <ProposeButton
                     closeEditor={closeEditor}
                     getMarkdown={getMarkdown}
                     saveMarkdown={saveMarkdown}
+                    pullStatus={pullStatus}
                 />
             </Stack>
         </div>

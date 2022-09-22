@@ -7,11 +7,19 @@ import draft from 'draft-js';
 import * as React from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSnackbar } from '../../../../../contexts/snackbar';
-import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
+import type {
+    GithubPullStatus,
+    KeyBinding as KeyBindingType
+} from '../../../../../docusaurus-theme-editor';
+
+const TOOLTIP_DISABLED_TEXT: string =
+    `Your pull request has been merged successfully. Hover over the tab name `
+    + `for details.`;
 
 type Props = {
     readonly onClick: (state?: draft.EditorState) => void;
     readonly editorState: draft.EditorState;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -24,6 +32,7 @@ export default function SaveButton(
     {
         onClick,
         editorState,
+        pullStatus,
     }: Props
 ): JSX.Element {
     const { snackbar } = useSnackbar();
@@ -87,17 +96,25 @@ export default function SaveButton(
 
     return (
         <Tooltip
-            title={`Save (${KeyBinding.friendlyLabel})`}
+            title={
+                pullStatus && pullStatus.state === 'merged'
+                    ? TOOLTIP_DISABLED_TEXT
+                    : `Save (${KeyBinding.friendlyLabel})`
+            }
             placement='top'
         >
-            <IconButton
-                aria-label='save'
-                onClick={() => handleClick(
-                    true  // shouldAlert
-                )}
-            >
-                {getIcon()}
-            </IconButton>
+            {/* Use a wrapper element for disabled Tooltip children. */}
+            <span>
+                <IconButton
+                    aria-label='save'
+                    disabled={pullStatus && pullStatus.state === 'merged'}
+                    onClick={() => handleClick(
+                        true  // shouldAlert
+                    )}
+                >
+                    {getIcon()}
+                </IconButton>
+            </span>
         </Tooltip>
     );
 }

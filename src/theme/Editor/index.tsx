@@ -32,8 +32,9 @@ type TabLabelProps = {
 }
 
 type TabContentProps = {
-    readonly index: number,
-    readonly activeIndex: number,
+    readonly index: number;
+    readonly activeIndex: number;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
 const checkPullExists = (
@@ -123,11 +124,12 @@ const TabContent = (
     {
         index,
         activeIndex,
+        pullStatus,
     }: TabContentProps
 ): JSX.Element | null => {
     return (
         index === activeIndex
-            ? <EditorTab />
+            ? <EditorTab pullStatus={pullStatus} />
             : null
     );
 };
@@ -185,6 +187,7 @@ export default function Editor(): JSX.Element {
                     key={`tab-content-${index}`}
                     index={index}
                     activeIndex={activeIndex}
+                    pullStatus={tab.pullStatus}
                 />
             )}
         </EditorContainer >

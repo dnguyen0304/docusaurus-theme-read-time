@@ -18,16 +18,24 @@ import { useEditor } from '../../../../../contexts/editor';
 import { useGithub } from '../../../../../contexts/github';
 import { useSite } from '../../../../../contexts/site';
 import { useSnackbar } from '../../../../../contexts/snackbar';
-import type { KeyBinding as KeyBindingType } from '../../../../../docusaurus-theme-editor';
+import type {
+    GithubPullStatus,
+    KeyBinding as KeyBindingType
+} from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
 import StyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
 
+const TOOLTIP_DISABLED_TEXT: string =
+    `Your pull request has been merged successfully. Hover over the tab name `
+    + `for details.`;
+
 type Props = {
     readonly closeEditor: () => void;
     readonly getMarkdown: (state?: draft.EditorState) => string;
     readonly saveMarkdown: (state?: draft.EditorState) => void;
+    readonly pullStatus: GithubPullStatus | undefined;
 }
 
 const KeyBinding: KeyBindingType = {
@@ -62,6 +70,7 @@ export default function ProposeButton(
         closeEditor,
         getMarkdown,
         saveMarkdown,
+        pullStatus,
     }: Props
 ): JSX.Element {
     const {
@@ -257,25 +266,31 @@ export default function ProposeButton(
                 facilitate maintenance. */}
             <Tooltip
                 title={
-                    `${getLabel(pullUrl)} (${KeyBinding.friendlyLabel})`
+                    pullStatus && pullStatus.state === 'merged'
+                        ? TOOLTIP_DISABLED_TEXT
+                        : `${getLabel(pullUrl)} (${KeyBinding.friendlyLabel})`
                 }
                 placement='top'
             >
-                <Button
-                    onClick={
-                        pullUrl
-                            ? syncLocalChanges
-                            : toggleConfirmation
-                    }
-                    startIcon={
-                        pullUrl
-                            ? <CloudUploadOutlinedIcon />
-                            : <SendIcon />
-                    }
-                    variant='contained'
-                >
-                    {getLabel(pullUrl)}
-                </Button>
+                {/* Use a wrapper element for disabled Tooltip children. */}
+                <span>
+                    <Button
+                        disabled={pullStatus && pullStatus.state === 'merged'}
+                        onClick={
+                            pullUrl
+                                ? syncLocalChanges
+                                : toggleConfirmation
+                        }
+                        startIcon={
+                            pullUrl
+                                ? <CloudUploadOutlinedIcon />
+                                : <SendIcon />
+                        }
+                        variant='contained'
+                    >
+                        {getLabel(pullUrl)}
+                    </Button>
+                </span>
             </Tooltip>
             <StyledDialog
                 TransitionComponent={Transition}

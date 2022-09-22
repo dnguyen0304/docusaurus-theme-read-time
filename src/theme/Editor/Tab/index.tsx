@@ -7,9 +7,14 @@ import { useRawContent } from '../../../contexts/rawContent';
 import { useLocation } from '../../../contexts/router';
 import { useSite } from '../../../contexts/site';
 import { useSnackbar } from '../../../contexts/snackbar';
+import { GithubPullStatus } from '../../../docusaurus-theme-editor';
 import { getLocalStorageKey } from '../../../utils';
 import EditModeButtonGroup from '../EditMode/ButtonGroup';
 import EditorLine from '../Line';
+
+type Props = {
+    readonly pullStatus: GithubPullStatus | undefined;
+}
 
 // TODO(dnguyen0304): Extract to a centralized location to facilitate
 // maintenance.
@@ -23,7 +28,11 @@ const HANDLER_NAME_ESCAPE: string = 'editor-escape';
 const KEY_CODE_ESCAPE: number = 27;
 
 // TODO: Fix inconsistent padding or margin in edit mode.
-export default function Tab(): JSX.Element {
+export default function Tab(
+    {
+        pullStatus,
+    }: Props
+): JSX.Element {
     const { setEditorIsOpen } = useEditor();
     const { rawContent } = useRawContent();
     const { currentPath } = useLocation();
@@ -170,6 +179,7 @@ export default function Tab(): JSX.Element {
                 // TODO(dnguyen0304): Investigate a better way to handle
                 // keybinding dependencies.
                 editorState={editorState}
+                pullStatus={pullStatus}
             />
         </>
     );
