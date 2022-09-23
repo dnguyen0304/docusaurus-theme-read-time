@@ -1,6 +1,5 @@
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import SendIcon from '@mui/icons-material/Send';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -24,7 +23,7 @@ import type {
 } from '../../../../../docusaurus-theme-editor';
 import Transition from '../../../../components/Transition';
 import { initializeAuth } from '../../../../services/Github';
-import StyledDialog from '../Dialog';
+import BaseStyledDialog from '../Dialog';
 import LoadingButton from '../LoadingButton';
 
 const TOOLTIP_DISABLED_TEXT: string =
@@ -43,11 +42,11 @@ const KeyBinding: KeyBindingType = {
     friendlyLabel: '⌘↩︎',
 };
 
-const StyledBox = styled(Box)({
-    '& .MuiDialogContent-root': {
+const StyledDialog = styled(BaseStyledDialog)({
+    '& div.MuiDialogContent-root': {
         // TODO(dnguyen0304): Migrate to theme.spacing.
         paddingTop: '1rem',
-        '& .MuiDialogContentText-root': {
+        '& p.MuiDialogContentText-root': {
             paddingBottom: '1rem',
         },
     },
@@ -298,40 +297,37 @@ export default function ProposeButton(
                 open={confirmationIsOpen}
                 keepMounted
             >
-                {/* TODO(dnguyen0304): Merge into StyledDialog. */}
-                <StyledBox>
-                    <DialogTitle>Propose Changes</DialogTitle>
-                    <DialogContent>
-                        <Stack spacing={2}>
-                            <DialogContentText>
-                                Provide a short, helpful background of your
-                                changes.
-                                <br /><br />
-                                This opens a pull request to get your changes
-                                reviewed by the documentation owners.
-                            </DialogContentText>
-                            {/* TODO(dnguyen0304): Add autoFocus. */}
-                            <StyledTextField
-                                autoComplete={'off'}
-                                helperText={<>Press <kbd>↩︎ Enter</kbd> to send</>}
-                                label='Title'
-                                onChange={handleTitleChange}
-                                onKeyUp={handleTitleKeyUp}
-                                value={pullTitle}
-                            />
-                        </Stack>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={toggleConfirmation}>Go Back</Button>
-                        <LoadingButton
-                            onClick={handleClick}
-                            isLoading={isLoading}
-                            variant='outlined'
-                        >
-                            Propose
-                        </LoadingButton>
-                    </DialogActions>
-                </StyledBox>
+                <DialogTitle>Propose Changes</DialogTitle>
+                <DialogContent>
+                    <Stack spacing={2}>
+                        <DialogContentText>
+                            Provide a short, helpful background of your
+                            changes.
+                            <br /><br />
+                            This opens a pull request to get your changes
+                            reviewed by the documentation owners.
+                        </DialogContentText>
+                        {/* TODO(dnguyen0304): Add autoFocus. */}
+                        <StyledTextField
+                            autoComplete={'off'}
+                            helperText={<>Press <kbd>↩︎ Enter</kbd> to send</>}
+                            label='Title'
+                            onChange={handleTitleChange}
+                            onKeyUp={handleTitleKeyUp}
+                            value={pullTitle}
+                        />
+                    </Stack>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={toggleConfirmation}>Go Back</Button>
+                    <LoadingButton
+                        onClick={handleClick}
+                        isLoading={isLoading}
+                        variant='outlined'
+                    >
+                        Propose
+                    </LoadingButton>
+                </DialogActions>
             </StyledDialog>
         </React.Fragment>
     );
