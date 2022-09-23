@@ -260,9 +260,7 @@ export default function ProposeButton(
     }, [externalRedirect]);
 
     return (
-        <React.Fragment>
-            {/* TODO(dnguyen0304): Extract to a centralized location to
-                facilitate maintenance. */}
+        <>
             <Tooltip
                 title={
                     pullStatus && pullStatus.state === 'merged'
@@ -329,6 +327,6 @@ export default function ProposeButton(
                     </LoadingButton>
                 </DialogActions>
             </StyledDialog>
-        </React.Fragment>
+        </>
     );
 }

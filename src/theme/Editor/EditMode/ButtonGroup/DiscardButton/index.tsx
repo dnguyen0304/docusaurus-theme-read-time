@@ -43,8 +43,6 @@ export default function DiscardButton(
 
     return (
         <React.Fragment>
-            {/* TODO(dnguyen0304): Extract to a centralized location to
-                facilitate maintenance. */}
             <Tooltip
                 title={`Discard (${KeyBinding.friendlyLabel})`}
                 placement='top'
