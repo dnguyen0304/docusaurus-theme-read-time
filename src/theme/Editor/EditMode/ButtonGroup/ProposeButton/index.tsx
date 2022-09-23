@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import { RequestError } from '@octokit/request-error';
 import draft from 'draft-js';
@@ -52,7 +52,10 @@ const StyledDialog = styled(BaseStyledDialog)({
     },
 });
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+// See https://stackoverflow.com/q/37949394
+const StyledTextField = styled((props: TextFieldProps): JSX.Element => (
+    <TextField inputRef={input => input && input.focus()} {...props} />
+))(({ theme }) => ({
     '& label.MuiInputLabel-root': {
         fontStyle: 'italic',
     },
@@ -305,7 +308,6 @@ export default function ProposeButton(
                             This opens a pull request to get your changes
                             reviewed by the documentation owners.
                         </DialogContentText>
-                        {/* TODO(dnguyen0304): Add autoFocus. */}
                         <StyledTextField
                             autoComplete={'off'}
                             helperText={<>Press <kbd>↩︎ Enter</kbd> to send</>}
