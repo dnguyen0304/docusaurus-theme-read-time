@@ -42,7 +42,7 @@ export default function DiscardButton(
     );
 
     return (
-        <React.Fragment>
+        <>
             <Tooltip
                 title={`Discard (${KeyBinding.friendlyLabel})`}
                 placement='top'
@@ -56,6 +56,7 @@ export default function DiscardButton(
                     <DeleteOutlineRoundedIcon />
                 </IconButton>
             </Tooltip>
+            {/* TODO(dnguyen0304): Fix dark mode color styles. */}
             <StyledDialog
                 TransitionComponent={Transition}
                 onClose={toggleConfirmation}
@@ -78,7 +79,7 @@ export default function DiscardButton(
                     />
                 </DialogActions>
             </StyledDialog>
-        </React.Fragment>
+        </>
     );
 }
 
