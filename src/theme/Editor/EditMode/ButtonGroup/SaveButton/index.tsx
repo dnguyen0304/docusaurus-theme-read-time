@@ -69,7 +69,7 @@ export default function SaveButton(
             // visual studdering.
             return <CircularProgress size={24} />;
         } else {
-            return <SaveOutlinedIcon />;
+            return <SaveOutlinedIcon sx={{ color: 'var(--ifm-color-emphasis-700)' }} />;
         };
     };
 
