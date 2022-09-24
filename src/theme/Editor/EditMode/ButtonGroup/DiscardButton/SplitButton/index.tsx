@@ -31,7 +31,7 @@ const MENU_ITEM_OPTIONS: string[] = [
     MENU_ITEM_OPTION_CLOSE,
 ];
 
-interface Props {
+type Props = {
     readonly closeEditor: () => void;
     readonly resetMarkdown: () => void;
     readonly toggleConfirmation: () => void;
@@ -177,7 +177,7 @@ export default function SplitButton(
     }, [externalRedirect]);
 
     return (
-        <React.Fragment>
+        <>
             <ButtonGroup
                 ref={anchorRef}
                 sx={{
@@ -269,6 +269,6 @@ export default function SplitButton(
                     </Grow>
                 )}
             </Popper>
-        </React.Fragment>
+        </>
     );
 }
