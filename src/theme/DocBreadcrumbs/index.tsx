@@ -29,7 +29,6 @@ export default function DocBreadcrumbsWrapper(props: Props): JSX.Element {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('mobile'));
 
-    // TODO(dnguyen0304): Set editor focus.
     const toggleEditorIsOpen = () => { setEditorIsOpen(prev => !prev) };
 
     const getButton = (): JSX.Element | null => {
