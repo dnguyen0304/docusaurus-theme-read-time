@@ -13,7 +13,7 @@ import Transition from '../../../../components/Transition';
 import StyledDialog from '../Dialog';
 import SplitButton from './SplitButton';
 
-interface Props {
+type Props = {
     readonly closeEditor: () => void;
     readonly resetMarkdown: () => void;
 }
