@@ -292,6 +292,7 @@ export default function ProposeButton(
                     </Button>
                 </span>
             </Tooltip>
+            {/* TODO(dnguyen0304): Fix dark mode color styles. */}
             <StyledDialog
                 TransitionComponent={Transition}
                 onClose={toggleConfirmation}
