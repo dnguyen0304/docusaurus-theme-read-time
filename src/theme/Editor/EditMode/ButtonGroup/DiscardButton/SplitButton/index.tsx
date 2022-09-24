@@ -8,6 +8,7 @@ import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { useEditor } from '../../../../../../contexts/editor';
 import { useGithub } from '../../../../../../contexts/github';
@@ -16,8 +17,12 @@ import { useSnackbar } from '../../../../../../contexts/snackbar';
 import { initializeAuth } from '../../../../../services/Github';
 import LoadingButton from '../../LoadingButton';
 
-// TODO(dnguyen0304): Add a tooltip to explain the difference between discarding
-// and closing.
+const TOOLTIP_TEXT: JSX.Element = (
+    <span>
+        <i>Discarding</i> resets local editor changes. <i>Closing</i> closes the
+        remote pull request on GitHub.
+    </span>
+);
 const MENU_ITEM_OPTION_DISCARD: string = 'Discard';
 const MENU_ITEM_OPTION_CLOSE: string = 'Close';
 const MENU_ITEM_KEY_PREFIX: string = 'menu-item'
@@ -31,6 +36,20 @@ interface Props {
     readonly resetMarkdown: () => void;
     readonly toggleConfirmation: () => void;
 }
+
+// Add back the ButtonGroup styles broken by adding a Tooltip.
+const StyledLoadingButton = styled(LoadingButton)({
+    'borderTopRightRadius': 0,
+    'borderBottomRightRadius': 0,
+    'borderRightColor': 'transparent',
+});
+
+// Add back the ButtonGroup styles broken by adding a Tooltip.
+const StyledMenuButton = styled(Button)({
+    'borderTopLeftRadius': 0,
+    'borderBottomLeftRadius': 0,
+    'marginLeft': '-1px',
+});
 
 const StyledPaper = styled(Paper)({
     '&&.MuiPaper-root': {
@@ -168,18 +187,27 @@ export default function SplitButton(
                 }}
                 variant='outlined'
             >
-                <LoadingButton
-                    onClick={handleClick}
-                    isLoading={isLoading}
+                <Tooltip
+                    title={TOOLTIP_TEXT}
+                    enterDelay={1000}
+                    enterNextDelay={1000}
+                    placement='top'
                 >
-                    {getText(MENU_ITEM_OPTIONS[menuItemIndex])}
-                </LoadingButton>
-                <Button
+                    <span>
+                        <StyledLoadingButton
+                            onClick={handleClick}
+                            isLoading={isLoading}
+                        >
+                            {getText(MENU_ITEM_OPTIONS[menuItemIndex])}
+                        </StyledLoadingButton>
+                    </span>
+                </Tooltip>
+                <StyledMenuButton
                     onClick={toggleMenuItem}
                     size='small'
                 >
                     <ArrowDropDownIcon />
-                </Button>
+                </StyledMenuButton>
             </ButtonGroup>
             <Popper
                 anchorEl={anchorRef.current}
