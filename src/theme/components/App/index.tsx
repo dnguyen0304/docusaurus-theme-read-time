@@ -25,8 +25,8 @@ export default function App(): null {
         // do not support cookie attributes (reproduced but no source
         // documentation). For example:
         //
-        //   document.cookie = 'this=works'
-        //   document.cookie = 'this=does_not_work;Secure'
+        //   document.cookie = 'without_options=works'
+        //   document.cookie = 'with_options=does_not_work;Secure'
         cookies.set(COOKIE_KEY_SESSION_ID, auth.accessToken);
         cookies.set(
             COOKIE_KEY_SESSION_ID,
