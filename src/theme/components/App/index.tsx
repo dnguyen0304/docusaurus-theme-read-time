@@ -6,8 +6,16 @@ import Cookies, { CookieSetOptions } from 'universal-cookie';
 import URI from 'urijs';
 import {
     COOKIE_KEY_SESSION_ID,
-    SEARCH_PARAM_KEY_AUTH
+    SEARCH_PARAM_KEY_AUTH,
+    SEARCH_PARAM_KEY_LOGGED_IN_AT
 } from '../../../constants';
+import { useSnackbar } from '../../../contexts/snackbar';
+
+const WELCOME_WINDOW_SECONDS: number = 10;
+
+function nowSeconds(): number {
+    return Math.floor(Date.now() / 1000);
+}
 
 function setCookieWithFallback(
     name: string,
@@ -27,6 +35,8 @@ function setCookieWithFallback(
 };
 
 export default function App(): null {
+    const { snackbar } = useSnackbar();
+
     // TODO(dnguyen0304): Move to Editor/Callback to hide the refresh.
     React.useEffect(() => {
         const encodedAuth =
@@ -48,7 +58,24 @@ export default function App(): null {
         window.location.href =
             new URI()
                 .removeSearch(SEARCH_PARAM_KEY_AUTH)
+                .addSearch(SEARCH_PARAM_KEY_LOGGED_IN_AT, nowSeconds())
                 .toString();
+    }, []);
+
+    React.useEffect(() => {
+        const loggedInAt =
+            new URLSearchParams(window.location.search)
+                .get(SEARCH_PARAM_KEY_LOGGED_IN_AT);
+        if (!loggedInAt) {
+            return;
+        }
+        const secondsSinceLoggedIn = nowSeconds() - Number(loggedInAt);
+        if (secondsSinceLoggedIn < WELCOME_WINDOW_SECONDS) {
+            snackbar.sendSuccessAlert(
+                'Logged in! Go ahead and retry your last action.',
+                (previous) => previous * 1.5,
+            );
+        };
     }, []);
 
     return null;
