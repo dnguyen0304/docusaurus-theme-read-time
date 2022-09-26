@@ -15,14 +15,14 @@ function useEditorThemeConfig(): EditorThemeConfig {
     ) as EditorThemeConfig;
 }
 
-const getLocalStorageKey = (
+function getLocalStorageKey(
     {
         owner,
         repository,
         path,
     }: ContextValue,
     key: LOCAL_STORAGE_KEYS,
-): string => {
+): string {
     return `${owner}/${repository}/${path}/${key}`;
 };
 
