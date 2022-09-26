@@ -22,8 +22,20 @@ function useContextValue(): ContextValue {
     } = useEditorThemeConfig();
 
     return React.useMemo(
-        () => ({ user, api, setUser, setApi, authorizationRedirectUrl }),
-        [user, api, setUser, setApi, authorizationRedirectUrl],
+        () => ({
+            user,
+            api,
+            setUser,
+            setApi,
+            authorizationRedirectUrl,
+        }),
+        [
+            user,
+            api,
+            setUser,
+            setApi,
+            authorizationRedirectUrl,
+        ],
     );
 }
 
