@@ -1,13 +1,15 @@
 import type { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types';
 import * as React from 'react';
 import type { GithubUser } from '../docusaurus-theme-editor';
+import { useEditorThemeConfig } from '../utils';
 import { ReactContextError } from './errors';
 
 type ContextValue = {
-    readonly user: GithubUser | undefined;
-    readonly api: RestEndpointMethods | undefined;
+    readonly user?: GithubUser;
+    readonly api?: RestEndpointMethods;
     readonly setUser: React.Dispatch<React.SetStateAction<GithubUser | undefined>>;
     readonly setApi: React.Dispatch<React.SetStateAction<RestEndpointMethods | undefined>>;
+    readonly authorizationRedirectUrl: string;
 };
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
@@ -15,10 +17,13 @@ const Context = React.createContext<ContextValue | undefined>(undefined);
 function useContextValue(): ContextValue {
     const [user, setUser] = React.useState<GithubUser>();
     const [api, setApi] = React.useState<RestEndpointMethods>();
+    const {
+        githubAuthorizationRedirectUrl: authorizationRedirectUrl,
+    } = useEditorThemeConfig();
 
     return React.useMemo(
-        () => ({ user, api, setUser, setApi }),
-        [user, api, setUser, setApi],
+        () => ({ user, api, setUser, setApi, authorizationRedirectUrl }),
+        [user, api, setUser, setApi, authorizationRedirectUrl],
     );
 }
 

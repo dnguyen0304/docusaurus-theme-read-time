@@ -5,8 +5,6 @@ const DOCUSAURUS_ALIASED_SITE_PATH_PREFIX: string = '@site';
 
 // Keep in sync:
 // GitHub > Developer Settings > OAuth Apps > "Authorization callback URL"
-// TODO(dnguyen0304): Extract as a configuration option.
-const GITHUB_AUTHORIZATION_REDIRECT_URL: string = 'https://kgevadn5a2.execute-api.us-east-1.amazonaws.com/production/DocusaurusEditor_handleOAuthRedirect';
 const SEARCH_PARAM_KEY_AUTH: string = 'auth';
 const SEARCH_PARAM_KEY_LOGGED_IN_AT: string = 'logged_in_at';
 const COOKIE_KEY_SESSION_ID: string = 'session_id';
@@ -18,7 +16,6 @@ const LOCAL_STORAGE_KEY_PULL_URL: LOCAL_STORAGE_KEYS = 'pull_url';
 export {
     COOKIE_KEY_SESSION_ID,
     DOCUSAURUS_ALIASED_SITE_PATH_PREFIX,
-    GITHUB_AUTHORIZATION_REDIRECT_URL,
     LOCAL_STORAGE_KEY_MARKDOWN,
     LOCAL_STORAGE_KEY_PULL_BRANCH_NAME,
     LOCAL_STORAGE_KEY_PULL_TITLE,

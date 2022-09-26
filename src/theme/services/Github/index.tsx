@@ -5,10 +5,7 @@ import { RequestError } from '@octokit/request-error';
 import { encode } from 'js-base64';
 import Cookies from 'universal-cookie';
 import URI from 'urijs';
-import {
-    COOKIE_KEY_SESSION_ID,
-    GITHUB_AUTHORIZATION_REDIRECT_URL
-} from '../../../constants';
+import { COOKIE_KEY_SESSION_ID } from '../../../constants';
 import type { ContextValue as GithubContextValue } from '../../../contexts/github';
 import type { ContextValue as SiteContextValue } from '../../../contexts/site';
 import type {
@@ -55,6 +52,7 @@ export const initializeAuth = async (
         api: existingApi,
         setUser,
         setApi,
+        authorizationRedirectUrl,
     } = githubContext;
 
     if (existingUser && existingApi) {
@@ -105,7 +103,7 @@ export const initializeAuth = async (
             .query({
                 client_id: APP_CLIENT_ID,
                 scope: GITHUB_AUTHORIZATION_SCOPES,
-                redirect_uri: GITHUB_AUTHORIZATION_REDIRECT_URL,
+                redirect_uri: authorizationRedirectUrl,
                 state: new URI(),
             })
             .toString()
