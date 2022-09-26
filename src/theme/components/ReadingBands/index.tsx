@@ -1,4 +1,6 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
+import type { DocupotamusThemeConfig } from '../../../utils';
 
 const STANDARD_DEVIATION_1: number = .341;
 const STANDARD_DEVIATION_2: number = .477;
@@ -64,8 +66,16 @@ export default function ReadingBands(
     {
     }: Props
 ): JSX.Element {
-    const viewportHeight = getViewportHeight();
+    const {
+        readTime: {
+            inDebugMode,
+        },
+    } = useDocusaurusContext()
+        .siteConfig
+        .themeConfig
+        .docupotamus as DocupotamusThemeConfig;
 
+    const viewportHeight = getViewportHeight();
     const boxShadows = bands.map(band => {
         const heightFromCenter = viewportHeight * band.heightFromCenterPercent;
         return `0px 0px 0px ${heightFromCenter}px ${band._debug.color}`;
@@ -76,8 +86,8 @@ export default function ReadingBands(
             position: 'fixed',
             width: '100%',
             top: `${viewportHeight / 2}px`,
-            boxShadow: boxShadows.join(', '),
             zIndex: 'calc(var(--ifm-z-index-fixed) + 1)',
+            ...(inDebugMode && { boxShadow: boxShadows.join(', ') })
         }} />
     );
 }

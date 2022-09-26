@@ -6,6 +6,12 @@ type EditorThemeConfig = {
     githubAuthorizationRedirectUrl: string;
 };
 
+type DocupotamusThemeConfig = {
+    readTime: {
+        inDebugMode: boolean;
+    };
+};
+
 function useEditorThemeConfig(): EditorThemeConfig {
     return (
         useDocusaurusContext()
@@ -27,6 +33,8 @@ function getLocalStorageKey(
 };
 
 export {
+    DocupotamusThemeConfig,
+    EditorThemeConfig,
     getLocalStorageKey,
     useEditorThemeConfig,
 };
