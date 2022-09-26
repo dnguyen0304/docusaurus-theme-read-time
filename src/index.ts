@@ -9,3 +9,5 @@ export default function themeEditor(): Plugin<undefined> {
         },
     };
 }
+
+export { validateThemeConfig } from './validateThemeConfig';
