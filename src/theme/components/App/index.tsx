@@ -10,6 +10,7 @@ import {
     SEARCH_PARAM_KEY_LOGGED_IN_AT
 } from '../../../constants';
 import { useSnackbar } from '../../../contexts/snackbar';
+import ReadingBands from '../ReadingBands';
 
 const WELCOME_WINDOW_SECONDS: number = 10;
 
@@ -34,7 +35,7 @@ function setCookieWithFallback(
     cookies.set(name, value, options);
 };
 
-export default function App(): null {
+export default function App(): JSX.Element {
     const { snackbar } = useSnackbar();
 
     // TODO(dnguyen0304): Add a callback landing page ("Please wait while you
@@ -79,5 +80,7 @@ export default function App(): null {
         };
     }, []);
 
-    return null;
+    return (
+        <ReadingBands />
+    );
 }
