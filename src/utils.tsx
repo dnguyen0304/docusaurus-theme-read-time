@@ -1,5 +1,19 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { LOCAL_STORAGE_KEYS } from './constants';
 import { ContextValue } from './contexts/site';
+
+type EditorThemeConfig = {
+    githubAuthorizationRedirectUrl: string;
+};
+
+function useEditorThemeConfig(): EditorThemeConfig {
+    return (
+        useDocusaurusContext()
+            .siteConfig
+            .themeConfig
+            .editor
+    ) as EditorThemeConfig;
+}
 
 const getLocalStorageKey = (
     {
@@ -14,4 +28,5 @@ const getLocalStorageKey = (
 
 export {
     getLocalStorageKey,
+    useEditorThemeConfig,
 };
