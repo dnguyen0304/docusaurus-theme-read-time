@@ -37,7 +37,8 @@ function setCookieWithFallback(
 export default function App(): null {
     const { snackbar } = useSnackbar();
 
-    // TODO(dnguyen0304): Move to Editor/Callback to hide the refresh.
+    // TODO(dnguyen0304): Add a callback landing page ("Please wait while you
+    // are being redirected...") to hide the refresh.
     React.useEffect(() => {
         const encodedAuth =
             new URLSearchParams(window.location.search)
