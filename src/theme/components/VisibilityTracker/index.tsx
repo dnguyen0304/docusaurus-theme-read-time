@@ -67,6 +67,11 @@ function onVisibilityChange(
 export default function VisibilityTracker(): JSX.Element {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
+    const handleVisibilityChange = (current: boolean) => {
+        return console.log(current);
+    };
+
+    // css border
     React.useEffect(() => {
         const doGetElement = async () => {
             const element = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
@@ -79,7 +84,10 @@ export default function VisibilityTracker(): JSX.Element {
         if (!element) {
             return;
         }
-        const handleScroll = onVisibilityChange(element, console.log);
+        const handleScroll = onVisibilityChange(
+            element,
+            handleVisibilityChange,
+        );
 
         window.removeEventListener('scroll', handleScroll);
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -88,5 +96,5 @@ export default function VisibilityTracker(): JSX.Element {
 
     return (
         <></>
-    )
+    );
 };
