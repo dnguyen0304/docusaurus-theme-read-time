@@ -52,7 +52,7 @@ export default function Borders(
             <Tooltip
                 key={`B${i}-top`}
                 title={topTitle}
-                placement='bottom'
+                placement='bottom-start'
                 arrow
                 open
             >
@@ -69,7 +69,7 @@ export default function Borders(
             <Tooltip
                 key={`B${i}-bottom`}
                 title={bottomTitle}
-                placement='top'
+                placement='top-start'
                 arrow
                 open
             >
