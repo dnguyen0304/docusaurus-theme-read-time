@@ -71,11 +71,10 @@ export default function VisibilityTracker(): JSX.Element | null {
         return console.log(current);
     };
 
-    // css border
     React.useEffect(() => {
         const doGetElement = async () => {
-            const element = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
-            setElement(element);
+            const found = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
+            setElement(found);
         }
         doGetElement();
     }, []);
@@ -93,6 +92,15 @@ export default function VisibilityTracker(): JSX.Element | null {
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, [element]);
+
+    // css border
+    // React.useEffect(() => {
+    //     if (!element) {
+    //         return;
+    //     }
+    //     element.classList.add('editorDocItemContainer');
+    //     return () => element.classList.remove('editorDocItemContainer');
+    // }, [element]);
 
     return null;
 };
