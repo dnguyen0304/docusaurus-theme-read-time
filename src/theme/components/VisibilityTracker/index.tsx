@@ -64,13 +64,7 @@ function onVisibilityChange(
     }
 }
 
-type Props = {
-};
-
-export default function VisibilityTracker(
-    {
-    }: Props
-): JSX.Element {
+export default function VisibilityTracker(): JSX.Element {
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
 
     React.useEffect(() => {
