@@ -18,7 +18,7 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG = {
             colors: [
                 'hsla(356.7, 82%, 43%, 0.25)',  // B0
                 'hsla(356.2, 61%, 65%, 0.2)',   // B1
-                'hsla(356.2, 61%, 65%, 0.1)',   // B2
+                'hsla(356.2, 61%, 65%, 0.15)',  // B2
             ],
         },
     },
