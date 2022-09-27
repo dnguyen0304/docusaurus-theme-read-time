@@ -14,6 +14,7 @@ export default function Borders(
     const viewportHeight = getViewportHeight();
     const lines = [];
 
+    // Skip the last band because it includes the entire viewport.
     for (let i = 0; i < bands.length - 1; i++) {
         const heightFromCenter =
             viewportHeight * bands[i].heightFromCenterPercent;
@@ -46,5 +47,6 @@ export default function Borders(
             />
         );
     }
+
     return <>{lines}</>;
 };
