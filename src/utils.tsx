@@ -24,6 +24,13 @@ function useEditorThemeConfig(): EditorThemeConfig {
     ) as EditorThemeConfig;
 }
 
+function getViewportHeight(): number {
+    return Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0,
+    );
+}
+
 function getLocalStorageKey(
     {
         owner,
@@ -39,5 +46,6 @@ export {
     DocupotamusThemeConfig,
     EditorThemeConfig,
     getLocalStorageKey,
+    getViewportHeight,
     useEditorThemeConfig,
 };
