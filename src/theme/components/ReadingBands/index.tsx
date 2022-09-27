@@ -55,6 +55,8 @@ export default function ReadingBands(
         .themeConfig
         .docupotamus as DocupotamusThemeConfig;
 
+    // TODO(dnguyen0304): Investigate migrating from box-shadow styles to
+    // support richer interactions such as hovering.
     const viewportHeight = getViewportHeight();
     const boxShadows = bands.map((band, i) => {
         const heightFromCenter = viewportHeight * band.heightFromCenterPercent;
