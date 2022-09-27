@@ -1,0 +1,5 @@
+.readingBands {
+    position: fixed;
+    width: 100%;
+    z-index: calc(var(--ifm-z-index-fixed) + 1);
+}

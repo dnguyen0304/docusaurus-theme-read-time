@@ -4,6 +4,7 @@ import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
 import Borders from './Borders';
 import type { Band } from './reading-bands';
+import styles from './styles.module.css';
 
 const STANDARD_DEVIATION_1: number = .341;
 const STANDARD_DEVIATION_2: number = .477;
@@ -62,13 +63,13 @@ export default function ReadingBands(
 
     return (
         <>
-            <div style={{
-                position: 'fixed',
-                width: '100%',
-                top: `${viewportHeight / 2}px`,
-                zIndex: 'calc(var(--ifm-z-index-fixed) + 1)',
-                ...(debugIsEnabled && { boxShadow: boxShadows.join(', ') })
-            }} />
+            <div
+                className={styles.readingBands}
+                style={{
+                    top: `${viewportHeight / 2}px`,
+                    ...(debugIsEnabled && { boxShadow: boxShadows.join(', ') })
+                }}
+            />
             <Borders bands={bands} />
         </>
     );
