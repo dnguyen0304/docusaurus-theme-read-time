@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { getViewportHeight } from '../../../../utils';
 import type { Band } from '../reading-bands';
-import styles from '../styles.module.css';
+import readingBandsStyles from '../styles.module.css';
+import styles from './styles.module.css';
 
 type Props = {
     bands: Band[];
@@ -24,23 +25,21 @@ export default function Borders(
         lines.push(
             <hr
                 key={`B${i}-top`}
-                className={styles.readingBands}
-                style={{
-                    margin: 0,
-                    height: '3px',
-                    top: topOfBand,
-                }}
+                className={
+                    `${readingBandsStyles.readingBands} `
+                    + `${styles.readingBands_border}`
+                }
+                style={{ top: topOfBand }}
             />
         );
         lines.push(
             <hr
                 key={`B${i}-bottom`}
-                className={styles.readingBands}
-                style={{
-                    height: '3px',
-                    top: bottomOfBand,
-                    margin: 0,
-                }}
+                className={
+                    `${readingBandsStyles.readingBands} `
+                    + `${styles.readingBands_border}`
+                }
+                style={{ top: bottomOfBand }}
             />
         );
     }
