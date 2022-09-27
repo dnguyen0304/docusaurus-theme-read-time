@@ -64,7 +64,7 @@ function onVisibilityChange(
     }
 }
 
-export default function VisibilityTracker(): JSX.Element {
+export default function VisibilityTracker(): JSX.Element | null {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
     const handleVisibilityChange = (current: boolean) => {
@@ -94,7 +94,5 @@ export default function VisibilityTracker(): JSX.Element {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [element]);
 
-    return (
-        <></>
-    );
+    return null;
 };
