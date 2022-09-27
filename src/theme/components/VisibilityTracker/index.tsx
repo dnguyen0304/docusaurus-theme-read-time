@@ -68,11 +68,11 @@ export default function VisibilityTracker(): JSX.Element {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
     React.useEffect(() => {
-        const getTarget = async () => {
+        const doGetElement = async () => {
             const element = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
             setElement(element);
         }
-        getTarget();
+        doGetElement();
     }, []);
 
     React.useEffect(() => {
