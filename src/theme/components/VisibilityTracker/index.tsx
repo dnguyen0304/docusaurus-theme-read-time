@@ -68,6 +68,7 @@ export default function VisibilityTracker(): JSX.Element | null {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
     const handleVisibilityChange = (current: boolean) => {
+        // TODO(dnguyen0304): Add real implementation.
         return console.log(current);
     };
 
