@@ -8,19 +8,10 @@ const STANDARD_DEVIATION_ALL: number = .5;
 const B0_MULTIPLIER: number = 1.0;
 const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
-// From B0 to B2, use decreasing alpha (opacity) because bands are implemented
-// as box shadows and therefore stack.
-// See: https://colorbox.io/
-const DEBUG_B0_COLOR: string = 'hsla(356.7, 82%, 43%, .25)';
-const DEBUG_B1_COLOR: string = 'hsla(356.2, 61%, 65%, .2)';
-const DEBUG_B2_COLOR: string = 'hsla(356.2, 61%, 65%, .1)';
 
 type Band = {
     heightFromCenterPercent: number;
     multiplier: number;
-    _debug: {
-        color: string,
-    };
 };
 
 type Props = {
@@ -31,23 +22,14 @@ const bands: Band[] = [
     {
         heightFromCenterPercent: STANDARD_DEVIATION_1,
         multiplier: B0_MULTIPLIER,
-        _debug: {
-            color: DEBUG_B0_COLOR,
-        },
     },
     {
         heightFromCenterPercent: STANDARD_DEVIATION_2,
         multiplier: B1_MULTIPLIER,
-        _debug: {
-            color: DEBUG_B1_COLOR,
-        },
     },
     {
         heightFromCenterPercent: STANDARD_DEVIATION_ALL,
         multiplier: B2_MULTIPLIER,
-        _debug: {
-            color: DEBUG_B2_COLOR,
-        },
     },
 ];
 
@@ -73,6 +55,7 @@ export default function ReadingBands(
         readTime: {
             debug: {
                 isEnabled: debugIsEnabled,
+                colors,
             },
         },
     } = useDocusaurusContext()
@@ -81,9 +64,9 @@ export default function ReadingBands(
         .docupotamus as DocupotamusThemeConfig;
 
     const viewportHeight = getViewportHeight();
-    const boxShadows = bands.map(band => {
+    const boxShadows = bands.map((band, i) => {
         const heightFromCenter = viewportHeight * band.heightFromCenterPercent;
-        return `0px 0px 0px ${heightFromCenter}px ${band._debug.color}`;
+        return `0px 0px 0px ${heightFromCenter}px ${colors[i]}`;
     });
 
     return (
