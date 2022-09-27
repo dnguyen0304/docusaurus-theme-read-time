@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getViewportHeight } from '../../../utils';
+import styles from './styles.module.css';
 
 type DOMRectSubset = Pick<DOMRect, 'top' | 'bottom'>;
 
@@ -94,14 +95,13 @@ export default function VisibilityTracker(): JSX.Element | null {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [element]);
 
-    // css border
-    // React.useEffect(() => {
-    //     if (!element) {
-    //         return;
-    //     }
-    //     element.classList.add('editorDocItemContainer');
-    //     return () => element.classList.remove('editorDocItemContainer');
-    // }, [element]);
+    React.useEffect(() => {
+        if (!element) {
+            return;
+        }
+        element.classList.add(styles.visibilityTracker_element);
+        return () => element.classList.remove(styles.visibilityTracker_element);
+    }, [element]);
 
     return null;
 };
