@@ -42,7 +42,7 @@ function getViewportWidth(): number {
 export default function ReadingBands(
     {
     }: Props
-): JSX.Element {
+): JSX.Element | null {
     const {
         readTime: {
             debug: {
@@ -64,15 +64,17 @@ export default function ReadingBands(
     });
 
     return (
-        <>
-            <div
-                className={styles.readingBands}
-                style={{
-                    top: `${viewportHeight / 2}px`,
-                    ...(debugIsEnabled && { boxShadow: boxShadows.join(', ') })
-                }}
-            />
-            <Borders bands={bands} />
-        </>
+        debugIsEnabled
+            ? <>
+                <div
+                    className={styles.readingBands}
+                    style={{
+                        top: `${viewportHeight / 2}px`,
+                        boxShadow: boxShadows.join(', '),
+                    }}
+                />
+                <Borders bands={bands} />
+            </>
+            : null
     );
 }
