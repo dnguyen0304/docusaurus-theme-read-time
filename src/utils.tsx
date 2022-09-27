@@ -8,7 +8,9 @@ type EditorThemeConfig = {
 
 type DocupotamusThemeConfig = {
     readTime: {
-        inDebugMode: boolean;
+        debug: {
+            isEnabled: boolean;
+        };
     };
 };
 

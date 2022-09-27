@@ -10,7 +10,9 @@ export const DEFAULT_CONFIG = {
 
 export const DOCUPOTAMUS_DEFAULT_CONFIG = {
     readTime: {
-        inDebugMode: false,
+        debug: {
+            isEnabled: false,
+        },
     },
 };
 
@@ -24,9 +26,12 @@ export const ThemeConfigSchema = Joi.object<ThemeConfig>({
         .default(DEFAULT_CONFIG),
     docupotamus: Joi.object({
         readTime: Joi.object({
-            inDebugMode: Joi
-                .boolean()
-                .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.inDebugMode),
+            debug: Joi.object({
+                isEnabled: Joi
+                    .boolean()
+                    .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.isEnabled),
+            })
+                .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug),
         })
             .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime),
     })

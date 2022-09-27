@@ -71,7 +71,9 @@ export default function ReadingBands(
 ): JSX.Element {
     const {
         readTime: {
-            inDebugMode,
+            debug: {
+                isEnabled: debugIsEnabled,
+            },
         },
     } = useDocusaurusContext()
         .siteConfig
@@ -90,7 +92,7 @@ export default function ReadingBands(
             width: '100%',
             top: `${viewportHeight / 2}px`,
             zIndex: 'calc(var(--ifm-z-index-fixed) + 1)',
-            ...(inDebugMode && { boxShadow: boxShadows.join(', ') })
+            ...(debugIsEnabled && { boxShadow: boxShadows.join(', ') })
         }} />
     );
 }
