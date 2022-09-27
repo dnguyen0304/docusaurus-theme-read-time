@@ -95,6 +95,7 @@ export default function VisibilityTracker(): JSX.Element | null {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [element]);
 
+    // TODO(dnguyen0304): Add tooltip with visibility.
     React.useEffect(() => {
         if (!element) {
             return;
