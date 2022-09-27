@@ -2,6 +2,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
+import VisibilityTracker from '../VisibilityTracker';
 import Borders from './Borders';
 import type { Band } from './reading-bands';
 import styles from './styles.module.css';
@@ -64,17 +65,22 @@ export default function ReadingBands(
     });
 
     return (
-        debugIsEnabled
-            ? <>
-                <div
-                    className={styles.readingBands}
-                    style={{
-                        top: `${viewportHeight / 2}px`,
-                        boxShadow: boxShadows.join(', '),
-                    }}
-                />
-                <Borders bands={bands} />
-            </>
-            : null
+        <>
+            <VisibilityTracker />
+            {
+                debugIsEnabled
+                    ? <>
+                        <div
+                            className={styles.readingBands}
+                            style={{
+                                top: `${viewportHeight / 2}px`,
+                                boxShadow: boxShadows.join(', '),
+                            }}
+                        />
+                        <Borders bands={bands} />
+                    </>
+                    : null
+            }
+        </>
     );
 }
