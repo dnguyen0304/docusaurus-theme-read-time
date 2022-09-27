@@ -65,26 +65,26 @@ function onVisibilityChange(
 }
 
 export default function VisibilityTracker(): JSX.Element {
-    const [target, setTarget] = React.useState<HTMLElement | null>(null);
+    const [element, setElement] = React.useState<HTMLElement | null>(null);
 
     React.useEffect(() => {
         const getTarget = async () => {
-            const target = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
-            setTarget(target);
+            const element = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
+            setElement(element);
         }
         getTarget();
     }, []);
 
     React.useEffect(() => {
-        if (!target) {
+        if (!element) {
             return;
         }
-        const handleScroll = onVisibilityChange(target, console.log);
+        const handleScroll = onVisibilityChange(element, console.log);
 
         window.removeEventListener('scroll', handleScroll);
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [target]);
+    }, [element]);
 
     return (
         <></>
