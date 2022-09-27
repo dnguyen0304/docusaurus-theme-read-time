@@ -1,3 +1,4 @@
+import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import { getViewportHeight } from '../../../../utils';
 import type { Band } from '../reading-bands';
@@ -16,31 +17,70 @@ export default function Borders(
     const viewportHeight = getViewportHeight();
     const lines = [];
 
+    const getTitles = (
+        name: number,
+        heightFromCenterPercent: number,
+        topPosition: number,
+        bottomPosition: number,
+    ): {
+        topTitle: string;
+        bottomTitle: string;
+    } => {
+        return {
+            topTitle: `B${name}: { `
+                + `coverage: ${Math.floor(heightFromCenterPercent * 200)}%, `
+                + `position: ${Math.floor(topPosition)}px }`,
+            bottomTitle: `B${name}: { `
+                + `coverage: ${Math.floor(heightFromCenterPercent * 200)}%, `
+                + `position: ${Math.floor(bottomPosition)}px }`,
+        };
+    };
+
     // Skip the last band because it includes the entire viewport.
     for (let i = 0; i < bands.length - 1; i++) {
         const heightFromCenter =
             viewportHeight * bands[i].heightFromCenterPercent;
         const topOfBand = viewportHeight / 2 - heightFromCenter;
         const bottomOfBand = viewportHeight / 2 + heightFromCenter;
-        lines.push(
-            <hr
-                key={`B${i}-top`}
-                className={
-                    `${readingBandsStyles.readingBands} `
-                    + `${styles.readingBands_border}`
-                }
-                style={{ top: topOfBand }}
-            />
+        const { topTitle, bottomTitle } = getTitles(
+            i,
+            bands[i].heightFromCenterPercent,
+            topOfBand,
+            bottomOfBand,
         );
         lines.push(
-            <hr
+            <Tooltip
+                key={`B${i}-top`}
+                title={topTitle}
+                placement='bottom'
+                arrow
+                open
+            >
+                <hr
+                    className={
+                        `${readingBandsStyles.readingBands} `
+                        + `${styles.readingBands_border}`
+                    }
+                    style={{ top: topOfBand }}
+                />
+            </Tooltip >
+        );
+        lines.push(
+            <Tooltip
                 key={`B${i}-bottom`}
-                className={
-                    `${readingBandsStyles.readingBands} `
-                    + `${styles.readingBands_border}`
-                }
-                style={{ top: bottomOfBand }}
-            />
+                title={bottomTitle}
+                placement='top'
+                arrow
+                open
+            >
+                <hr
+                    className={
+                        `${readingBandsStyles.readingBands} `
+                        + `${styles.readingBands_border}`
+                    }
+                    style={{ top: bottomOfBand }}
+                />
+            </Tooltip>
         );
     }
 
