@@ -71,8 +71,10 @@ function onVisibilityChange(
 export default function VisibilityTracker(): JSX.Element | null {
     const {
         readTime: {
-            debugBorder: {
-                isEnabled: debugBorderIsEnabled,
+            debug: {
+                border: {
+                    isEnabled: debugBorderIsEnabled,
+                },
             },
         },
     } = useDocusaurusContext()

@@ -20,9 +20,9 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG = {
                 'hsla(356.2, 61%, 65%, 0.2)',   // B1
                 'hsla(356.2, 61%, 65%, 0.15)',  // B2
             ],
-        },
-        debugBorder: {
-            isEnabled: false,
+            border: {
+                isEnabled: false,
+            },
         },
     },
 };
@@ -53,15 +53,15 @@ export const ThemeConfigSchema = Joi.object<ThemeConfig>({
                             // TODO(dnguyen0304): Improve error messaging.
                             then: Joi.forbidden(),
                         },
-                    )
+                    ),
+                border: Joi.object({
+                    isEnabled: Joi
+                        .boolean()
+                        .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.border.isEnabled),
+                })
+                    .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.border),
             })
                 .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug),
-            debugBorder: Joi.object({
-                isEnabled: Joi
-                    .boolean()
-                    .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debugBorder.isEnabled),
-            })
-                .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debugBorder),
         })
             .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime),
     })
