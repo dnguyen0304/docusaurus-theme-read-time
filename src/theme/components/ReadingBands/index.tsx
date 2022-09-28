@@ -47,8 +47,10 @@ export default function ReadingBands(
     const {
         readTime: {
             debug: {
-                isEnabled: debugIsEnabled,
-                bandColors,
+                band: {
+                    isEnabled: debugBandIsEnabled,
+                    colors: bandColors,
+                }
             },
         },
     } = useDocusaurusContext()
@@ -68,7 +70,7 @@ export default function ReadingBands(
         <>
             <VisibilityTracker />
             {
-                debugIsEnabled
+                debugBandIsEnabled
                     ? <>
                         <div
                             className={styles.readingBands}

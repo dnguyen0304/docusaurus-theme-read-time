@@ -9,8 +9,10 @@ type EditorThemeConfig = {
 type DocupotamusThemeConfig = {
     readTime: {
         debug: {
-            isEnabled: boolean;
-            bandColors: string[];
+            band: {
+                isEnabled: boolean;
+                colors: string[];
+            };
             border: {
                 isEnabled: boolean;
             };
