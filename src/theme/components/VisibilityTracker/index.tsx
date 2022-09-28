@@ -59,9 +59,7 @@ function onVisibilityChange(
     let prev: boolean | undefined;
     return () => {
         const curr = isVisible(target);
-        console.log(`curr: ${curr}`)
         if (prev === undefined || curr != prev) {
-            console.log('differ!')
             prev = curr;
             callback(curr);
         }
