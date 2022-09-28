@@ -12,6 +12,9 @@ type DocupotamusThemeConfig = {
             isEnabled: boolean;
             bandColors: string[];
         };
+        debugBorder: {
+            isEnabled: boolean;
+        };
     };
 };
 

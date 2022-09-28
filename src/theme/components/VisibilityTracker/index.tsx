@@ -1,4 +1,6 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
+import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
 import styles from './styles.module.css';
 
@@ -67,6 +69,17 @@ function onVisibilityChange(
 }
 
 export default function VisibilityTracker(): JSX.Element | null {
+    const {
+        readTime: {
+            debugBorder: {
+                isEnabled: debugBorderIsEnabled,
+            },
+        },
+    } = useDocusaurusContext()
+        .siteConfig
+        .themeConfig
+        .docupotamus as DocupotamusThemeConfig;
+
     const [element, setElement] = React.useState<Element | null>(null);
 
     const handleVisibilityChange = (current: boolean) => {
@@ -98,7 +111,7 @@ export default function VisibilityTracker(): JSX.Element | null {
 
     // TODO(dnguyen0304): Add tooltip with visibility.
     React.useEffect(() => {
-        if (!element) {
+        if (!debugBorderIsEnabled || !element) {
             return;
         }
         element.classList.add(styles.visibilityTracker_element);
