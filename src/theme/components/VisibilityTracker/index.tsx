@@ -4,23 +4,26 @@ import styles from './styles.module.css';
 
 type DOMRectSubset = Pick<DOMRect, 'top' | 'bottom'>;
 
-async function getElement(selector: string): Promise<HTMLElement> {
+async function getElement(selector: string): Promise<Element> {
     return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
+        const element = document.querySelector(selector);
+        if (element) {
+            return resolve(element);
         }
-
         const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                resolve(document.querySelector(selector));
+            const element = document.querySelector(selector);
+            if (element) {
+                resolve(element);
                 observer.disconnect();
             }
         });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        observer.observe(
+            document.body,
+            {
+                childList: true,
+                subtree: true
+            },
+        );
     });
 }
 
