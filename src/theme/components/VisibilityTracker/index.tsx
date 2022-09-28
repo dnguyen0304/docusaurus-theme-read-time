@@ -27,7 +27,7 @@ async function getElement(selector: string): Promise<Element> {
     });
 }
 
-function getContainerRect(target: HTMLElement): DOMRectSubset {
+function getContainerRect(target: Element): DOMRectSubset {
     const containerRect = target.parentElement?.getBoundingClientRect();
     if (!containerRect) {
         throw new Error('no parent container');
@@ -38,7 +38,7 @@ function getContainerRect(target: HTMLElement): DOMRectSubset {
     }
 }
 
-function isVisible(target: HTMLElement): boolean {
+function isVisible(target: Element): boolean {
     const targetRect = target.getBoundingClientRect() as DOMRectSubset;
     const containerRect = getContainerRect(target);
 
@@ -53,7 +53,7 @@ function isVisible(target: HTMLElement): boolean {
 }
 
 function onVisibilityChange(
-    target: HTMLElement,
+    target: Element,
     callback: (current: boolean) => void,
 ) {
     let prev: boolean | undefined;
@@ -69,7 +69,7 @@ function onVisibilityChange(
 }
 
 export default function VisibilityTracker(): JSX.Element | null {
-    const [element, setElement] = React.useState<HTMLElement | null>(null);
+    const [element, setElement] = React.useState<Element | null>(null);
 
     const handleVisibilityChange = (current: boolean) => {
         // TODO(dnguyen0304): Add real implementation.
