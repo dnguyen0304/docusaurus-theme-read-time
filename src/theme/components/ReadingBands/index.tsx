@@ -48,7 +48,7 @@ export default function ReadingBands(
         readTime: {
             debug: {
                 isEnabled: debugIsEnabled,
-                colors,
+                bandColors,
             },
         },
     } = useDocusaurusContext()
@@ -61,7 +61,7 @@ export default function ReadingBands(
     const viewportHeight = getViewportHeight();
     const boxShadows = bands.map((band, i) => {
         const heightFromCenter = viewportHeight * band.heightFromCenterPercent;
-        return `0px 0px 0px ${heightFromCenter}px ${colors[i]}`;
+        return `0px 0px 0px ${heightFromCenter}px ${bandColors[i]}`;
     });
 
     return (

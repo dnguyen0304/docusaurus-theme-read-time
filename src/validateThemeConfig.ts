@@ -15,7 +15,7 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG = {
             // From B0 to B2, use decreasing alpha (opacity) because bands are
             // implemented as box shadows and therefore stack.
             // See: https://colorbox.io/
-            colors: [
+            bandColors: [
                 'hsla(356.7, 82%, 43%, 0.25)',  // B0
                 'hsla(356.2, 61%, 65%, 0.2)',   // B1
                 'hsla(356.2, 61%, 65%, 0.15)',  // B2
@@ -38,11 +38,11 @@ export const ThemeConfigSchema = Joi.object<ThemeConfig>({
                 isEnabled: Joi
                     .boolean()
                     .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.isEnabled),
-                colors: Joi
+                bandColors: Joi
                     .array()
                     .items(Joi.string())
                     .length(3)
-                    .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.colors)
+                    .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.debug.bandColors)
                     .when(
                         'isEnabled',
                         {

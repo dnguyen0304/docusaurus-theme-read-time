@@ -10,7 +10,7 @@ type DocupotamusThemeConfig = {
     readTime: {
         debug: {
             isEnabled: boolean;
-            colors: string[];
+            bandColors: string[];
         };
     };
 };
