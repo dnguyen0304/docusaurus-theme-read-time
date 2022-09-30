@@ -1,4 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import styled from '@emotion/styled';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
@@ -11,6 +12,12 @@ const STANDARD_DEVIATION_2: number = .477;
 const B0_MULTIPLIER: number = 1.0;
 const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
+
+type StyledDivProps = {
+    readonly backgroundColor: string;
+    readonly height: string;
+    readonly top: string;
+}
 
 type Props = {
 };
@@ -43,6 +50,14 @@ const bands: Band[] = [
     },
 ];
 
+const StyledDiv = styled('div', {
+    shouldForwardProp: (prop) => !(prop in ['backgroundColor', 'height', 'top'])
+})<StyledDivProps>(({ backgroundColor, height, top }) => ({
+    backgroundColor,
+    height,
+    top,
+}));
+
 export default function ReadingBands(
     {
     }: Props
@@ -71,14 +86,12 @@ export default function ReadingBands(
                     const heightPx =
                         (band.bottomVh - band.topVh) * viewportHeight;
                     return (
-                        <div
+                        <StyledDiv
                             className={styles.readingBands}
-                            style={{
-                                top: `${viewportHeight * band.topVh}px`,
-                                height: `${heightPx}px`,
-                                backgroundColor: bandColors[i],
-                            }}>
-                        </div>
+                            top={`${viewportHeight * band.topVh}px`}
+                            height={`${heightPx}px`}
+                            backgroundColor={bandColors[i]}>
+                        </StyledDiv>
                     )
                 })}
             </>
