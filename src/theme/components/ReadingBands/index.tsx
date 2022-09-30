@@ -48,13 +48,7 @@ const bands: Band[] = [
     },
 ];
 
-type Props = {
-};
-
-export default function ReadingBands(
-    {
-    }: Props
-): JSX.Element | null {
+export default function ReadingBands(): JSX.Element | null {
     const {
         readTime: {
             debug: {
