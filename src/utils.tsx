@@ -1,3 +1,4 @@
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { LOCAL_STORAGE_KEYS } from './constants';
 import { ContextValue } from './contexts/site';
@@ -30,6 +31,9 @@ function useEditorThemeConfig(): EditorThemeConfig {
 }
 
 function getViewportHeight(): number {
+    if (!ExecutionEnvironment.canUseDOM) {
+        return 0;
+    }
     return Math.max(
         document.documentElement.clientHeight || 0,
         window.innerHeight || 0,
