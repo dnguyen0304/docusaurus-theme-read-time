@@ -24,26 +24,31 @@ type Props = {
 
 const bands: Band[] = [
     {
+        friendlyKey: 'B2-top',
         topVh: 0,
         bottomVh: CENTER - STANDARD_DEVIATION_2,
         multiplier: B2_MULTIPLIER,
     },
     {
+        friendlyKey: 'B1-top',
         topVh: CENTER - STANDARD_DEVIATION_2,
         bottomVh: CENTER - STANDARD_DEVIATION_1,
         multiplier: B1_MULTIPLIER,
     },
     {
+        friendlyKey: 'B0',
         topVh: CENTER - STANDARD_DEVIATION_1,
         bottomVh: CENTER + STANDARD_DEVIATION_1,
         multiplier: B0_MULTIPLIER,
     },
     {
+        friendlyKey: 'B1-bottom',
         topVh: CENTER + STANDARD_DEVIATION_1,
         bottomVh: CENTER + STANDARD_DEVIATION_2,
         multiplier: B1_MULTIPLIER,
     },
     {
+        friendlyKey: 'B2-bottom',
         topVh: CENTER + STANDARD_DEVIATION_2,
         bottomVh: 1.0,
         multiplier: B2_MULTIPLIER,
@@ -87,6 +92,7 @@ export default function ReadingBands(
                         (band.bottomVh - band.topVh) * viewportHeight;
                     return (
                         <StyledDiv
+                            key={band.friendlyKey}
                             className={styles.readingBands}
                             top={`${viewportHeight * band.topVh}px`}
                             height={`${heightPx}px`}
