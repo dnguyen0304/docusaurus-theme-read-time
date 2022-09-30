@@ -55,6 +55,7 @@ const bands: Band[] = [
     },
 ];
 
+// TODO(dnguyen0304): Support animation on hover.
 const StyledDiv = styled('div', {
     shouldForwardProp: (prop) => !(prop in ['backgroundColor', 'height', 'top'])
 })<StyledDivProps>(({ backgroundColor, height, top }) => ({
@@ -81,7 +82,6 @@ export default function ReadingBands(
         .themeConfig
         .docupotamus as DocupotamusThemeConfig;
 
-    // TODO(dnguyen0304): hover
     const viewportHeight = getViewportHeight();
 
     return (
