@@ -1,5 +1,4 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import styled from '@emotion/styled';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
@@ -14,13 +13,6 @@ const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-
-type StyledDivProps = {
-    readonly backgroundColor: string;
-    readonly borderTop: string;
-    readonly height: string;
-    readonly top: string;
-}
 
 type Props = {
 };
@@ -58,21 +50,6 @@ const bands: Band[] = [
     },
 ];
 
-// TODO(dnguyen0304): Support animation on hover.
-const StyledDiv = styled('div', {
-    shouldForwardProp: (prop) => !(prop in [
-        'backgroundColor',
-        'borderTop',
-        'height',
-        'top',
-    ]),
-})<StyledDivProps>(({ backgroundColor, height, borderTop, top }) => ({
-    backgroundColor,
-    borderTop,
-    height,
-    top,
-}));
-
 export default function ReadingBands(
     {
     }: Props
@@ -100,18 +77,21 @@ export default function ReadingBands(
                     const heightPx =
                         (band.bottomVh - band.topVh) * viewportHeight;
                     return (
-                        <StyledDiv
+                        <div
                             key={band.friendlyKey}
                             className={styles.readingBands}
-                            backgroundColor={bandColors[i]}
-                            borderTop={
-                                (i !== 0)
-                                    ? `${BORDER_HEIGHT_PX}px solid ${BORDER_COLOR}`
-                                    : ''
-                            }
-                            height={`${heightPx}px`}
-                            top={`${viewportHeight * band.topVh}px`}>
-                        </StyledDiv>
+                            // TODO(dnguyen0304): Support animation on hover.
+                            style={{
+                                backgroundColor: bandColors[i],
+                                borderTop:
+                                    (i !== 0)
+                                        ? `${BORDER_HEIGHT_PX}px solid ${BORDER_COLOR}`
+                                        : ''
+                                ,
+                                height: `${heightPx}px`,
+                                top: `${viewportHeight * band.topVh}px`,
+                            }}>
+                        </div>
                     )
                 })}
             </>
