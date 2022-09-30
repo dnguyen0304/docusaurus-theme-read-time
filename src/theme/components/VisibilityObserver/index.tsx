@@ -70,7 +70,7 @@ async function getElement(selector: string): Promise<Element> {
 //     }
 // }
 
-function VisibilityTracker(): JSX.Element | null {
+function VisibilityObserver(): JSX.Element | null {
     const {
         readTime: {
             debug: {
