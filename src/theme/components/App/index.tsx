@@ -80,7 +80,5 @@ export default function App(): JSX.Element {
         };
     }, []);
 
-    return (
-        <ReadingBands />
-    );
+    return <ReadingBands />;
 }
