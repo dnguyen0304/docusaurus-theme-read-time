@@ -77,10 +77,12 @@ export default function ReadingBands(
                     const heightPx =
                         (band.bottomVh - band.topVh) * viewportHeight;
                     return (
+                        // TODO(dnguyen0304): Add tooltip, for example:
+                        //   "B0: { coverage: 68%, position: 154px }".
+                        // TODO(dnguyen0304): Support animation on hover.
                         <div
                             key={band.friendlyKey}
                             className={styles.readingBands}
-                            // TODO(dnguyen0304): Support animation on hover.
                             style={{
                                 backgroundColor: bandColors[i],
                                 borderTop:
