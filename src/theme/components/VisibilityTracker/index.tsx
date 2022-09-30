@@ -1,3 +1,4 @@
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
@@ -68,7 +69,7 @@ function onVisibilityChange(
     }
 }
 
-export default function VisibilityTracker(): JSX.Element | null {
+function VisibilityTracker(): JSX.Element | null {
     const {
         readTime: {
             debug: {
@@ -121,4 +122,12 @@ export default function VisibilityTracker(): JSX.Element | null {
     }, [element]);
 
     return null;
+};
+
+export default (): JSX.Element | null => {
+    return (
+        <BrowserOnly >
+            {() => <VisibilityTracker />}
+        </BrowserOnly>
+    );
 };
