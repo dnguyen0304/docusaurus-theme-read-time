@@ -75,7 +75,7 @@ export default function ReadingBands(): JSX.Element | null {
                     // TODO(dnguyen0304): Support animation on hover.
                     return (
                         <Tooltip
-                            uniqueKey={band.friendlyKey}
+                            key={band.friendlyKey}
                             index={i}
                             topPx={topPx}
                             bottomPx={bottomPx}

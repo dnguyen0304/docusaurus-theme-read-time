@@ -13,7 +13,6 @@ type GetTooltipPropsProps = {
 }
 
 type Props = {
-    readonly uniqueKey: React.Key;
     readonly children: React.ReactElement<any, any>,
 } & GetTooltipPropsProps;
 
@@ -41,7 +40,6 @@ const getTooltipProps = (
 
 export default function Tooltip(
     {
-        uniqueKey,
         index,
         topPx,
         bottomPx,
@@ -55,7 +53,6 @@ export default function Tooltip(
         } = getTooltipProps({ index, topPx, bottomPx })
         return (
             <MuiTooltip
-                key={uniqueKey}
                 title={title}
                 placement={placement}
                 arrow
