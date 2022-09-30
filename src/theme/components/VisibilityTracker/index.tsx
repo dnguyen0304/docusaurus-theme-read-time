@@ -92,6 +92,7 @@ function VisibilityTracker(): JSX.Element | null {
 
     React.useEffect(() => {
         const doGetElement = async () => {
+            // TODO(dnguyen0304): Change to include all child elements.
             const found = await getElement(`main[class*='docMainContainer'] article .markdown h2`);
             setElement(found);
         }
