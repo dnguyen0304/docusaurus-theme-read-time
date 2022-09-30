@@ -3,7 +3,6 @@ import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
 import VisibilityTracker from '../VisibilityTracker';
-import Borders from './Borders';
 import type { Band } from './reading-bands';
 import styles from './styles.module.css';
 
@@ -72,7 +71,6 @@ export default function ReadingBands(
                                 boxShadow: boxShadows.join(', '),
                             }}
                         />
-                        <Borders bands={bands} />
                     </>
                     : null
             }
