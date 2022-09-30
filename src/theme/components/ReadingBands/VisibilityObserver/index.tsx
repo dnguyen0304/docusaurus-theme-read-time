@@ -2,7 +2,7 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
-import type { DocupotamusThemeConfig } from '../../../utils';
+import type { DocupotamusThemeConfig } from '../../../../utils';
 // import { getViewportHeight } from '../../../utils';
 import styles from './styles.module.css';
 
