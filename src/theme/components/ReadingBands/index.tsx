@@ -1,11 +1,10 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import type { TooltipProps } from '@mui/material/Tooltip';
-import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
 import type { Band } from './reading-bands';
 import styles from './styles.module.css';
+import Tooltip from './Tooltip';
 
 const CENTER: number = .5;
 const STANDARD_DEVIATION_1: number = .341;
@@ -15,7 +14,6 @@ const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-const BANDS_WITH_TOOLTIP: number[] = [0, 1, 3, 4];
 
 const bands: Band[] = [
     {
@@ -50,29 +48,7 @@ const bands: Band[] = [
     },
 ];
 
-type SubsetTooltipProps = Pick<TooltipProps, 'title' | 'placement'>;
-
 type Props = {
-};
-
-const getTooltipProps = (
-    index: number,
-    topPx: number,
-    bottomPx: number,
-): SubsetTooltipProps => {
-    if (!BANDS_WITH_TOOLTIP.includes(index)) {
-        throw new Error(`invalid tooltip index ${index}`);
-    }
-    if (index < 2) {
-        return {
-            title: `B${index}: { position: ${Math.floor(bottomPx)}px }`,
-            placement: 'bottom-start',
-        };
-    }
-    return {
-        title: `B${index}: { position: ${Math.floor(topPx)}px }`,
-        placement: 'top-start',
-    };
 };
 
 export default function ReadingBands(
@@ -103,42 +79,30 @@ export default function ReadingBands(
                     const bottomPx = band.bottomVh * viewportHeight;
                     const heightPx = bottomPx - topPx;
                     // TODO(dnguyen0304): Support animation on hover.
-                    const bandComponent = (
-                        <div
-                            // Bands and bands wrapped with tooltips use the
-                            // same keys for simplicity.
+                    return (
+                        <Tooltip
                             key={band.friendlyKey}
-                            className={styles.readingBands}
-                            style={{
-                                backgroundColor: bandColors[i],
-                                borderTop:
-                                    (i !== 0)
-                                        ? `${BORDER_HEIGHT_PX}px solid ${BORDER_COLOR}`
-                                        : ''
-                                ,
-                                height: `${heightPx}px`,
-                                top: `${viewportHeight * band.topVh}px`,
-                            }}>
-                        </div>
+                            index={i}
+                            topPx={topPx}
+                            bottomPx={bottomPx}
+                        >
+                            <div
+                                // Bands and bands wrapped with tooltips use the
+                                // same keys for simplicity.
+                                className={styles.readingBands}
+                                style={{
+                                    backgroundColor: bandColors[i],
+                                    borderTop:
+                                        (i !== 0)
+                                            ? `${BORDER_HEIGHT_PX}px solid ${BORDER_COLOR}`
+                                            : ''
+                                    ,
+                                    height: `${heightPx}px`,
+                                    top: `${viewportHeight * band.topVh}px`,
+                                }}>
+                            </div>
+                        </Tooltip>
                     );
-                    if (BANDS_WITH_TOOLTIP.includes(i)) {
-                        const {
-                            title,
-                            placement,
-                        } = getTooltipProps(i, topPx, bottomPx)
-                        return (
-                            <Tooltip
-                                key={band.friendlyKey}
-                                title={title}
-                                placement={placement}
-                                arrow
-                                open
-                            >
-                                {bandComponent}
-                            </Tooltip>
-                        );
-                    }
-                    return bandComponent;
                 })}
             </>
             : null
