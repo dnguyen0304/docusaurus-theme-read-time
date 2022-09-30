@@ -12,8 +12,8 @@ const STANDARD_DEVIATION_2: number = .477;
 const B0_MULTIPLIER: number = 1.0;
 const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
-const BORDER_HEIGHT_PX: number = 3;
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
+const BORDER_HEIGHT_PX: number = 3;
 
 type StyledDivProps = {
     readonly backgroundColor: string;
