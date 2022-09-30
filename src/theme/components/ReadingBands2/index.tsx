@@ -12,9 +12,12 @@ const STANDARD_DEVIATION_2: number = .477;
 const B0_MULTIPLIER: number = 1.0;
 const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
+const BORDER_HEIGHT_PX: number = 3;
+const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 
 type StyledDivProps = {
     readonly backgroundColor: string;
+    readonly borderTop: string;
     readonly height: string;
     readonly top: string;
 }
@@ -57,9 +60,15 @@ const bands: Band[] = [
 
 // TODO(dnguyen0304): Support animation on hover.
 const StyledDiv = styled('div', {
-    shouldForwardProp: (prop) => !(prop in ['backgroundColor', 'height', 'top'])
-})<StyledDivProps>(({ backgroundColor, height, top }) => ({
+    shouldForwardProp: (prop) => !(prop in [
+        'backgroundColor',
+        'borderTop',
+        'height',
+        'top',
+    ]),
+})<StyledDivProps>(({ backgroundColor, height, borderTop, top }) => ({
     backgroundColor,
+    borderTop,
     height,
     top,
 }));
@@ -94,9 +103,14 @@ export default function ReadingBands(
                         <StyledDiv
                             key={band.friendlyKey}
                             className={styles.readingBands}
-                            top={`${viewportHeight * band.topVh}px`}
+                            backgroundColor={bandColors[i]}
+                            borderTop={
+                                (i !== 0)
+                                    ? `${BORDER_HEIGHT_PX}px solid ${BORDER_COLOR}`
+                                    : ''
+                            }
                             height={`${heightPx}px`}
-                            backgroundColor={bandColors[i]}>
+                            top={`${viewportHeight * band.topVh}px`}>
                         </StyledDiv>
                     )
                 })}
