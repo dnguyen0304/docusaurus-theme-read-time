@@ -10,7 +10,7 @@ import {
     SEARCH_PARAM_KEY_LOGGED_IN_AT
 } from '../../../constants';
 import { useSnackbar } from '../../../contexts/snackbar';
-import ReadingBands2 from '../ReadingBands2';
+import ReadingBands from '../ReadingBands';
 
 const WELCOME_WINDOW_SECONDS: number = 10;
 
@@ -81,6 +81,6 @@ export default function App(): JSX.Element {
     }, []);
 
     return (
-        <ReadingBands2 />
+        <ReadingBands />
     );
 }
