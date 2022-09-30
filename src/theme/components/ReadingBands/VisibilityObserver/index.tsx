@@ -152,7 +152,7 @@ function VisibilityObserver(): JSX.Element | null {
 export default (): JSX.Element | null => {
     return (
         <BrowserOnly >
-            {() => <VisibilityTracker />}
+            {() => <VisibilityObserver />}
         </BrowserOnly>
     );
 };
