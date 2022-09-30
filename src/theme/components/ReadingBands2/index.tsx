@@ -1,4 +1,6 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import type { TooltipProps } from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
@@ -13,9 +15,7 @@ const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-
-type Props = {
-};
+const BANDS_WITH_TOOLTIP: number[] = [0, 1, 3, 4];
 
 const bands: Band[] = [
     {
@@ -50,6 +50,31 @@ const bands: Band[] = [
     },
 ];
 
+type SubsetTooltipProps = Pick<TooltipProps, 'title' | 'placement'>;
+
+type Props = {
+};
+
+const getTooltipProps = (
+    index: number,
+    topPx: number,
+    bottomPx: number,
+): SubsetTooltipProps => {
+    if (!BANDS_WITH_TOOLTIP.includes(index)) {
+        throw new Error(`invalid tooltip index ${index}`);
+    }
+    if (index < 2) {
+        return {
+            title: `B${index}: { position: ${Math.floor(bottomPx)}px }`,
+            placement: 'bottom-start',
+        };
+    }
+    return {
+        title: `B${index}: { position: ${Math.floor(topPx)}px }`,
+        placement: 'top-start',
+    };
+};
+
 export default function ReadingBands(
     {
     }: Props
@@ -74,13 +99,14 @@ export default function ReadingBands(
         debugBandIsEnabled
             ? <>
                 {bands.map((band, i) => {
-                    const heightPx =
-                        (band.bottomVh - band.topVh) * viewportHeight;
-                    return (
-                        // TODO(dnguyen0304): Add tooltip, for example:
-                        //   "B0: { coverage: 68%, position: 154px }".
-                        // TODO(dnguyen0304): Support animation on hover.
+                    const topPx = band.topVh * viewportHeight;
+                    const bottomPx = band.bottomVh * viewportHeight;
+                    const heightPx = bottomPx - topPx;
+                    // TODO(dnguyen0304): Support animation on hover.
+                    const bandComponent = (
                         <div
+                            // Bands and bands wrapped with tooltips use the
+                            // same keys for simplicity.
                             key={band.friendlyKey}
                             className={styles.readingBands}
                             style={{
@@ -94,7 +120,25 @@ export default function ReadingBands(
                                 top: `${viewportHeight * band.topVh}px`,
                             }}>
                         </div>
-                    )
+                    );
+                    if (BANDS_WITH_TOOLTIP.includes(i)) {
+                        const {
+                            title,
+                            placement,
+                        } = getTooltipProps(i, topPx, bottomPx)
+                        return (
+                            <Tooltip
+                                key={band.friendlyKey}
+                                title={title}
+                                placement={placement}
+                                arrow
+                                open
+                            >
+                                {bandComponent}
+                            </Tooltip>
+                        );
+                    }
+                    return bandComponent;
                 })}
             </>
             : null
