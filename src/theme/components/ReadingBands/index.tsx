@@ -52,7 +52,7 @@ const bands: Band[] = [
 export default function ReadingBands(): JSX.Element | null {
     const {
         readTime: {
-            contentContainerSelector,
+            contentSelector,
             debug: {
                 band: {
                     isEnabled: debugBandIsEnabled,
@@ -77,8 +77,7 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
-                const contentContainer =
-                    await getElement(contentContainerSelector);
+                const contentContainer = await getElement(contentSelector);
                 for (const child of Array.from(contentContainer.children)) {
                     await observeVisibility({
                         target: child,
