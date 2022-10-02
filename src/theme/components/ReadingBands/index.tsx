@@ -78,7 +78,7 @@ export default function ReadingBands(): JSX.Element | null {
             if (node !== null) {
                 await observeVisibility({
                     // TODO(dnguyen0304): Change to include all child elements.
-                    selector: `main[class*='docMainContainer'] article .markdown h2`,
+                    target: `main[class*='docMainContainer'] article .markdown h2`,
                     rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
                     debugBorderIsEnabled,
                 });

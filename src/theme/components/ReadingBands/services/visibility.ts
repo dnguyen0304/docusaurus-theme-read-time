@@ -2,7 +2,7 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import styles from './styles.module.css';
 
 type Props = {
-    readonly selector: string;
+    readonly target: string | Element;
     readonly debugBorderIsEnabled?: boolean;
 } & IntersectionObserverInit;
 
@@ -31,7 +31,7 @@ async function getElement(selector: string): Promise<Element> {
 
 export default async function observeVisibility(
     {
-        selector,
+        target,
         root,
         rootMargin,
         threshold,
@@ -43,7 +43,10 @@ export default async function observeVisibility(
     }
 
     const cleanUp: Array<() => void> = [];
-    const element = await getElement(selector);
+    const element =
+        typeof target === 'string'
+            ? await getElement(target)
+            : target;
     const observer = new IntersectionObserver((entries, observer) => {
         // TODO(dnguyen0304): Add real implementation.
         console.log(entries);
