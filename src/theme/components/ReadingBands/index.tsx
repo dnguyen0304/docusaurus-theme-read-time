@@ -82,6 +82,10 @@ export default function ReadingBands(): JSX.Element | null {
                 for (const child of Array.from(contentContainer.children)) {
                     await observeVisibility({
                         target: child,
+                        onChange: (entries, observer) => {
+                            // TODO(dnguyen0304): Add real implementation.
+                            console.log(entries);
+                        },
                         rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
                         debugBorderIsEnabled,
                     });

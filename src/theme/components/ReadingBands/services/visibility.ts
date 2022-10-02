@@ -4,12 +4,14 @@ import styles from './styles.module.css';
 
 type Props = {
     readonly target: string | Element;
+    readonly onChange: IntersectionObserverCallback;
     readonly debugBorderIsEnabled?: boolean;
 } & IntersectionObserverInit;
 
 export default async function observeVisibility(
     {
         target,
+        onChange,
         root,
         rootMargin,
         threshold,
@@ -25,14 +27,14 @@ export default async function observeVisibility(
         typeof target === 'string'
             ? await getElement(target)
             : target;
-    const observer = new IntersectionObserver((entries, observer) => {
-        // TODO(dnguyen0304): Add real implementation.
-        console.log(entries);
-    }, {
-        root,
-        rootMargin,
-        threshold,
-    });
+    const observer = new IntersectionObserver(
+        onChange,
+        {
+            root,
+            rootMargin,
+            threshold,
+        },
+    );
 
     // TODO(dnguyen0304): Add tooltip with visibility.
     if (debugBorderIsEnabled
