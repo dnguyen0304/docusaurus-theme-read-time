@@ -76,7 +76,6 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
-
                 await observeVisibility({
                     // TODO(dnguyen0304): Change to include all child elements.
                     selector: `main[class*='docMainContainer'] article .markdown h2`,
