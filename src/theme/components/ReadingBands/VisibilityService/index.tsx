@@ -41,9 +41,6 @@ export default async function observeVisibility(
     if (!ExecutionEnvironment.canUseIntersectionObserver) {
         return [];
     }
-    if (rootMargin && !rootMargin.includes('px')) {
-        throw new Error('rootMargin must include the "px" and/or "%" suffixes');
-    }
 
     const cleanUp: Array<() => void> = [];
     const element = await getElement(selector);
