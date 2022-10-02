@@ -8,6 +8,7 @@ type EditorThemeConfig = {
 
 type DocupotamusThemeConfig = {
     readTime: {
+        contentContainerSelector: string;
         debug: {
             band: {
                 isEnabled: boolean;
