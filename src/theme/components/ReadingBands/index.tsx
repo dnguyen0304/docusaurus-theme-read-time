@@ -2,7 +2,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import type { Band } from './reading-bands';
-import { getViewportHeight } from './services/dom';
+import { getElement, getViewportHeight } from './services/dom';
 import observeVisibility from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
@@ -52,6 +52,7 @@ const bands: Band[] = [
 export default function ReadingBands(): JSX.Element | null {
     const {
         readTime: {
+            contentContainerSelector,
             debug: {
                 band: {
                     isEnabled: debugBandIsEnabled,
@@ -76,8 +77,9 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
-                const children = Array.from(document.querySelectorAll(`main[class*='docMainContainer'] article div.markdown > *`));
-                for (const child of children) {
+                const contentContainer =
+                    await getElement(contentContainerSelector);
+                for (const child of Array.from(contentContainer.children)) {
                     await observeVisibility({
                         target: child,
                         rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
