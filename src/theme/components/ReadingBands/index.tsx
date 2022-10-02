@@ -77,6 +77,8 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
+                // TODO(dnguyen0304): Fix code blocks not being included because
+                // of "Node cannot be found in the current page." error.
                 const targets = await getElementAll(contentSelector);
                 for (const target of targets) {
                     await observeVisibility({
