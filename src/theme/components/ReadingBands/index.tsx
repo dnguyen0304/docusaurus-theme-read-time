@@ -3,9 +3,9 @@ import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { getViewportHeight } from '../../../utils';
 import type { Band } from './reading-bands';
+import observeVisibility from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
-import observeVisibility from './VisibilityService';
 
 const CENTER: number = .5;
 const STANDARD_DEVIATION_1: number = .341;
