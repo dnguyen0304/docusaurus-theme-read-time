@@ -2,7 +2,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import type { Band } from './reading-bands';
-import { getElement, getViewportHeight } from './services/dom';
+import { getElementAll, getViewportHeight } from './services/dom';
 import observeVisibility from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
@@ -77,10 +77,10 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
-                const contentContainer = await getElement(contentSelector);
-                for (const child of Array.from(contentContainer.children)) {
+                const targets = await getElementAll(contentSelector);
+                for (const target of targets) {
                     await observeVisibility({
-                        target: child,
+                        target: target,
                         onChange: (entries, observer) => {
                             // TODO(dnguyen0304): Add real implementation.
                             console.log(entries);

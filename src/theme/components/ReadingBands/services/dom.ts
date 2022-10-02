@@ -1,5 +1,7 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
+// TODO(dnguyen0304): Maybe refactor to reduce duplicated code with
+// getElementAll.
 async function getElement(selector: string): Promise<Element> {
     return new Promise(resolve => {
         const element = document.querySelector(selector);
@@ -10,6 +12,30 @@ async function getElement(selector: string): Promise<Element> {
             const element = document.querySelector(selector);
             if (element) {
                 resolve(element);
+                observer.disconnect();
+            }
+        });
+        observer.observe(
+            document.body,
+            {
+                childList: true,
+                subtree: true
+            },
+        );
+    });
+}
+
+// TODO(dnguyen0304): Maybe refactor to reduce duplicated code with getElement.
+async function getElementAll(selector: string): Promise<Element[]> {
+    return new Promise(resolve => {
+        const elements = document.querySelectorAll(selector);
+        if (elements) {
+            return resolve(Array.from(elements));
+        }
+        const observer = new MutationObserver(mutations => {
+            const elements = document.querySelectorAll(selector);
+            if (elements) {
+                resolve(Array.from(elements));
                 observer.disconnect();
             }
         });
@@ -35,5 +61,6 @@ function getViewportHeight(): number {
 
 export {
     getElement,
+    getElementAll,
     getViewportHeight,
 };
