@@ -11,7 +11,7 @@ export const DEFAULT_CONFIG = {
 export const DOCUPOTAMUS_DEFAULT_CONFIG = {
     readTime: {
         contentContainerSelector:
-            "main[class*='docMainContainer'] article div.markdown > *",
+            "main[class*='docMainContainer'] article div.markdown",
         debug: {
             band: {
                 isEnabled: false,
