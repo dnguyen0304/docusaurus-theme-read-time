@@ -5,6 +5,7 @@ import { getViewportHeight } from '../../../utils';
 import type { Band } from './reading-bands';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
+import observeVisibility from './VisibilityService';
 
 const CENTER: number = .5;
 const STANDARD_DEVIATION_1: number = .341;
@@ -55,7 +56,10 @@ export default function ReadingBands(): JSX.Element | null {
                 band: {
                     isEnabled: debugBandIsEnabled,
                     colors: bandColors,
-                }
+                },
+                border: {
+                    isEnabled: debugBorderIsEnabled,
+                },
             },
         },
     } = useDocusaurusContext()
@@ -64,6 +68,24 @@ export default function ReadingBands(): JSX.Element | null {
         .docupotamus as DocupotamusThemeConfig;
 
     const viewportHeight = getViewportHeight();
+
+    const createVisibilityRef = (
+        topPx: number,
+        bottomPx: number,
+        viewportHeight: number,
+    ): React.RefCallback<HTMLDivElement> => {
+        return React.useCallback(async (node: HTMLDivElement | null) => {
+            if (node !== null) {
+
+                await observeVisibility({
+                    // TODO(dnguyen0304): Change to include all child elements.
+                    selector: `main[class*='docMainContainer'] article .markdown h2`,
+                    rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
+                    debugBorderIsEnabled,
+                });
+            }
+        }, []);
+    };
 
     return (
         debugBandIsEnabled
@@ -81,8 +103,11 @@ export default function ReadingBands(): JSX.Element | null {
                             bottomPx={bottomPx}
                         >
                             <div
-                                // Bands and bands wrapped with tooltips use the
-                                // same keys for simplicity.
+                                ref={createVisibilityRef(
+                                    topPx,
+                                    bottomPx,
+                                    viewportHeight,
+                                )}
                                 className={styles.readingBands}
                                 style={{
                                     backgroundColor: bandColors[i],
@@ -92,9 +117,9 @@ export default function ReadingBands(): JSX.Element | null {
                                             : ''
                                     ,
                                     height: `${heightPx}px`,
-                                    top: `${viewportHeight * band.topVh}px`,
-                                }}>
-                            </div>
+                                    top: `${topPx}px`,
+                                }}
+                            />
                         </Tooltip>
                     );
                 })}
