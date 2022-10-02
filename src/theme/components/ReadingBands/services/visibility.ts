@@ -28,7 +28,6 @@ export default async function observeVisibility(
     const observer = new IntersectionObserver((entries, observer) => {
         // TODO(dnguyen0304): Add real implementation.
         console.log(entries);
-        // classList.toggle
     }, {
         root,
         rootMargin,
