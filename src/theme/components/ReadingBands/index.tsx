@@ -76,13 +76,15 @@ export default function ReadingBands(): JSX.Element | null {
     ): React.RefCallback<HTMLDivElement> => {
         return React.useCallback(async (node: HTMLDivElement | null) => {
             if (node !== null) {
-                await observeVisibility({
-                    // TODO(dnguyen0304): Change to include all child elements.
-                    target: `main[class*='docMainContainer'] article .markdown h2`,
-                    rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
-                    debugBorderIsEnabled,
-                });
-            }
+                const children = Array.from(document.querySelectorAll(`main[class*='docMainContainer'] article div.markdown > *`));
+                for (const child of children) {
+                    await observeVisibility({
+                        target: child,
+                        rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
+                        debugBorderIsEnabled,
+                    });
+                }
+            };
         }, []);
     };
 
