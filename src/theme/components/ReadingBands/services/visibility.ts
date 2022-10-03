@@ -80,7 +80,7 @@ function getThreshold(element: Element): number[] {
         `invalid height: ${element.getBoundingClientRect().height}`);
 }
 
-export function getDynamicThreshold(
+function getDynamicThreshold(
     height: number,
     thresholdMinPx: number = THRESHOLD_MIN_PX,
     thresholdMaxPx: number = THRESHOLD_MAX_PX,
