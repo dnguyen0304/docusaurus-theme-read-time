@@ -68,7 +68,7 @@ const HEIGHT_RANGE_TO_THRESHOLD: HeightRangeToThresholdType[] = [
 function getThreshold(element: Element): number[] {
     for (const range of HEIGHT_RANGE_TO_THRESHOLD) {
         const height = element.getBoundingClientRect().height;
-        if (height < range.heightMinPx && height >= range.heightMaxPx) {
+        if (height < range.heightMinPx || height >= range.heightMaxPx) {
             continue;
         }
         if (range.friendlyName === DYNAMICALLY_GENERATED_RANGE) {
