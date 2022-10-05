@@ -6,7 +6,7 @@ type OnChangeContext = {
     [key: string]: any;
 };
 
-type IntersectionObserverCallbackWithContext = (
+export type IntersectionObserverCallbackWithContext = (
     entries: IntersectionObserverEntry[],
     observer: IntersectionObserver,
     context?: OnChangeContext,
