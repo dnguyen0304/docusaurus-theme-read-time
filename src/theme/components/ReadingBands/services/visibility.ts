@@ -2,6 +2,16 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import { getElement } from './dom';
 import styles from './styles.module.css';
 
+type OnChangeContext = {
+    [key: string]: any;
+};
+
+type IntersectionObserverCallbackWithContext = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver,
+    context?: OnChangeContext,
+) => void;
+
 // Mapping from a height range to an intersection observer threshold.
 type HeightRangeToThresholdType = {
     // Unique identifier that is human-readable.
@@ -107,7 +117,8 @@ function getDynamicThreshold(
 
 type Props = {
     readonly target: string | Element;
-    readonly onChange: IntersectionObserverCallback;
+    readonly onChange: IntersectionObserverCallbackWithContext;
+    readonly context?: OnChangeContext;
     readonly debugBorderIsEnabled?: boolean;
 } & IntersectionObserverInit;
 
@@ -118,6 +129,7 @@ export default async function observeVisibility(
         root,
         rootMargin,
         threshold,
+        context,
         debugBorderIsEnabled = false,
     }: Props
 ): Promise<Array<() => void>> {
@@ -132,7 +144,7 @@ export default async function observeVisibility(
             ? await getElement(target)
             : target;
     const observer = new IntersectionObserver(
-        onChange,
+        (entries, observer) => onChange(entries, observer, context),
         {
             root,
             rootMargin,
