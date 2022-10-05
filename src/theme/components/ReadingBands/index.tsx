@@ -1,9 +1,9 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
-import type { Band } from './reading-bands';
+import type { Band, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
-import observeVisibility from './services/visibility';
+import observeVisibility, { IntersectionObserverCallbackWithContext } from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
 
@@ -93,25 +93,41 @@ export default function ReadingBands(): JSX.Element | null {
             for (const target of targets) {
                 await observeVisibility({
                     target: target,
-                    onChange: (entries, observer) => {
-                        handleOnVisibilityChange(entries, observer);
-                    },
+                    onChange: handleOnVisibilityChange,
                     rootMargin,
+                    context: {
+                        target,
+                        band,
+                    },
                     debugBorderIsEnabled,
                 });
             }
         }
     };
 
-    const handleOnVisibilityChange = (
-        entries: IntersectionObserverEntry[],
-        observer: IntersectionObserver,
+    const handleOnVisibilityChange: IntersectionObserverCallbackWithContext = (
+        entries,
+        observer,
+        context,
     ) => {
+        if (!context || !context.band || !context.target) {
+            throw new Error('expected context to be defined');
+        }
+        const typedContext = context as {
+            target: Element;
+            band: Band;
+        };
         for (const entry of entries) {
             if (entry.isIntersecting) {
                 const intervalId = window.setInterval(() => {
                     // TODO(dnguyen0304): Add real implementation.
-                    console.log(entry);
+                    const sample: IntersectionSample = {
+                        timestampMilli: Date.now(),
+                        targetRect: typedContext.target.getBoundingClientRect(),
+                        band: typedContext.band,
+                        isIntersecting: entry.isIntersecting,
+                        viewportHeightPx: getViewportHeight(),
+                    };
                 }, INTERSECTION_SAMPLING_RATE_MS);
                 rootToIntervalId.set(observer.rootMargin, intervalId);
             } else {

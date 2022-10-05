@@ -13,3 +13,20 @@ export type Band = {
     // Currently unused.
     readonly multiplier: number;
 };
+
+export type IntersectionSample = {
+    // Measurement time as a Unix epoch timestamp, in milliseconds.
+    readonly timestampMilli: number;
+
+    // Smallest rectangle that contains the target.
+    readonly targetRect: DOMRect;
+
+    // Intersection root.
+    readonly band: Band;
+
+    // Whether the target is intersecting, at any threshold, with the band.
+    readonly isIntersecting: boolean;
+
+    // Viewport height, in pixels.
+    readonly viewportHeightPx: number;
+};
