@@ -131,16 +131,12 @@ export default async function observeVisibility(
         typeof target === 'string'
             ? await getElement(target)
             : target;
-    const resolvedThreshold =
-        (threshold !== undefined)
-            ? threshold
-            : getThreshold(element);
     const observer = new IntersectionObserver(
         onChange,
         {
             root,
             rootMargin,
-            threshold: resolvedThreshold,
+            threshold,
         },
     );
 
