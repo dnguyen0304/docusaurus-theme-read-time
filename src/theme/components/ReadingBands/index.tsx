@@ -3,7 +3,10 @@ import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import type { Band, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
-import observeVisibility, { IntersectionObserverCallbackWithContext } from './services/visibility';
+import {
+    IntersectionObserverCallbackWithContext,
+    observeVisibility
+} from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
 
