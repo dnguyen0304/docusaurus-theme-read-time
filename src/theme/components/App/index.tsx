@@ -1,6 +1,7 @@
 // If you need the DocItem-specific ("page-specific") root, use
 // theme/DocItem/Layout.
 
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import * as React from 'react';
 import Cookies, { CookieSetOptions } from 'universal-cookie';
 import URI from 'urijs';
@@ -80,5 +81,9 @@ export default function App(): JSX.Element {
         };
     }, []);
 
-    return <ReadingBands />;
+    return (
+        <BrowserOnly>
+            {() => <ReadingBands />}
+        </BrowserOnly>
+    );
 }

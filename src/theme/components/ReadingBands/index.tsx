@@ -15,6 +15,7 @@ const B1_MULTIPLIER: number = 0.8;
 const B2_MULTIPLIER: number = 0.4;
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
+const INTERSECTION_SAMPLING_RATE_MS: number = 1 * 1000;
 
 const bands: Band[] = [
     {
@@ -68,6 +69,14 @@ export default function ReadingBands(): JSX.Element | null {
         .themeConfig
         .docupotamus as DocupotamusThemeConfig;
 
+    // TODO(dnguyen0304): Support keying by root and rootMargin.
+    // Array or tuple keys are not yet supported until ES7 value objects.
+    // - See: https://stackoverflow.com/a/21846269
+    // - See: https://stackoverflow.com/a/32660218
+    const rootToIntervalId = new Map<
+        IntersectionObserver['rootMargin'],
+        number
+    >();
     const viewportHeight = getViewportHeight();
 
     const doObserveVisibility = async () => {
@@ -76,25 +85,45 @@ export default function ReadingBands(): JSX.Element | null {
         const targets = await getElementAll(contentSelector);
 
         for (const band of bands) {
-            const topPx = band.topVh * viewportHeight;
-            const bottomPx = band.bottomVh * viewportHeight;
+            const rootMargin =
+                `-${band.topVh * viewportHeight}px `
+                + `0px `
+                + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
 
             for (const target of targets) {
                 await observeVisibility({
                     target: target,
                     onChange: (entries, observer) => {
-                        // TODO(dnguyen0304): Add real implementation.
-                        console.log(entries);
+                        handleOnVisibilityChange(entries, observer);
                     },
-                    rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
+                    rootMargin,
                     debugBorderIsEnabled,
                 });
             }
         }
     };
 
+    const handleOnVisibilityChange = (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver,
+    ) => {
+        for (const entry of entries) {
+            if (entry.isIntersecting) {
+                const intervalId = window.setInterval(() => {
+                    // TODO(dnguyen0304): Add real implementation.
+                    console.log(entry);
+                }, INTERSECTION_SAMPLING_RATE_MS);
+                rootToIntervalId.set(observer.rootMargin, intervalId);
+            } else {
+                const intervalId = rootToIntervalId.get(observer.rootMargin);
+                clearInterval(intervalId);
+            }
+        }
+    };
+
     React.useEffect(() => {
         (async () => await doObserveVisibility())();
+        // TODO(dnguyen0304): Add real implemention for observer.disconnect().
         return () => { };
     }, []);
 
