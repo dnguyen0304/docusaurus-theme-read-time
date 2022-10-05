@@ -70,30 +70,33 @@ export default function ReadingBands(): JSX.Element | null {
 
     const viewportHeight = getViewportHeight();
 
-    const createVisibilityRef = (
-        topPx: number,
-        bottomPx: number,
-        viewportHeight: number,
-    ): React.RefCallback<HTMLDivElement> => {
-        return React.useCallback(async (node: HTMLDivElement | null) => {
-            if (node !== null) {
-                // TODO(dnguyen0304): Fix code blocks not being included because
-                // of "Node cannot be found in the current page." error.
-                const targets = await getElementAll(contentSelector);
-                for (const target of targets) {
-                    await observeVisibility({
-                        target: target,
-                        onChange: (entries, observer) => {
-                            // TODO(dnguyen0304): Add real implementation.
-                            console.log(entries);
-                        },
-                        rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
-                        debugBorderIsEnabled,
-                    });
-                }
-            };
-        }, []);
+    const doObserveVisibility = async () => {
+        // TODO(dnguyen0304): Fix code blocks not being included because
+        // of "Node cannot be found in the current page." error.
+        const targets = await getElementAll(contentSelector);
+
+        for (const band of bands) {
+            const topPx = band.topVh * viewportHeight;
+            const bottomPx = band.bottomVh * viewportHeight;
+
+            for (const target of targets) {
+                await observeVisibility({
+                    target: target,
+                    onChange: (entries, observer) => {
+                        // TODO(dnguyen0304): Add real implementation.
+                        console.log(entries);
+                    },
+                    rootMargin: `-${topPx}px 0px -${viewportHeight - bottomPx}px`,
+                    debugBorderIsEnabled,
+                });
+            }
+        }
     };
+
+    React.useEffect(() => {
+        (async () => await doObserveVisibility())();
+        return () => { };
+    }, []);
 
     return (
         debugBandIsEnabled
@@ -111,11 +114,6 @@ export default function ReadingBands(): JSX.Element | null {
                             bottomPx={bottomPx}
                         >
                             <div
-                                ref={createVisibilityRef(
-                                    topPx,
-                                    bottomPx,
-                                    viewportHeight,
-                                )}
                                 className={styles.readingBands}
                                 style={{
                                     backgroundColor: bandColors[i],
