@@ -129,7 +129,9 @@ export default function ReadingBands(): JSX.Element | null {
                         targetRect: typedContext.target.getBoundingClientRect(),
                         band: typedContext.band,
                         isIntersecting: entry.isIntersecting,
-                        viewportHeightPx: getViewportHeight(),
+                        deviceInfo: {
+                            viewportHeightPx: getViewportHeight(),
+                        },
                     };
                 }, INTERSECTION_SAMPLING_RATE_MS);
                 rootToIntervalId.set(observer.rootMargin, intervalId);

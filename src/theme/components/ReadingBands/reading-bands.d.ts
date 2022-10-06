@@ -27,6 +27,11 @@ export type IntersectionSample = {
     // Whether the target is intersecting, at any threshold, with the band.
     readonly isIntersecting: boolean;
 
+    // Details about the device viewing the content.
+    readonly deviceInfo: DeviceInfo;
+};
+
+export type DeviceInfo = {
     // Viewport height, in pixels.
     readonly viewportHeightPx: number;
 };
