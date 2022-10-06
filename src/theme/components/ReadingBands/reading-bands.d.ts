@@ -1,4 +1,4 @@
-export type FriendlyKey =
+export type BandFriendlyKey =
     | 'B2-top'
     | 'B1-top'
     | 'B0'
@@ -7,7 +7,7 @@ export type FriendlyKey =
 
 export type Band = {
     // Unique identifier that is human-readable.
-    readonly friendlyKey: FriendlyKey;
+    readonly friendlyKey: BandFriendlyKey;
 
     // Top position as a percent of the viewport height. This range endpoint is
     // inclusive: [top, bottom).
