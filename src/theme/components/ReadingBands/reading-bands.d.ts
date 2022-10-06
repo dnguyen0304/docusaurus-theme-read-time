@@ -21,6 +21,7 @@ export type Band = {
     readonly multiplier: number;
 };
 
+// TODO(dnguyen0304): Add target unique identifier.
 export type IntersectionSample = {
     // Measurement time as a Unix epoch timestamp, in milliseconds.
     readonly timestampMilli: number;
