@@ -42,7 +42,7 @@ export type IntersectionSample = {
 export type StopIntersectionSample = Pick<
     IntersectionSample,
     'timestampMilli' | 'band' | 'isIntersecting'
->
+>;
 
 export type DeviceInfo = {
     // Viewport height, in pixels.
