@@ -1,7 +1,11 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
-import type { Band, IntersectionSample } from './reading-bands';
+import type {
+    Band,
+    IntersectionSample,
+    StopIntersectionSample
+} from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
 import {
     IntersectionObserverCallbackWithContext,
@@ -72,6 +76,8 @@ export default function ReadingBands(): JSX.Element | null {
         .themeConfig
         .docupotamus as DocupotamusThemeConfig;
 
+    const samples =
+        React.useRef<(IntersectionSample | StopIntersectionSample)[]>([]);
     // TODO(dnguyen0304): Support keying by root and rootMargin.
     // Array or tuple keys are not yet supported until ES7 value objects.
     // - See: https://stackoverflow.com/a/21846269
@@ -123,24 +129,38 @@ export default function ReadingBands(): JSX.Element | null {
         for (const entry of entries) {
             if (entry.isIntersecting) {
                 const intervalId = window.setInterval(() => {
-                    // TODO(dnguyen0304): Add real implementation.
                     const sample: IntersectionSample = {
                         timestampMilli: Date.now(),
                         targetRect: typedContext.target.getBoundingClientRect(),
                         band: typedContext.band,
-                        isIntersecting: entry.isIntersecting,
+                        isIntersecting: true,
                         deviceInfo: {
                             viewportHeightPx: getViewportHeight(),
                         },
                     };
+                    samples.current.push(sample);
                 }, INTERSECTION_SAMPLING_RATE_MS);
                 rootToIntervalId.set(observer.rootMargin, intervalId);
             } else {
                 const intervalId = rootToIntervalId.get(observer.rootMargin);
                 clearInterval(intervalId);
+                const sample: StopIntersectionSample = {
+                    timestampMilli: Date.now(),
+                    band: typedContext.band,
+                    isIntersecting: false,
+                };
+                samples.current.push(sample);
             }
         }
     };
+
+    React.useEffect(() => {
+        // TODO(dnguyen0304): Add real implementation.
+        const intervalId = window.setInterval(() => {
+            console.log(samples.current);
+        }, 5 * 1000);
+        return () => clearInterval(intervalId);
+    }, [samples]);
 
     React.useEffect(() => {
         (async () => await doObserveVisibility())();
