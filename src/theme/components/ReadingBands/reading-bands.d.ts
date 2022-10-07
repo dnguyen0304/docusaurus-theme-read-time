@@ -26,14 +26,14 @@ export type StartIntersectionSample = {
     // Measurement time as a Unix epoch timestamp, in milliseconds.
     readonly timestampMilli: number;
 
-    // Smallest rectangle that contains the target.
-    readonly targetRect: DOMRect;
-
     // Intersection root.
     readonly band: Band;
 
     // Whether the target is intersecting, at any threshold, with the band.
     readonly isIntersecting: boolean;
+
+    // Smallest rectangle that contains the target.
+    readonly targetRect: DOMRect;
 
     // Details about the device viewing the content.
     readonly deviceInfo: DeviceInfo;
