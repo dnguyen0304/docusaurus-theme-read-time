@@ -40,34 +40,32 @@ export default function ReadingBands(): JSX.Element | null {
     );
     const viewportHeight = getViewportHeight();
 
-    const doObserveVisibility = async () => {
-        // TODO(dnguyen0304): Fix code blocks not being included because
-        // of "Node cannot be found in the current page." error.
-        const targets = await getElementAll(contentSelector);
-
-        for (const band of BANDS) {
-            const rootMargin =
-                `-${band.topVh * viewportHeight}px `
-                + `0px `
-                + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
-
-            for (const target of targets) {
-                await observeVisibility({
-                    target: target,
-                    onChange: createOnVisibilityChange(
-                        samples.current,
-                        target,
-                        band,
-                    ),
-                    rootMargin,
-                    debugBorderIsEnabled,
-                });
-            }
-        }
-    };
-
     React.useEffect(() => {
-        doObserveVisibility();
+        (async () => {
+            // TODO(dnguyen0304): Fix code blocks not being included because
+            // of "Node cannot be found in the current page." error.
+            const targets = await getElementAll(contentSelector);
+
+            for (const band of BANDS) {
+                const rootMargin =
+                    `-${band.topVh * viewportHeight}px `
+                    + `0px `
+                    + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
+
+                for (const target of targets) {
+                    await observeVisibility({
+                        target: target,
+                        onChange: createOnVisibilityChange(
+                            samples.current,
+                            target,
+                            band,
+                        ),
+                        rootMargin,
+                        debugBorderIsEnabled,
+                    });
+                }
+            }
+        })();
         // TODO(dnguyen0304): Add real implemention for observer.disconnect().
         return () => { };
     }, []);
