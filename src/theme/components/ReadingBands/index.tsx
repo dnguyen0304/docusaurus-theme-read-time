@@ -78,7 +78,7 @@ export default function ReadingBands(): JSX.Element | null {
             CALCULATE_TOTAL_RATE_MILLI,
         );
         return () => clearInterval(intervalId);
-    }, [samples]);
+    }, []);
 
     return (
         debugBandIsEnabled
