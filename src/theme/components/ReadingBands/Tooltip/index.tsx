@@ -4,8 +4,11 @@ import * as React from 'react';
 import { BANDS } from '../config';
 import { BandFriendlyKey } from '../reading-bands';
 
-const INDEX_TO_FRIENDLY_KEY: Map<number, BandFriendlyKey> =
-    new Map(BANDS.map((band, i) => [i, band.friendlyKey]));
+const INDEX_TO_FRIENDLY_KEY: Map<number, BandFriendlyKey> = new Map(
+    BANDS
+        .map<[number, BandFriendlyKey]>((band, i) => [i, band.friendlyKey])
+        .filter(x => x[1] !== 'B0')
+);
 
 type GetTooltipPropsProps = {
     readonly index: number;
@@ -22,14 +25,15 @@ const getTooltipProps = (
         bottomPx,
     }: GetTooltipPropsProps
 ): SubsetTooltipProps => {
+    const friendlyKey = INDEX_TO_FRIENDLY_KEY.get(index);
     if (index < 2) {
         return {
-            title: `B${index}: { position: ${Math.floor(bottomPx)}px }`,
+            title: `${friendlyKey}: { position: ${Math.floor(bottomPx)}px }`,
             placement: 'bottom-start',
         };
     }
     return {
-        title: `B${index}: { position: ${Math.floor(topPx)}px }`,
+        title: `${friendlyKey}: { position: ${Math.floor(topPx)}px }`,
         placement: 'top-start',
     };
 };
