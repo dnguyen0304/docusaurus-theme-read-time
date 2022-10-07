@@ -67,18 +67,18 @@ export default function ReadingBands(): JSX.Element | null {
     };
 
     React.useEffect(() => {
+        (async () => await doObserveVisibility())();
+        // TODO(dnguyen0304): Add real implemention for observer.disconnect().
+        return () => { };
+    }, []);
+
+    React.useEffect(() => {
         const intervalId = window.setInterval(
             createCalculateRunningTotals(samples.current),
             CALCULATE_TOTAL_RATE_MILLI,
         );
         return () => clearInterval(intervalId);
     }, [samples]);
-
-    React.useEffect(() => {
-        (async () => await doObserveVisibility())();
-        // TODO(dnguyen0304): Add real implemention for observer.disconnect().
-        return () => { };
-    }, []);
 
     return (
         debugBandIsEnabled
