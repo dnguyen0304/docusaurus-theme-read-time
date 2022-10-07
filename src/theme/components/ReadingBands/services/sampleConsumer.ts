@@ -1,5 +1,9 @@
 import { BAND_FRIENDLY_KEYS } from '../config';
-import type { BandFriendlyKey, IntersectionSample } from '../reading-bands';
+import type {
+    BandFriendlyKey,
+    IntersectionSample,
+    StartIntersectionSample
+} from '../reading-bands';
 
 type RunningTotal = {
     // Total visible time, in milliseconds.
@@ -8,6 +12,45 @@ type RunningTotal = {
     // Last sample included in the calculation.
     lastSample: IntersectionSample | null;
 };
+
+// stale closure can't use entry
+function getIntersectionRatio(sample: IntersectionSample): number {
+    if (!sample.isIntersecting) {
+        return 0;
+    }
+    const startSample = sample as StartIntersectionSample;
+
+    const intersectingWidth = startSample.targetRect.width;
+    let intersectingHeight: number = 0;
+
+    const { viewportHeightPx } = startSample.deviceInfo;
+    const bandTopPx = startSample.band.topVh * viewportHeightPx;
+    const bandBottomPx = startSample.band.bottomVh * viewportHeightPx;
+
+    const isInsideTop = startSample.targetRect.top >= bandTopPx;
+    const isInsideBottom = startSample.targetRect.bottom < bandBottomPx;
+
+    const insideBoth = isInsideTop && isInsideBottom;
+    const outsideOnlyBottom = isInsideTop && !isInsideBottom;
+    const outsideOnlyTop = !isInsideTop && isInsideBottom;
+    const outsideBoth = !isInsideTop && !isInsideBottom;
+
+    if (insideBoth) {
+        intersectingHeight = startSample.targetRect.height;
+    } else if (outsideOnlyBottom) {
+        intersectingHeight = bandBottomPx - startSample.targetRect.top;
+    } else if (outsideOnlyTop) {
+        intersectingHeight = startSample.targetRect.bottom - bandTopPx;
+    } else if (outsideBoth) {
+        intersectingHeight = bandBottomPx - bandTopPx;
+    }
+
+    const intersectionRatio =
+        (intersectingWidth * intersectingHeight) /
+        (startSample.targetRect.width * startSample.targetRect.height);
+
+    return intersectionRatio;
+}
 
 export function createUpdateRunningTotals(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
@@ -33,11 +76,7 @@ export function createUpdateRunningTotals(
                     : bandSamples.slice(1);
 
             let prevTimestampMilli = lastSample.timestampMilli;
-            let prevIntersectionRatio =
-                (lastSample.isIntersecting)
-                    // TODO
-                    ? 1
-                    : 0;
+            let prevIntersectionRatio = getIntersectionRatio(lastSample)
 
             for (const bandSample of tempSamples) {
                 const currVisibleTime =
@@ -46,11 +85,7 @@ export function createUpdateRunningTotals(
                 runningTotal.visibleTimeMilli += currVisibleTime;
 
                 prevTimestampMilli = bandSample.timestampMilli;
-                prevIntersectionRatio =
-                    (bandSample.isIntersecting)
-                        // TODO
-                        ? 1
-                        : 0;
+                prevIntersectionRatio = getIntersectionRatio(bandSample);
             }
 
             samples.set(bandKey, []);
