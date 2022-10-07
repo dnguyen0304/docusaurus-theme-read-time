@@ -105,20 +105,9 @@ import styles from './styles.module.css';
 //     return threshold.map(chunk => chunk / height);
 // }
 
-type OnChangeContext = {
-    [key: string]: any;
-};
-
-export type IntersectionObserverCallbackWithContext = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver,
-    context?: OnChangeContext,
-) => void;
-
 type Props = {
     readonly target: string | Element;
-    readonly onChange: IntersectionObserverCallbackWithContext;
-    readonly context?: OnChangeContext;
+    readonly onChange: IntersectionObserverCallback;
     readonly debugBorderIsEnabled?: boolean;
 } & IntersectionObserverInit;
 
@@ -129,7 +118,6 @@ export async function observeVisibility(
         root,
         rootMargin,
         threshold,
-        context,
         debugBorderIsEnabled = false,
     }: Props
 ): Promise<Array<() => void>> {
@@ -144,7 +132,7 @@ export async function observeVisibility(
             ? await getElement(target)
             : target;
     const observer = new IntersectionObserver(
-        (entries, observer) => onChange(entries, observer, context),
+        onChange,
         {
             root,
             rootMargin,
