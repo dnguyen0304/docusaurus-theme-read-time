@@ -53,7 +53,10 @@ export function createCalculateRunningTotals(
 
             samples.set(bandKey, []);
             // TODO(dnguyen0304): Add real implementation.
-            console.log(`${bandKey} | visibleTime | ${runningTotal.visibleTimeMilli / 1000}`)
+            console.log(
+                `${bandKey} `
+                + `| visibleTime `
+                + `| ${runningTotal.visibleTimeMilli / 1000}`);
         }
     };
 };
