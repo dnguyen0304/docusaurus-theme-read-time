@@ -2,18 +2,10 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import { BANDS } from './config';
-import type {
-    Band,
-    BandFriendlyKey,
-    IntersectionSample,
-    StartIntersectionSample,
-    StopIntersectionSample
-} from './reading-bands';
+import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
-import {
-    IntersectionObserverCallbackWithContext,
-    observeVisibility
-} from './services/visibility';
+import { handleOnVisibilityChange } from './services/sampleProducer';
+import { observeVisibility } from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
 
@@ -21,7 +13,6 @@ const BAND_FRIENDLY_KEYS =
     new Set<BandFriendlyKey>(BANDS.map(band => band.friendlyKey));
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-const INTERSECTION_SAMPLING_RATE_MS: number = 1 * 1000;
 const COMPUTE_TOTAL_RATE_MILLI: number = 5 * 1000;
 
 type RunningTotal = {
@@ -61,14 +52,6 @@ export default function ReadingBands(): JSX.Element | null {
             return [bandKey, { visibleTimeMilli: 0, lastSample: null }];
         })),
     );
-    // TODO(dnguyen0304): Support keying by root and rootMargin.
-    // Array or tuple keys are not yet supported until ES7 value objects.
-    // - See: https://stackoverflow.com/a/21846269
-    // - See: https://stackoverflow.com/a/32660218
-    const rootToIntervalId = new Map<
-        IntersectionObserver['rootMargin'],
-        number
-    >();
     const viewportHeight = getViewportHeight();
 
     const doObserveVisibility = async () => {
@@ -88,58 +71,12 @@ export default function ReadingBands(): JSX.Element | null {
                     onChange: handleOnVisibilityChange,
                     rootMargin,
                     context: {
+                        samples,
                         target,
                         band,
                     },
                     debugBorderIsEnabled,
                 });
-            }
-        }
-    };
-
-    const handleOnVisibilityChange: IntersectionObserverCallbackWithContext = (
-        entries,
-        observer,
-        context,
-    ) => {
-        if (!context || !context.band || !context.target) {
-            throw new Error('expected context to be defined');
-        }
-        const typedContext = context as {
-            target: Element;
-            band: Band;
-        };
-        for (const entry of entries) {
-            if (entry.isIntersecting) {
-                const intervalId = window.setInterval(() => {
-                    const sample: StartIntersectionSample = {
-                        timestampMilli: Date.now(),
-                        targetRect: typedContext.target.getBoundingClientRect(),
-                        band: typedContext.band,
-                        isIntersecting: true,
-                        deviceInfo: {
-                            viewportHeightPx: getViewportHeight(),
-                        },
-                    };
-                    samples
-                        .current
-                        .get(typedContext.band.friendlyKey)
-                        ?.push(sample);
-                }, INTERSECTION_SAMPLING_RATE_MS);
-                rootToIntervalId.set(observer.rootMargin, intervalId);
-            } else {
-                const intervalId = rootToIntervalId.get(observer.rootMargin);
-                clearInterval(intervalId);
-
-                const sample: StopIntersectionSample = {
-                    timestampMilli: Date.now(),
-                    band: typedContext.band,
-                    isIntersecting: false,
-                };
-                samples
-                    .current
-                    .get(typedContext.band.friendlyKey)
-                    ?.push(sample);
             }
         }
     };
