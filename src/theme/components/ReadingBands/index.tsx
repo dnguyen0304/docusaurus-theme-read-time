@@ -12,7 +12,7 @@ import Tooltip from './Tooltip';
 
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-const CALCULATE_TOTAL_RATE_MILLI: number = 5 * 1000;
+const UPDATE_RUNNING_TOTALS_RATE_MILLI: number = 5 * 1000;
 
 export default function ReadingBands(): JSX.Element | null {
     const {
@@ -75,7 +75,7 @@ export default function ReadingBands(): JSX.Element | null {
     React.useEffect(() => {
         const intervalId = window.setInterval(
             createUpdateRunningTotals(samples.current),
-            CALCULATE_TOTAL_RATE_MILLI,
+            UPDATE_RUNNING_TOTALS_RATE_MILLI,
         );
         return () => clearInterval(intervalId);
     }, []);
