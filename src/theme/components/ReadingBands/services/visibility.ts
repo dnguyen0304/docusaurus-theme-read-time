@@ -2,16 +2,6 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import { getElement } from './dom';
 import styles from './styles.module.css';
 
-type OnChangeContext = {
-    [key: string]: any;
-};
-
-export type IntersectionObserverCallbackWithContext = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver,
-    context?: OnChangeContext,
-) => void;
-
 // // Mapping from a height range to an intersection observer threshold.
 // type HeightRangeToThresholdType = {
 //     // Unique identifier that is human-readable.
@@ -114,6 +104,16 @@ export type IntersectionObserverCallbackWithContext = (
 //     }
 //     return threshold.map(chunk => chunk / height);
 // }
+
+type OnChangeContext = {
+    [key: string]: any;
+};
+
+export type IntersectionObserverCallbackWithContext = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver,
+    context?: OnChangeContext,
+) => void;
 
 type Props = {
     readonly target: string | Element;
