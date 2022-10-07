@@ -9,7 +9,7 @@ type RunningTotal = {
     lastSample: IntersectionSample | null;
 };
 
-export function createCalculateRunningTotals(
+export function createUpdateRunningTotals(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
 ): () => void {
     const runningTotals = new Map<BandFriendlyKey, RunningTotal>(
@@ -35,6 +35,7 @@ export function createCalculateRunningTotals(
             let prevTimestampMilli = lastSample.timestampMilli;
             let prevIntersectionRatio =
                 (lastSample.isIntersecting)
+                    // TODO
                     ? 1
                     : 0;
 
@@ -47,6 +48,7 @@ export function createCalculateRunningTotals(
                 prevTimestampMilli = bandSample.timestampMilli;
                 prevIntersectionRatio =
                     (bandSample.isIntersecting)
+                        // TODO
                         ? 1
                         : 0;
             }

@@ -4,7 +4,7 @@ import type { DocupotamusThemeConfig } from '../../../utils';
 import { BANDS, BAND_FRIENDLY_KEYS } from './config';
 import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
-import { createCalculateRunningTotals } from './services/sampleConsumer';
+import { createUpdateRunningTotals } from './services/sampleConsumer';
 import { createOnVisibilityChange } from './services/sampleProducer';
 import { observeVisibility } from './services/visibility';
 import styles from './styles.module.css';
@@ -74,7 +74,7 @@ export default function ReadingBands(): JSX.Element | null {
     // Consume intersection samples.
     React.useEffect(() => {
         const intervalId = window.setInterval(
-            createCalculateRunningTotals(samples.current),
+            createUpdateRunningTotals(samples.current),
             CALCULATE_TOTAL_RATE_MILLI,
         );
         return () => clearInterval(intervalId);
