@@ -4,6 +4,7 @@ import type { DocupotamusThemeConfig } from '../../../utils';
 import { BANDS } from './config';
 import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
+import { createCalculateRunningTotals } from './services/sampleConsumer';
 import { createOnVisibilityChange } from './services/sampleProducer';
 import { observeVisibility } from './services/visibility';
 import styles from './styles.module.css';
@@ -14,14 +15,6 @@ const BAND_FRIENDLY_KEYS =
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
 const COMPUTE_TOTAL_RATE_MILLI: number = 5 * 1000;
-
-type RunningTotal = {
-    // Total visible time, in milliseconds.
-    visibleTimeMilli: number;
-
-    // Last computed sample.
-    lastSample: IntersectionSample | null;
-};
 
 export default function ReadingBands(): JSX.Element | null {
     const {
@@ -45,11 +38,6 @@ export default function ReadingBands(): JSX.Element | null {
     const samples = React.useRef<Map<BandFriendlyKey, IntersectionSample[]>>(
         new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
             return [bandKey, []];
-        })),
-    );
-    const runningTotals = React.useRef<Map<BandFriendlyKey, RunningTotal>>(
-        new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
-            return [bandKey, { visibleTimeMilli: 0, lastSample: null }];
         })),
     );
     const viewportHeight = getViewportHeight();
@@ -81,44 +69,10 @@ export default function ReadingBands(): JSX.Element | null {
     };
 
     React.useEffect(() => {
-        // TODO(dnguyen0304): Add real implementation.
-        const intervalId = window.setInterval(() => {
-            for (const [bandKey, bandSamples] of samples.current.entries()) {
-                const runningTotal = runningTotals.current.get(bandKey)!;
-
-                if (!runningTotal.lastSample && !bandSamples.length) {
-                    continue;
-                }
-
-                const lastSample = runningTotal.lastSample || bandSamples[0];
-                const tempSamples =
-                    (runningTotal.lastSample)
-                        ? bandSamples
-                        : bandSamples.slice(1);
-
-                let prevTimestampMilli = lastSample.timestampMilli;
-                let prevIntersectionRatio =
-                    (lastSample.isIntersecting)
-                        ? 1
-                        : 0;
-
-                for (const bandSample of tempSamples) {
-                    const currVisibleTime =
-                        (bandSample.timestampMilli - prevTimestampMilli)
-                        * prevIntersectionRatio;
-                    runningTotal.visibleTimeMilli += currVisibleTime;
-
-                    prevTimestampMilli = bandSample.timestampMilli;
-                    prevIntersectionRatio =
-                        (bandSample.isIntersecting)
-                            ? 1
-                            : 0;
-                }
-
-                samples.current.set(bandKey, []);
-                console.log(`${bandKey} | visibleTime | ${runningTotal.visibleTimeMilli / 1000}`)
-            }
-        }, COMPUTE_TOTAL_RATE_MILLI);
+        const intervalId = window.setInterval(
+            createCalculateRunningTotals(samples.current),
+            COMPUTE_TOTAL_RATE_MILLI,
+        );
         return () => clearInterval(intervalId);
     }, [samples]);
 
