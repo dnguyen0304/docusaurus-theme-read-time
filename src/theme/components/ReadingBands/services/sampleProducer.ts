@@ -24,7 +24,7 @@ export function createOnVisibilityChange(
         number
     >();
 
-    const handle: IntersectionObserverCallback = (entries, observer) => {
+    return (entries, observer) => {
         for (const entry of entries) {
             if (entry.isIntersecting) {
                 const intervalId = window.setInterval(() => {
@@ -53,5 +53,4 @@ export function createOnVisibilityChange(
             }
         }
     };
-    return handle;
 };
