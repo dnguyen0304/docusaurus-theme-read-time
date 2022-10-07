@@ -7,13 +7,13 @@ import type {
 } from '../reading-bands';
 import { getViewportHeight } from './dom';
 
-const INTERSECTION_SAMPLING_RATE_MS: number = 1 * 1000;
+const INTERSECTION_SAMPLING_RATE_MILLI: number = 1 * 1000;
 
 export function createOnVisibilityChange(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
     target: Element,
     band: Band,
-    samplingRateMilli: number = INTERSECTION_SAMPLING_RATE_MS,
+    samplingRateMilli: number = INTERSECTION_SAMPLING_RATE_MILLI,
 ): IntersectionObserverCallback {
     // TODO(dnguyen0304): Support keying by root and rootMargin.
     // Array or tuple keys are not yet supported until ES7 value objects.
