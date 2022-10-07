@@ -1,7 +1,7 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
-import { BANDS } from './config';
+import { BANDS, BAND_FRIENDLY_KEYS } from './config';
 import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
 import { createCalculateRunningTotals } from './services/sampleConsumer';
@@ -10,8 +10,6 @@ import { observeVisibility } from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
 
-const BAND_FRIENDLY_KEYS =
-    new Set<BandFriendlyKey>(BANDS.map(band => band.friendlyKey));
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
 const CALCULATE_TOTAL_RATE_MILLI: number = 5 * 1000;
