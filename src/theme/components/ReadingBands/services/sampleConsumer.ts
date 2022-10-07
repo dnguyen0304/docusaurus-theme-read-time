@@ -5,7 +5,7 @@ type RunningTotal = {
     // Total visible time, in milliseconds.
     visibleTimeMilli: number;
 
-    // Last computed sample.
+    // Last sample included in the calculation.
     lastSample: IntersectionSample | null;
 };
 
