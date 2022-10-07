@@ -2,7 +2,7 @@ import type { TooltipProps } from '@mui/material/Tooltip';
 import MuiTooltip from '@mui/material/Tooltip';
 import * as React from 'react';
 
-const BANDS_WITH_TOOLTIP: number[] = [0, 1, 3, 4];
+const BANDS_WITH_TOOLTIP: Set<number> = new Set([0, 1, 3, 4]);
 
 type SubsetTooltipProps = Pick<TooltipProps, 'title' | 'placement'>;
 
@@ -23,7 +23,7 @@ const getTooltipProps = (
         bottomPx,
     }: GetTooltipPropsProps
 ): SubsetTooltipProps => {
-    if (!BANDS_WITH_TOOLTIP.includes(index)) {
+    if (!BANDS_WITH_TOOLTIP.has(index)) {
         throw new Error(`invalid tooltip index ${index}`);
     }
     if (index < 2) {
@@ -46,7 +46,7 @@ export default function Tooltip(
         children,
     }: Props
 ): JSX.Element {
-    if (BANDS_WITH_TOOLTIP.includes(index)) {
+    if (BANDS_WITH_TOOLTIP.has(index)) {
         const {
             title,
             placement,
