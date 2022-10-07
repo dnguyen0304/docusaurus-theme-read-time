@@ -17,13 +17,8 @@ import {
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
 
-const BAND_FRIENDLY_KEYS = new Set<BandFriendlyKey>([
-    'B2-top',
-    'B1-top',
-    'B0',
-    'B1-bottom',
-    'B2-bottom',
-]);
+const BAND_FRIENDLY_KEYS =
+    new Set<BandFriendlyKey>(BANDS.map(band => band.friendlyKey));
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
 const INTERSECTION_SAMPLING_RATE_MS: number = 1 * 1000;
