@@ -4,7 +4,7 @@ import type { DocupotamusThemeConfig } from '../../../utils';
 import { BANDS } from './config';
 import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
-import { handleOnVisibilityChange } from './services/sampleProducer';
+import { createOnVisibilityChange } from './services/sampleProducer';
 import { observeVisibility } from './services/visibility';
 import styles from './styles.module.css';
 import Tooltip from './Tooltip';
@@ -68,13 +68,12 @@ export default function ReadingBands(): JSX.Element | null {
             for (const target of targets) {
                 await observeVisibility({
                     target: target,
-                    onChange: handleOnVisibilityChange,
-                    rootMargin,
-                    context: {
-                        samples,
+                    onChange: createOnVisibilityChange(
+                        samples.current,
                         target,
                         band,
-                    },
+                    ),
+                    rootMargin,
                     debugBorderIsEnabled,
                 });
             }
