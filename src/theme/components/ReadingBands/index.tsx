@@ -67,7 +67,7 @@ export default function ReadingBands(): JSX.Element | null {
     };
 
     React.useEffect(() => {
-        (async () => await doObserveVisibility())();
+        doObserveVisibility();
         // TODO(dnguyen0304): Add real implemention for observer.disconnect().
         return () => { };
     }, []);
