@@ -1,8 +1,11 @@
 import type { TooltipProps } from '@mui/material/Tooltip';
 import MuiTooltip from '@mui/material/Tooltip';
 import * as React from 'react';
+import { BANDS } from '../config';
+import { BandFriendlyKey } from '../reading-bands';
 
-const BANDS_WITH_TOOLTIP: Set<number> = new Set([0, 1, 3, 4]);
+const INDEX_TO_FRIENDLY_KEY: Map<number, BandFriendlyKey> =
+    new Map(BANDS.map((band, i) => [i, band.friendlyKey]));
 
 type GetTooltipPropsProps = {
     readonly index: number;
@@ -19,7 +22,7 @@ const getTooltipProps = (
         bottomPx,
     }: GetTooltipPropsProps
 ): SubsetTooltipProps => {
-    if (!BANDS_WITH_TOOLTIP.has(index)) {
+    if (!new Set(INDEX_TO_FRIENDLY_KEY.keys()).has(index)) {
         throw new Error(`invalid tooltip index ${index}`);
     }
     if (index < 2) {
@@ -46,7 +49,7 @@ export default function Tooltip(
         children,
     }: Props
 ): JSX.Element {
-    if (BANDS_WITH_TOOLTIP.has(index)) {
+    if (new Set(INDEX_TO_FRIENDLY_KEY.keys()).has(index)) {
         const {
             title,
             placement,
