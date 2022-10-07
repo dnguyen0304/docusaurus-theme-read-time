@@ -4,17 +4,13 @@ import * as React from 'react';
 
 const BANDS_WITH_TOOLTIP: Set<number> = new Set([0, 1, 3, 4]);
 
-type SubsetTooltipProps = Pick<TooltipProps, 'title' | 'placement'>;
-
 type GetTooltipPropsProps = {
     readonly index: number;
     readonly topPx: number;
     readonly bottomPx: number;
 }
 
-type Props = {
-    readonly children: React.ReactElement<any, any>,
-} & GetTooltipPropsProps;
+type SubsetTooltipProps = Pick<TooltipProps, 'title' | 'placement'>;
 
 const getTooltipProps = (
     {
@@ -37,6 +33,10 @@ const getTooltipProps = (
         placement: 'top-start',
     };
 };
+
+type Props = {
+    readonly children: React.ReactElement<any, any>,
+} & GetTooltipPropsProps;
 
 export default function Tooltip(
     {
