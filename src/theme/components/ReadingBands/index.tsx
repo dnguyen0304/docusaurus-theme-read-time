@@ -40,6 +40,7 @@ export default function ReadingBands(): JSX.Element | null {
     );
     const viewportHeight = getViewportHeight();
 
+    // Produce intersection samples.
     React.useEffect(() => {
         (async () => {
             // TODO(dnguyen0304): Fix code blocks not being included because
@@ -70,6 +71,7 @@ export default function ReadingBands(): JSX.Element | null {
         return () => { };
     }, []);
 
+    // Consume intersection samples.
     React.useEffect(() => {
         const intervalId = window.setInterval(
             createCalculateRunningTotals(samples.current),
