@@ -22,7 +22,7 @@ export type Band = {
 };
 
 // TODO(dnguyen0304): Add target unique identifier.
-export type IntersectionSample = {
+export type StartIntersectionSample = {
     // Measurement time as a Unix epoch timestamp, in milliseconds.
     readonly timestampMilli: number;
 
@@ -40,7 +40,7 @@ export type IntersectionSample = {
 };
 
 export type StopIntersectionSample = Pick<
-    IntersectionSample,
+    StartIntersectionSample,
     'timestampMilli' | 'band' | 'isIntersecting'
 >;
 

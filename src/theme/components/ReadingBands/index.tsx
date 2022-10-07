@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../utils';
 import type {
     Band,
-    IntersectionSample,
+    StartIntersectionSample,
     StopIntersectionSample
 } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
@@ -77,7 +77,7 @@ export default function ReadingBands(): JSX.Element | null {
         .docupotamus as DocupotamusThemeConfig;
 
     const samples =
-        React.useRef<(IntersectionSample | StopIntersectionSample)[]>([]);
+        React.useRef<(StartIntersectionSample | StopIntersectionSample)[]>([]);
     // TODO(dnguyen0304): Support keying by root and rootMargin.
     // Array or tuple keys are not yet supported until ES7 value objects.
     // - See: https://stackoverflow.com/a/21846269
@@ -129,7 +129,7 @@ export default function ReadingBands(): JSX.Element | null {
         for (const entry of entries) {
             if (entry.isIntersecting) {
                 const intervalId = window.setInterval(() => {
-                    const sample: IntersectionSample = {
+                    const sample: StartIntersectionSample = {
                         timestampMilli: Date.now(),
                         targetRect: typedContext.target.getBoundingClientRect(),
                         band: typedContext.band,
