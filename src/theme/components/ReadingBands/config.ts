@@ -1,4 +1,4 @@
-import type { Band } from './reading-bands';
+import type { Band, BandFriendlyKey } from './reading-bands';
 
 const CENTER: number = .5;
 const STANDARD_DEVIATION_1: number = .341;
@@ -39,3 +39,6 @@ export const BANDS: Band[] = [
         multiplier: B2_MULTIPLIER,
     },
 ];
+
+export const BAND_FRIENDLY_KEYS =
+    new Set<BandFriendlyKey>(BANDS.map(band => band.friendlyKey));
