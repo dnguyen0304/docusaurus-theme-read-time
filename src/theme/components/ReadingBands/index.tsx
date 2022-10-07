@@ -14,7 +14,7 @@ const BAND_FRIENDLY_KEYS =
     new Set<BandFriendlyKey>(BANDS.map(band => band.friendlyKey));
 const BORDER_COLOR: string = 'var(--ifm-hr-background-color)';
 const BORDER_HEIGHT_PX: number = 3;
-const COMPUTE_TOTAL_RATE_MILLI: number = 5 * 1000;
+const CALCULATE_TOTAL_RATE_MILLI: number = 5 * 1000;
 
 export default function ReadingBands(): JSX.Element | null {
     const {
@@ -71,7 +71,7 @@ export default function ReadingBands(): JSX.Element | null {
     React.useEffect(() => {
         const intervalId = window.setInterval(
             createCalculateRunningTotals(samples.current),
-            COMPUTE_TOTAL_RATE_MILLI,
+            CALCULATE_TOTAL_RATE_MILLI,
         );
         return () => clearInterval(intervalId);
     }, [samples]);
