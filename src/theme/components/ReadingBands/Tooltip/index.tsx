@@ -22,9 +22,6 @@ const getTooltipProps = (
         bottomPx,
     }: GetTooltipPropsProps
 ): SubsetTooltipProps => {
-    if (!new Set(INDEX_TO_FRIENDLY_KEY.keys()).has(index)) {
-        throw new Error(`invalid tooltip index ${index}`);
-    }
     if (index < 2) {
         return {
             title: `B${index}: { position: ${Math.floor(bottomPx)}px }`,
