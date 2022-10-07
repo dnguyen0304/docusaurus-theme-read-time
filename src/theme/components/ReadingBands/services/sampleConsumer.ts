@@ -9,14 +9,15 @@ type RunningTotal = {
     lastSample: IntersectionSample | null;
 };
 
-const runningTotals: Map<BandFriendlyKey, RunningTotal> =
-    new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
-        return [bandKey, { visibleTimeMilli: 0, lastSample: null }];
-    }));
-
 export function createCalculateRunningTotals(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
 ): () => void {
+    const runningTotals = new Map<BandFriendlyKey, RunningTotal>(
+        [...BAND_FRIENDLY_KEYS].map(bandKey => {
+            return [bandKey, { visibleTimeMilli: 0, lastSample: null }];
+        })
+    );
+
     return () => {
         for (const [bandKey, bandSamples] of samples.entries()) {
             const runningTotal = runningTotals.get(bandKey)!;
