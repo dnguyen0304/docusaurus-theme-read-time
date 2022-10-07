@@ -81,7 +81,8 @@ export function createUpdateRunningTotals(
             for (const bandSample of tempSamples) {
                 const currVisibleTime =
                     (bandSample.timestampMilli - prevTimestampMilli)
-                    * prevIntersectionRatio;
+                    * prevIntersectionRatio
+                    * bandSample.band.multiplier;
                 runningTotal.visibleTimeMilli += currVisibleTime;
 
                 prevTimestampMilli = bandSample.timestampMilli;
