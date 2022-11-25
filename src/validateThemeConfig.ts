@@ -35,6 +35,7 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG = {
     },
 };
 
+// TODO(dnguyen0304): Investigate missing labels.
 // TODO(dnguyen0304): Fix incorrect ThemeConfig type.
 export const ThemeConfigSchema = Joi.object<ThemeConfig>({
     editor: Joi.object({
