@@ -2,7 +2,7 @@ import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 // TODO(dnguyen0304): Maybe refactor to reduce duplicated code with
 // getElementAll.
-async function getElement(selector: string): Promise<Element> {
+export async function getElement(selector: string): Promise<Element> {
     return new Promise(resolve => {
         const element = document.querySelector(selector);
         if (element) {
@@ -26,7 +26,7 @@ async function getElement(selector: string): Promise<Element> {
 }
 
 // TODO(dnguyen0304): Maybe refactor to reduce duplicated code with getElement.
-async function getElementAll(selector: string): Promise<Element[]> {
+export async function getElementAll(selector: string): Promise<Element[]> {
     return new Promise(resolve => {
         const elements = document.querySelectorAll(selector);
         if (elements) {
@@ -49,7 +49,7 @@ async function getElementAll(selector: string): Promise<Element[]> {
     });
 }
 
-function getViewportHeight(): number {
+export function getViewportHeight(): number {
     if (!ExecutionEnvironment.canUseDOM) {
         return 0;
     }
@@ -58,9 +58,3 @@ function getViewportHeight(): number {
         window.innerHeight || 0,
     );
 }
-
-export {
-    getElement,
-    getElementAll,
-    getViewportHeight,
-};

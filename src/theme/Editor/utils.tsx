@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const useRefMeasure = <T extends HTMLElement>(
+export const useRefMeasure = <T extends HTMLElement>(
     callback: (clientRect: DOMRect) => number,
     deps: ReadonlyArray<unknown> = [],
 ) => {
@@ -13,8 +13,4 @@ const useRefMeasure = <T extends HTMLElement>(
     }, deps);
 
     return [measure, measureRef];
-};
-
-export {
-    useRefMeasure,
 };

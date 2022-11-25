@@ -1,6 +1,6 @@
 // TODO(dnguyen0304): Support react-router options such as exact and strict.
 // TODO(dnguyen0304): Add retrying on loading the raw content.
-function getRawContent(
+export function getRawContent(
     pathname: string,
     rawContent: { [key: string]: string },
     trailingSlash: boolean | undefined,
@@ -12,7 +12,3 @@ function getRawContent(
             : rawContent[processed]
     );
 }
-
-export {
-    getRawContent,
-};

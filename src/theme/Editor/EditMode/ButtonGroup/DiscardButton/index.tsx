@@ -18,7 +18,7 @@ type Props = {
     readonly resetMarkdown: () => void;
 }
 
-const KeyBinding: KeyBindingType = {
+export const KeyBinding: KeyBindingType = {
     key: 'shift+option+d',
     friendlyLabel: '^⌥D',
 };
@@ -82,7 +82,3 @@ export default function DiscardButton(
         </>
     );
 }
-
-export {
-    KeyBinding,
-};
