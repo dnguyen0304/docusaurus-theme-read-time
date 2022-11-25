@@ -7,13 +7,13 @@ import { Joi } from '@docusaurus/utils-validation';
 export const DEFAULT_CONFIG = {
     githubAuthorizationRedirectUrl: 'https://kgevadn5a2.execute-api.us-east-1.amazonaws.com/production/DocusaurusEditor_handleOAuthRedirect',
 };
+const CONTENT_ROOT_SELECTOR: string =
+    'main[class*="docMainContainer"] article div.markdown';
 
 export const DOCUPOTAMUS_DEFAULT_CONFIG = {
     readTime: {
-        contentRootSelector:
-            'main[class*="docMainContainer"] article div.markdown',
-        contentSelector:
-            "main[class*='docMainContainer'] article div.markdown > *",
+        contentRootSelector: CONTENT_ROOT_SELECTOR,
+        contentSelector: `${CONTENT_ROOT_SELECTOR} > *`,
         debug: {
             band: {
                 isEnabled: false,
