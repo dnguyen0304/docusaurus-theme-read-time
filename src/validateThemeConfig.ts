@@ -10,6 +10,8 @@ export const DEFAULT_CONFIG = {
 
 export const DOCUPOTAMUS_DEFAULT_CONFIG = {
     readTime: {
+        contentRootSelector:
+            'main[class*="docMainContainer"] article div.markdown',
         contentSelector:
             "main[class*='docMainContainer'] article div.markdown > *",
         debug: {
@@ -43,6 +45,9 @@ export const ThemeConfigSchema = Joi.object<ThemeConfig>({
         .default(DEFAULT_CONFIG),
     docupotamus: Joi.object({
         readTime: Joi.object({
+            contentRootSelector: Joi
+                .string()
+                .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.contentRootSelector),
             contentSelector: Joi
                 .string()
                 .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.contentSelector),
