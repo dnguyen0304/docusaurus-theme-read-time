@@ -4,7 +4,7 @@ import type { GithubUser } from '../docusaurus-theme-editor';
 import { useEditorThemeConfig } from '../utils';
 import { ReactContextError } from './errors';
 
-type ContextValue = {
+export type ContextValue = {
     readonly user?: GithubUser;
     readonly api?: RestEndpointMethods;
     readonly setUser: React.Dispatch<React.SetStateAction<GithubUser | undefined>>;
@@ -43,7 +43,7 @@ type Props = {
     readonly children: React.ReactNode;
 };
 
-function GithubProvider({ children }: Props): JSX.Element {
+export function GithubProvider({ children }: Props): JSX.Element {
     const value = useContextValue();
 
     return (
@@ -53,16 +53,10 @@ function GithubProvider({ children }: Props): JSX.Element {
     );
 };
 
-function useGithub(): ContextValue {
+export function useGithub(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
         throw new ReactContextError('GithubProvider');
     }
     return context;
 }
-
-export {
-    GithubProvider,
-    useGithub,
-    ContextValue,
-};

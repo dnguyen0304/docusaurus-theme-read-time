@@ -5,7 +5,7 @@ type ContextValue = {
     readonly currentPath: string;
 };
 
-function useLocation(): ContextValue {
+export function useLocation(): ContextValue {
     const {
         siteConfig: {
             trailingSlash,
@@ -16,7 +16,3 @@ function useLocation(): ContextValue {
         currentPath: trailingSlash ? pathname.slice(0, -1) : pathname,
     };
 }
-
-export {
-    useLocation,
-};

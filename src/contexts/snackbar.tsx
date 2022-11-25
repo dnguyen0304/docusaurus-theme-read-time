@@ -20,7 +20,7 @@ interface Props {
     readonly children: React.ReactNode;
 };
 
-function SnackbarProvider(
+export function SnackbarProvider(
     {
         snackbar,
         children,
@@ -35,15 +35,10 @@ function SnackbarProvider(
     );
 };
 
-function useSnackbar(): ContextValue {
+export function useSnackbar(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
         throw new ReactContextError('SnackbarProvider');
     }
     return context;
 }
-
-export {
-    SnackbarProvider,
-    useSnackbar,
-};

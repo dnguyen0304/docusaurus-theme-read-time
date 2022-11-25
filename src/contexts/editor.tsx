@@ -23,7 +23,7 @@ type TabSetter = (
 //   functional updates (unconfirmed requirement).
 // TODO(dnguyen0304): Add markdown and setMarkdown.
 // TODO(dnguyen0304): Add lastUpdatedAt.
-type EditorTab = {
+export type EditorTab = {
     readonly tabId: number;
     readonly pullTitle: string;
     readonly pullUrl: string;
@@ -156,7 +156,7 @@ type Props = {
     readonly children: React.ReactNode;
 };
 
-function EditorProvider({ children }: Props): JSX.Element {
+export function EditorProvider({ children }: Props): JSX.Element {
     const value = useContextValue();
 
     return (
@@ -166,16 +166,10 @@ function EditorProvider({ children }: Props): JSX.Element {
     );
 };
 
-function useEditor(): ContextValue {
+export function useEditor(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
         throw new ReactContextError('EditorProvider');
     }
     return context;
 }
-
-export {
-    EditorProvider,
-    EditorTab,
-    useEditor,
-};

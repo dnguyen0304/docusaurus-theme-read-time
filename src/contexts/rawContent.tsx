@@ -27,7 +27,7 @@ interface Props {
     readonly children: React.ReactNode;
 };
 
-function RawContentProvider(
+export function RawContentProvider(
     {
         rawContent,
         children,
@@ -42,15 +42,10 @@ function RawContentProvider(
     );
 };
 
-function useRawContent(): ContextValue {
+export function useRawContent(): ContextValue {
     const context = React.useContext(Context);
     if (context === undefined) {
         throw new ReactContextError('RawContentProvider');
     }
     return context;
 }
-
-export {
-    RawContentProvider,
-    useRawContent,
-};

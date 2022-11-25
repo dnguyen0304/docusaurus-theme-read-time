@@ -3,13 +3,13 @@ import { useDoc } from '@docusaurus/theme-common/internal';
 import URI from 'urijs';
 import { DOCUSAURUS_ALIASED_SITE_PATH_PREFIX } from '../constants';
 
-interface ContextValue {
+export interface ContextValue {
     readonly owner: string;
     readonly repository: string;
     readonly path: string;
 };
 
-function useSite(): ContextValue {
+export function useSite(): ContextValue {
     const {
         metadata: {
             editUrl,
@@ -25,8 +25,3 @@ function useSite(): ContextValue {
         path: source.replace(`${DOCUSAURUS_ALIASED_SITE_PATH_PREFIX}/`, ''),
     }
 }
-
-export {
-    useSite,
-    ContextValue,
-};
