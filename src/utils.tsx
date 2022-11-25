@@ -3,7 +3,7 @@ import type { LOCAL_STORAGE_KEYS } from './constants';
 import { ContextValue } from './contexts/site';
 import type { EditorThemeConfig } from './docusaurus-theme-editor';
 
-function useEditorThemeConfig(): EditorThemeConfig {
+export function useEditorThemeConfig(): EditorThemeConfig {
     return (
         useDocusaurusContext()
             .siteConfig
@@ -12,7 +12,7 @@ function useEditorThemeConfig(): EditorThemeConfig {
     ) as EditorThemeConfig;
 }
 
-function getLocalStorageKey(
+export function getLocalStorageKey(
     {
         owner,
         repository,
@@ -21,9 +21,4 @@ function getLocalStorageKey(
     key: LOCAL_STORAGE_KEYS,
 ): string {
     return `${owner}/${repository}/${path}/${key}`;
-};
-
-export {
-    getLocalStorageKey,
-    useEditorThemeConfig,
 };
