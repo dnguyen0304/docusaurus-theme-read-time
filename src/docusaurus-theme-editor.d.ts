@@ -63,3 +63,9 @@ export type GithubPullStatus = {
     readonly closedAt: string | null;
     readonly mergedAt: string | null;
 }
+
+export type LOCAL_STORAGE_KEYS =
+    | 'markdown'
+    | 'pull_branch_name'
+    | 'pull_title'
+    | 'pull_url';

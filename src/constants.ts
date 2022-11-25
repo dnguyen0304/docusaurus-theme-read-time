@@ -1,8 +1,4 @@
-export type LOCAL_STORAGE_KEYS =
-    | 'markdown'
-    | 'pull_branch_name'
-    | 'pull_title'
-    | 'pull_url';
+import type { LOCAL_STORAGE_KEYS } from './docusaurus-theme-editor';
 
 // See https://github.com/facebook/docusaurus/blob/01ac2e0fcaccaf469992f93a0e8bf04e61cf850e/packages/docusaurus-utils/src/pathUtils.ts#L93
 export const DOCUSAURUS_ALIASED_SITE_PATH_PREFIX: string = '@site';
