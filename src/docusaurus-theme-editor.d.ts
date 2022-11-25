@@ -20,6 +20,26 @@ declare module '@theme-init/DocBreadcrumbs' {
     export default function DocBreadcrumbs(props: Props): JSX.Element;
 }
 
+export type EditorThemeConfig = {
+    githubAuthorizationRedirectUrl: string;
+};
+
+export type DocupotamusThemeConfig = {
+    readTime: {
+        contentRootSelector: string;
+        contentSelector: string;
+        debug: {
+            band: {
+                isEnabled: boolean;
+                colors: string[];
+            };
+            border: {
+                isEnabled: boolean;
+            };
+        };
+    };
+};
+
 export type KeyBinding = {
     readonly key: string;
     readonly friendlyLabel: string;

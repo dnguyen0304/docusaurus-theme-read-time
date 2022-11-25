@@ -1,28 +1,7 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { LOCAL_STORAGE_KEYS } from './constants';
 import { ContextValue } from './contexts/site';
-
-// TODO: Extract to a centralized location to facilitate maintenance.
-type EditorThemeConfig = {
-    githubAuthorizationRedirectUrl: string;
-};
-
-// TODO: Extract to a centralized location to facilitate maintenance.
-type DocupotamusThemeConfig = {
-    readTime: {
-        contentRootSelector: string;
-        contentSelector: string;
-        debug: {
-            band: {
-                isEnabled: boolean;
-                colors: string[];
-            };
-            border: {
-                isEnabled: boolean;
-            };
-        };
-    };
-};
+import type { EditorThemeConfig } from './docusaurus-theme-editor';
 
 function useEditorThemeConfig(): EditorThemeConfig {
     return (
@@ -45,8 +24,6 @@ function getLocalStorageKey(
 };
 
 export {
-    DocupotamusThemeConfig,
-    EditorThemeConfig,
     getLocalStorageKey,
     useEditorThemeConfig,
 };

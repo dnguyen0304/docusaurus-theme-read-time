@@ -1,6 +1,6 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
-import type { DocupotamusThemeConfig } from '../../../utils';
+import type { DocupotamusThemeConfig } from '../../../docusaurus-theme-editor';
 import { BANDS, BAND_FRIENDLY_KEYS } from './config';
 import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
 import { getElementAll, getViewportHeight } from './services/dom';
