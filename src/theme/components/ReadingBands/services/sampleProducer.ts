@@ -30,9 +30,9 @@ export function createOnVisibilityChange(
                 const intervalId = window.setInterval(() => {
                     const sample: StartIntersectionSample = {
                         timestampMilli: Date.now(),
-                        targetRect: getBoundingClientRect(),
                         band,
                         isIntersecting: true,
+                        targetRect: getBoundingClientRect(),
                         deviceInfo: {
                             viewportHeightPx: getViewportHeight(),
                         },
