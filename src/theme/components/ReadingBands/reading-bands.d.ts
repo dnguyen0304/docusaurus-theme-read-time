@@ -52,10 +52,12 @@ export type Band = {
     readonly multiplier: number;
 };
 
-// TODO(dnguyen0304): Add target unique identifier.
 export type StartIntersectionSample = {
     // Measurement time as a Unix epoch timestamp, in milliseconds.
     readonly timestampMilli: number;
+
+    // Contiguous region of content.
+    readonly target: Target;
 
     // Horizontal region ("slice") of the viewport.
     readonly band: Band;
@@ -72,7 +74,10 @@ export type StartIntersectionSample = {
 
 export type StopIntersectionSample = Pick<
     StartIntersectionSample,
-    'timestampMilli' | 'band' | 'isIntersecting'
+    | 'timestampMilli'
+    | 'target'
+    | 'band'
+    | 'isIntersecting'
 >;
 
 export type IntersectionSample =
