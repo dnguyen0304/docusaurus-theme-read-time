@@ -1,3 +1,34 @@
+// TODO(dnguyen0304): Fix using module declarations as exports.
+
+// Contiguous region of content.
+export type Target = {
+    // TODO(dnguyen0304): Add repository information.
+    // Page containing the target.
+    readonly document: Document;
+
+    // Root to reference for relative selector paths. 
+    readonly root: string;
+
+    // Serialized queries for locating a target on a page.
+    readonly selectors: Selector[];
+}
+
+export type Document = {
+    readonly href: string;
+}
+
+// Locates a region of content using XPaths and character offsets.
+export type RangeSelector = {
+    readonly type: 'RangeSelector';
+    readonly startContainer: string;
+    readonly startOffset: number;
+    readonly endContainer: string;
+    readonly endOffset: number;
+};
+
+// Serialized queries for locating a target on a page.
+export type Selector = RangeSelector;
+
 export type BandFriendlyKey =
     | 'B2-top'
     | 'B1-top'
