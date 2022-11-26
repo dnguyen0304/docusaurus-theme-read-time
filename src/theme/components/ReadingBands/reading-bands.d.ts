@@ -2,6 +2,9 @@
 
 // Contiguous region of content.
 export type Target = {
+    // Target unique identifier.
+    readonly id: string;
+
     // TODO(dnguyen0304): Add repository information.
     // Page containing the target.
     readonly document: Document;

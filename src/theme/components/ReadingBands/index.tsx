@@ -1,5 +1,6 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import type { DocupotamusThemeConfig } from '../../../docusaurus-theme-editor';
 import { BANDS, BAND_FRIENDLY_KEYS } from './config';
 import type {
@@ -69,6 +70,7 @@ export default function ReadingBands(): JSX.Element | null {
                     range.selectNodeContents(element);
 
                     const target: Target = {
+                        id: uuidv4(),
                         document: {
                             href: document.location.href,
                         },
