@@ -66,7 +66,7 @@ export type StartIntersectionSample = {
     // Smallest rectangle that contains the target.
     readonly targetRect: DOMRect;
 
-    // Details about the device used to view the target.
+    // Details about the device being used to view the target.
     readonly deviceInfo: DeviceInfo;
 };
 
