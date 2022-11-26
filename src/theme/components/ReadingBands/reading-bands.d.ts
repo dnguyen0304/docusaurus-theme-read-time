@@ -7,7 +7,7 @@ export type Target = {
     readonly document: Document;
 
     // Root to reference for relative selector paths. 
-    readonly root: string;
+    readonly root: RangeSelector;
 
     // Serialized queries for locating a target on a page.
     readonly selectors: Selector[];
