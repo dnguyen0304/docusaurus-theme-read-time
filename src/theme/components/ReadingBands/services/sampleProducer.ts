@@ -11,8 +11,8 @@ const INTERSECTION_SAMPLING_RATE_MILLI: number = 1 * 1000;
 
 export function createOnVisibilityChange(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
-    getBoundingClientRect: () => DOMRect,
     band: Band,
+    getBoundingClientRect: () => DOMRect,
     samplingRateMilli: number = INTERSECTION_SAMPLING_RATE_MILLI,
 ): IntersectionObserverCallback {
     // TODO(dnguyen0304): Support keying by root and rootMargin.
