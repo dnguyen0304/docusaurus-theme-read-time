@@ -2,8 +2,14 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import type { DocupotamusThemeConfig } from '../../../docusaurus-theme-editor';
 import { BANDS, BAND_FRIENDLY_KEYS } from './config';
-import type { BandFriendlyKey, IntersectionSample } from './reading-bands';
-import { getElementAll, getViewportHeight } from './services/dom';
+import type {
+    BandFriendlyKey,
+    IntersectionSample,
+    Target
+} from './reading-bands';
+// TODO(dnguyen0304): Fix missing module declaration.
+import { RangeAnchor } from './services/annotator/anchoring/types';
+import { getElement, getElementAll, getViewportHeight } from './services/dom';
 import { createUpdateRunningTotals } from './services/sampleConsumer';
 import { createOnVisibilityChange } from './services/sampleProducer';
 import { observeVisibility } from './services/visibility';
@@ -17,6 +23,7 @@ const UPDATE_RUNNING_TOTALS_RATE_MILLI: number = 5 * 1000;
 export default function ReadingBands(): JSX.Element | null {
     const {
         readTime: {
+            contentRootSelector,
             contentSelector,
             debug: {
                 band: {
@@ -43,9 +50,13 @@ export default function ReadingBands(): JSX.Element | null {
     // Produce intersection samples.
     React.useEffect(() => {
         (async () => {
+            const rootElement = await getElement(contentRootSelector);
+            const rootRange = new Range();
+            rootRange.selectNodeContents(rootElement);
+
             // TODO(dnguyen0304): Fix code blocks not being included because
             // of "Node cannot be found in the current page." error.
-            const targets = await getElementAll(contentSelector);
+            const elements = await getElementAll(contentSelector);
 
             for (const band of BANDS) {
                 const rootMargin =
@@ -53,13 +64,27 @@ export default function ReadingBands(): JSX.Element | null {
                     + `0px `
                     + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
 
-                for (const target of targets) {
+                for (const element of elements) {
+                    const range = new Range();
+                    range.selectNodeContents(element);
+
+                    const target: Target = {
+                        document: {
+                            href: document.location.href,
+                        },
+                        root: new RangeAnchor(document.body, rootRange).toSelector(),
+                        selectors: [
+                            new RangeAnchor(rootElement, range).toSelector(),
+                        ],
+                    };
+
                     await observeVisibility({
-                        target: target,
+                        element,
                         onChange: createOnVisibilityChange(
                             samples.current,
+                            target,
                             band,
-                            target.getBoundingClientRect.bind(target),
+                            element.getBoundingClientRect.bind(element),
                         ),
                         rootMargin,
                         debugBorderIsEnabled,

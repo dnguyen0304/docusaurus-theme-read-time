@@ -106,14 +106,14 @@ import styles from './styles.module.css';
 // }
 
 type Props = {
-    readonly target: string | Element;
+    readonly element: string | Element;
     readonly onChange: IntersectionObserverCallback;
     readonly debugBorderIsEnabled?: boolean;
 } & IntersectionObserverInit;
 
 export async function observeVisibility(
     {
-        target,
+        element,
         onChange,
         root,
         rootMargin,
@@ -127,10 +127,10 @@ export async function observeVisibility(
     }
 
     const cleanUp: Array<() => void> = [];
-    const element =
-        typeof target === 'string'
-            ? await getElement(target)
-            : target;
+    const resolvedElement =
+        typeof element === 'string'
+            ? await getElement(element)
+            : element;
     const observer = new IntersectionObserver(
         onChange,
         {
@@ -142,16 +142,16 @@ export async function observeVisibility(
 
     // TODO(dnguyen0304): Add tooltip with visibility.
     if (debugBorderIsEnabled
-        && !element.classList.contains(styles.visibilityObserver_target)
+        && !resolvedElement.classList.contains(styles.visibilityObserver_target)
     ) {
-        element.classList.add(styles.visibilityObserver_target);
+        resolvedElement.classList.add(styles.visibilityObserver_target);
         cleanUp.push(() => {
-            element.classList.remove(styles.visibilityObserver_target);
+            resolvedElement.classList.remove(styles.visibilityObserver_target);
         });
     }
 
-    observer.observe(element);
-    cleanUp.push(() => observer.unobserve(element));
+    observer.observe(resolvedElement);
+    cleanUp.push(() => observer.unobserve(resolvedElement));
 
     return cleanUp;
 }

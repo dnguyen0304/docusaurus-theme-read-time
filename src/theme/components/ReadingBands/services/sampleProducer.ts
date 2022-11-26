@@ -3,7 +3,8 @@ import type {
     BandFriendlyKey,
     IntersectionSample,
     StartIntersectionSample,
-    StopIntersectionSample
+    StopIntersectionSample,
+    Target
 } from '../reading-bands';
 import { getViewportHeight } from './dom';
 
@@ -11,6 +12,7 @@ const INTERSECTION_SAMPLING_RATE_MILLI: number = 1 * 1000;
 
 export function createOnVisibilityChange(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
+    target: Target,
     band: Band,
     getBoundingClientRect: () => DOMRect,
     samplingRateMilli: number = INTERSECTION_SAMPLING_RATE_MILLI,
@@ -30,6 +32,7 @@ export function createOnVisibilityChange(
                 const intervalId = window.setInterval(() => {
                     const sample: StartIntersectionSample = {
                         timestampMilli: Date.now(),
+                        target,
                         band,
                         isIntersecting: true,
                         targetRect: getBoundingClientRect(),
@@ -46,6 +49,7 @@ export function createOnVisibilityChange(
 
                 const sample: StopIntersectionSample = {
                     timestampMilli: Date.now(),
+                    target,
                     band,
                     isIntersecting: false,
                 };
