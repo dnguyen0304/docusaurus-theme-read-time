@@ -57,7 +57,7 @@ export type StartIntersectionSample = {
     // Measurement time as a Unix epoch timestamp, in milliseconds.
     readonly timestampMilli: number;
 
-    // Intersection root.
+    // Horizontal region ("slice") of the viewport.
     readonly band: Band;
 
     // Whether the target is intersecting, at any threshold, with the band.
