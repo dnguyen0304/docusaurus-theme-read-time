@@ -11,7 +11,7 @@ const INTERSECTION_SAMPLING_RATE_MILLI: number = 1 * 1000;
 
 export function createOnVisibilityChange(
     samples: Map<BandFriendlyKey, IntersectionSample[]>,
-    target: Element,
+    getBoundingClientRect: () => DOMRect,
     band: Band,
     samplingRateMilli: number = INTERSECTION_SAMPLING_RATE_MILLI,
 ): IntersectionObserverCallback {
@@ -30,7 +30,7 @@ export function createOnVisibilityChange(
                 const intervalId = window.setInterval(() => {
                     const sample: StartIntersectionSample = {
                         timestampMilli: Date.now(),
-                        targetRect: target.getBoundingClientRect(),
+                        targetRect: getBoundingClientRect(),
                         band,
                         isIntersecting: true,
                         deviceInfo: {

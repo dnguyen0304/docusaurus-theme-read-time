@@ -58,7 +58,7 @@ export default function ReadingBands(): JSX.Element | null {
                         target: target,
                         onChange: createOnVisibilityChange(
                             samples.current,
-                            target,
+                            target.getBoundingClientRect.bind(target),
                             band,
                         ),
                         rootMargin,
