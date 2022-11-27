@@ -109,6 +109,7 @@ type Props = {
     readonly element: string | Element;
     readonly onChange: IntersectionObserverCallback;
     readonly debugBorderIsEnabled?: boolean;
+    readonly targetId?: string;
 } & IntersectionObserverInit;
 
 export async function observeVisibility(
@@ -119,6 +120,8 @@ export async function observeVisibility(
         rootMargin,
         threshold,
         debugBorderIsEnabled = false,
+        // TODO(dnguyen0304): Fix complex conditional parameters.
+        targetId = '',
     }: Props
 ): Promise<Array<() => void>> {
     const env = ExecutionEnvironment;
@@ -145,8 +148,16 @@ export async function observeVisibility(
         && !resolvedElement.classList.contains(styles.visibilityObserver_target)
     ) {
         resolvedElement.classList.add(styles.visibilityObserver_target);
+        if (resolvedElement instanceof HTMLElement) {
+            resolvedElement.dataset.targetId = targetId;
+        }
         cleanUp.push(() => {
             resolvedElement.classList.remove(styles.visibilityObserver_target);
+            if (resolvedElement instanceof HTMLElement) {
+                // The MDN recommendation is to use the delete keyword, but that
+                // is not compatible with Safari.
+                resolvedElement.removeAttribute('data-target-id');
+            }
         });
     }
 

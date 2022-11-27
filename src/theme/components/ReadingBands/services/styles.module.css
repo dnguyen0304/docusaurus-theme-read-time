@@ -19,3 +19,28 @@
     border: 4px solid #3342f2;
     z-index: calc(var(--ifm-z-index-fixed) + 1);
 }
+
+.visibilityObserver_target::after {
+    content: attr(data-target-id);
+    position: absolute;
+    top: 0;
+    left: calc(100% + 0.25rem);
+
+    display: block;
+    width: 150px;
+
+    font-size: 0.5rem;
+    text-align: center;
+    z-index: calc(var(--ifm-z-index-fixed) + 1);
+
+    /* Copied from: MuiTooltip-tooltip CSS styles. */
+    background-color: rgba(97, 97, 97, 0.92);
+    border-radius: 4px;
+    color: #fff;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    margin: 0;
+    max-width: 300px;
+    padding: 4px 8px;
+    word-wrap: break-word;
+}
