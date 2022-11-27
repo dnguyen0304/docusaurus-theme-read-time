@@ -75,6 +75,11 @@ export default function ReadingBands(): JSX.Element | null {
                     ],
                 };
 
+                // TODO(dnguyen0304): Remove debug logging.
+                console.log(
+                    `${target.id}-${target.selectors[0].startContainer}`
+                );
+
                 for (const band of BANDS) {
                     const rootMargin =
                         `-${band.topVh * viewportHeight}px `
