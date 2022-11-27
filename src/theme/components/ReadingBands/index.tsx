@@ -2,7 +2,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { DocupotamusThemeConfig } from '../../../docusaurus-theme-editor';
-import { BANDS, BAND_FRIENDLY_KEYS } from './config';
+import { BANDS } from './config';
 import type {
     BandFriendlyKey,
     IntersectionSample,
@@ -42,11 +42,11 @@ export default function ReadingBands(): JSX.Element | null {
         .docupotamus as DocupotamusThemeConfig;
 
     // TODO(dnguyen0304): Investigate migrating from ref to constant.
-    const samples = React.useRef<Map<BandFriendlyKey, IntersectionSample[]>>(
-        new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
-            return [bandKey, []];
-        })),
-    );
+    // Samples are keyed first for each target then keyed for each band.
+    const samples =
+        React.useRef<Map<string, Map<BandFriendlyKey, IntersectionSample[]>>>(
+            new Map(),
+        );
     const viewportHeight = getViewportHeight();
 
     // Produce intersection samples.
@@ -142,4 +142,4 @@ export default function ReadingBands(): JSX.Element | null {
             </>
             : null
     );
-}
+};

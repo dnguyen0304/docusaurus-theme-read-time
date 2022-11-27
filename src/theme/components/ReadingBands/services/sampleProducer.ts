@@ -1,3 +1,4 @@
+import { BAND_FRIENDLY_KEYS } from '../config';
 import type {
     Band,
     BandFriendlyKey,
@@ -11,7 +12,7 @@ import { getViewportHeight } from './dom';
 const INTERSECTION_SAMPLING_RATE_MILLI: number = 1 * 1000;
 
 export function createOnVisibilityChange(
-    samples: Map<BandFriendlyKey, IntersectionSample[]>,
+    samples: Map<string, Map<BandFriendlyKey, IntersectionSample[]>>,
     target: Target,
     band: Band,
     getBoundingClientRect: () => DOMRect,
@@ -40,7 +41,7 @@ export function createOnVisibilityChange(
                             viewportHeightPx: getViewportHeight(),
                         },
                     };
-                    samples.get(band.friendlyKey)?.push(sample);
+                    pushSample(samples, target.id, band.friendlyKey, sample);
                 }, samplingRateMilli);
                 rootToIntervalId.set(observer.rootMargin, intervalId);
             } else {
@@ -53,8 +54,25 @@ export function createOnVisibilityChange(
                     band,
                     isIntersecting: false,
                 };
-                samples.get(band.friendlyKey)?.push(sample);
+                pushSample(samples, target.id, band.friendlyKey, sample);
             }
         }
     };
+};
+
+function pushSample(
+    samples: Map<string, Map<BandFriendlyKey, IntersectionSample[]>>,
+    targetId: string,
+    bandKey: BandFriendlyKey,
+    sample: IntersectionSample,
+) {
+    let targetSamples = samples.get(targetId);
+    if (targetSamples === undefined) {
+        targetSamples =
+            new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
+                return [bandKey, []];
+            }));
+        samples.set(targetId, targetSamples);
+    }
+    targetSamples.get(bandKey)!.push(sample);
 };

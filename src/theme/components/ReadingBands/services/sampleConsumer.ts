@@ -50,10 +50,10 @@ function getIntersectionRatio(sample: IntersectionSample): number {
         (startSample.targetRect.width * startSample.targetRect.height);
 
     return intersectionRatio;
-}
+};
 
 export function createUpdateRunningTotals(
-    samples: Map<BandFriendlyKey, IntersectionSample[]>,
+    samples: Map<string, Map<BandFriendlyKey, IntersectionSample[]>>,
 ): () => void {
     const runningTotals = new Map<BandFriendlyKey, RunningTotal>(
         [...BAND_FRIENDLY_KEYS].map(bandKey => {
@@ -62,39 +62,42 @@ export function createUpdateRunningTotals(
     );
 
     return () => {
-        for (const [bandKey, bandSamples] of samples.entries()) {
-            const runningTotal = runningTotals.get(bandKey)!;
+        for (const [targetId, targetSamples] of samples.entries()) {
+            for (const [bandKey, bandSamples] of targetSamples.entries()) {
+                const runningTotal = runningTotals.get(bandKey)!;
 
-            if (!runningTotal.lastSample && !bandSamples.length) {
-                continue;
+                if (!runningTotal.lastSample && !bandSamples.length) {
+                    continue;
+                }
+
+                const lastSample = runningTotal.lastSample || bandSamples[0];
+                const tempSamples =
+                    (runningTotal.lastSample)
+                        ? bandSamples
+                        : bandSamples.slice(1);
+
+                let prevTimestampMilli = lastSample.timestampMilli;
+                let prevIntersectionRatio = getIntersectionRatio(lastSample)
+
+                for (const bandSample of tempSamples) {
+                    const currVisibleTime =
+                        (bandSample.timestampMilli - prevTimestampMilli)
+                        * prevIntersectionRatio
+                        * bandSample.band.multiplier;
+                    runningTotal.visibleTimeMilli += currVisibleTime;
+
+                    prevTimestampMilli = bandSample.timestampMilli;
+                    prevIntersectionRatio = getIntersectionRatio(bandSample);
+                }
+
+                samples.get(targetId)?.set(bandKey, []);
+                // TODO(dnguyen0304): Add real implementation.
+                console.log(
+                    `${targetId}\n`
+                    + `| ${bandKey}\n`
+                    + `| visibleTime\n`
+                    + `| ${runningTotal.visibleTimeMilli / 1000}`);
             }
-
-            const lastSample = runningTotal.lastSample || bandSamples[0];
-            const tempSamples =
-                (runningTotal.lastSample)
-                    ? bandSamples
-                    : bandSamples.slice(1);
-
-            let prevTimestampMilli = lastSample.timestampMilli;
-            let prevIntersectionRatio = getIntersectionRatio(lastSample)
-
-            for (const bandSample of tempSamples) {
-                const currVisibleTime =
-                    (bandSample.timestampMilli - prevTimestampMilli)
-                    * prevIntersectionRatio
-                    * bandSample.band.multiplier;
-                runningTotal.visibleTimeMilli += currVisibleTime;
-
-                prevTimestampMilli = bandSample.timestampMilli;
-                prevIntersectionRatio = getIntersectionRatio(bandSample);
-            }
-
-            samples.set(bandKey, []);
-            // TODO(dnguyen0304): Add real implementation.
-            console.log(
-                `${bandKey} `
-                + `| visibleTime `
-                + `| ${runningTotal.visibleTimeMilli / 1000}`);
         }
     };
 };
