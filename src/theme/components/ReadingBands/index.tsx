@@ -60,26 +60,26 @@ export default function ReadingBands(): JSX.Element | null {
             // of "Node cannot be found in the current page." error.
             const elements = await getElementAll(contentSelector);
 
-            for (const band of BANDS) {
-                const rootMargin =
-                    `-${band.topVh * viewportHeight}px `
-                    + `0px `
-                    + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
+            for (const element of elements) {
+                const range = new Range();
+                range.selectNodeContents(element);
 
-                for (const element of elements) {
-                    const range = new Range();
-                    range.selectNodeContents(element);
+                const target: Target = {
+                    id: uuidv4(),
+                    document: {
+                        href: document.location.href,
+                    },
+                    root: new RangeAnchor(document.body, rootRange).toSelector(),
+                    selectors: [
+                        new RangeAnchor(rootElement, range).toSelector(),
+                    ],
+                };
 
-                    const target: Target = {
-                        id: uuidv4(),
-                        document: {
-                            href: document.location.href,
-                        },
-                        root: new RangeAnchor(document.body, rootRange).toSelector(),
-                        selectors: [
-                            new RangeAnchor(rootElement, range).toSelector(),
-                        ],
-                    };
+                for (const band of BANDS) {
+                    const rootMargin =
+                        `-${band.topVh * viewportHeight}px `
+                        + `0px `
+                        + `-${viewportHeight - band.bottomVh * viewportHeight}px`;
 
                     await observeVisibility({
                         element,
