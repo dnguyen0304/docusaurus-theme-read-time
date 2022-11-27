@@ -41,6 +41,7 @@ export default function ReadingBands(): JSX.Element | null {
         .themeConfig
         .docupotamus as DocupotamusThemeConfig;
 
+    // TODO(dnguyen0304): Investigate migrating from ref to constant.
     const samples = React.useRef<Map<BandFriendlyKey, IntersectionSample[]>>(
         new Map([...BAND_FRIENDLY_KEYS].map(bandKey => {
             return [bandKey, []];
