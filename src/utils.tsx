@@ -1,26 +1,11 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { ContextValue } from './contexts/site';
-import type {
-    EditorThemeConfig,
-    LOCAL_STORAGE_KEYS
-} from './docusaurus-theme-editor';
+import type { DocupotamusThemeConfig } from './docusaurus-theme-editor';
 
-export function useEditorThemeConfig(): EditorThemeConfig {
+export function useDocupotamusThemeConfig(): DocupotamusThemeConfig {
     return (
         useDocusaurusContext()
             .siteConfig
             .themeConfig
-            .editor
-    ) as EditorThemeConfig;
+            .docupotamus
+    ) as DocupotamusThemeConfig;
 }
-
-export function getLocalStorageKey(
-    {
-        owner,
-        repository,
-        path,
-    }: ContextValue,
-    key: LOCAL_STORAGE_KEYS,
-): string {
-    return `${owner}/${repository}/${path}/${key}`;
-};

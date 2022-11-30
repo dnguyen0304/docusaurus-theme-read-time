@@ -4,9 +4,6 @@ import type {
 } from '@docusaurus/types';
 import { Joi } from '@docusaurus/utils-validation';
 
-export const DEFAULT_CONFIG = {
-    githubAuthorizationRedirectUrl: 'https://kgevadn5a2.execute-api.us-east-1.amazonaws.com/production/DocusaurusEditor_handleOAuthRedirect',
-};
 const CONTENT_ROOT_SELECTOR: string =
     'main[class*="docMainContainer"] article div.markdown';
 
@@ -38,12 +35,6 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG = {
 // TODO(dnguyen0304): Investigate missing labels.
 // TODO(dnguyen0304): Fix incorrect ThemeConfig type.
 export const ThemeConfigSchema = Joi.object<ThemeConfig>({
-    editor: Joi.object({
-        githubAuthorizationRedirectUrl:
-            Joi.string().default(DEFAULT_CONFIG.githubAuthorizationRedirectUrl),
-    })
-        .label('themeConfig.editor')
-        .default(DEFAULT_CONFIG),
     docupotamus: Joi.object({
         readTime: Joi.object({
             contentRootSelector: Joi
