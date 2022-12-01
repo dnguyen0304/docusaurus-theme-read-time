@@ -1,6 +1,0 @@
-.readingBands {
-    position: fixed;
-    width: 100%;
-    pointer-events: none;
-    z-index: calc(var(--ifm-z-index-fixed) + 1);
-}
