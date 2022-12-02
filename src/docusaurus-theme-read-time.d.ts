@@ -6,3 +6,9 @@ declare module '@theme-init/DocPage/Layout/Main' {
 
     export default DocPageLayoutMain;
 }
+
+declare module '@theme-init/Layout/Provider' {
+    import LayoutProvider from '@theme/Layout/Provider';
+
+    export default LayoutProvider;
+}
