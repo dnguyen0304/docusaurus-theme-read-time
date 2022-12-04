@@ -5,6 +5,11 @@
     align-items: center;
     width: 100px;
     background-color: red;
+
+    /* --gradient_stop_color_top: rgb(46, 69, 97);
+    --gradient_stop_color_bottom: rgb(39, 60, 85);
+    --gradient: linear-gradient(to bottom, var(--gradient_stop_color_top) 0%, var(--gradient_stop_color_bottom) 100%);
+    background: var(--gradient); */
 }
 
 .Workbench_container > * {
