@@ -12,3 +12,9 @@ declare module '@theme-init/Layout/Provider' {
 
     export default LayoutProvider;
 }
+
+export type DocupotamusThemeConfig = {
+    readTime: {
+        workbenchIsOpen: boolean;
+    };
+};
