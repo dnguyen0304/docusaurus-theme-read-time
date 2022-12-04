@@ -1,4 +1,4 @@
-import HomeIcon from '@mui/icons-material/Home';
+import InsightsOutlinedIcon from '@mui/icons-material/InsightsOutlined';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
@@ -26,7 +26,7 @@ export default function Toolbar(
         >
             {/* TODO(dnguyen0304): Add real onClick implementation. */}
             <IconButton onClick={() => { setWorkbenchIsOpen(prev => !prev) }}>
-                <HomeIcon />
+                <InsightsOutlinedIcon />
             </IconButton>
         </Box>
     );
