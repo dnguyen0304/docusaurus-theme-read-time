@@ -1,0 +1,16 @@
+.Workbench_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100px;
+    background-color: red;
+}
+
+.Workbench_container > * {
+    margin-bottom: 1rem;
+}
+
+.Workbench_container > *:last-child {
+    margin-bottom: 0;
+}

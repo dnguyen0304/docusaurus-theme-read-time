@@ -1,0 +1,20 @@
+.Card_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 0.5rem;
+
+    border-radius: 0.5rem;
+
+    background-color: rgb(48, 56, 70);
+    color: white;
+}
+
+.Card_container:hover {
+    box-shadow:
+        white 0 0 0rem 0.3rem,
+        rgb(100, 255, 218) 0 0 0rem 0.5rem;
+}

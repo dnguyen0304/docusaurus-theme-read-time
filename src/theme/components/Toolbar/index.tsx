@@ -2,6 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
+import { useToolbar } from '../../../contexts/toolbar';
 
 type Props = Readonly<{}>;
 
@@ -9,6 +10,8 @@ export default function Toolbar(
     {
     }: Props
 ): JSX.Element {
+    const { setWorkbenchIsOpen } = useToolbar();
+
     return (
         <Box
             // TODO(dnguyen0304): Add paddingRight for the scrollbar.
@@ -22,7 +25,7 @@ export default function Toolbar(
             }}
         >
             {/* TODO(dnguyen0304): Add real onClick implementation. */}
-            <IconButton onClick={() => { console.log('hi') }}>
+            <IconButton onClick={() => { setWorkbenchIsOpen(prev => !prev) }}>
                 <HomeIcon />
             </IconButton>
         </Box>
