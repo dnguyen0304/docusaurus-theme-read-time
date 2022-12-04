@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import LayoutProvider from '@theme-init/Layout/Provider';
 import type LayoutProviderType from '@theme/Layout/Provider';
 import * as React from 'react';
+import Workbench from '../../../components/Workbench';
 import { ToolbarProvider } from '../../../contexts/toolbar';
-import Workbench from '../../components/Workbench';
 
 type Props = Readonly<WrapperProps<typeof LayoutProviderType>>;
 

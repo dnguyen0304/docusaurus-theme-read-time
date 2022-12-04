@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { useToolbar } from '../../../contexts/toolbar';
+import { useToolbar } from '../../contexts/toolbar';
 import Card from './Card';
 import styles from './styles.module.css';
 
