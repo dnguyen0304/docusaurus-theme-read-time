@@ -24,7 +24,6 @@ export default function Toolbar(
                 paddingTop: '1rem',
             }}
         >
-            {/* TODO(dnguyen0304): Add real onClick implementation. */}
             <IconButton onClick={() => { setWorkbenchIsOpen(prev => !prev) }}>
                 <InsightsOutlinedIcon />
             </IconButton>
