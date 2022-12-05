@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
-import styles from './styles.module.css';
 
 const KEY_PREFIX: string = 'workbenchCard';
 const fakeData: { targetId: string; readTime: number }[] = [
@@ -30,12 +29,13 @@ export default function Workbench(
 
     return (
         <Box
-            className={styles.Workbench_container}
             sx={theme => ({
                 display: workbenchIsOpen ? 'flex' : 'none',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
+                // TODO(dnguyen0304): Add responsive design.
+                width: '300px',
                 height: '100vh',
                 background: `linear-gradient(
                     to bottom,
