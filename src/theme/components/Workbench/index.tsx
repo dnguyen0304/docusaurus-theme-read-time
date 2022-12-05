@@ -30,13 +30,15 @@ export default function Workbench(
     return (
         <Box
             sx={theme => ({
+                position: 'sticky',
+                top: 0,
+                // TODO(dnguyen0304): Add responsive design.
+                width: '300px',
+                height: '100vh',
                 display: workbenchIsOpen ? 'flex' : 'none',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                // TODO(dnguyen0304): Add responsive design.
-                width: '300px',
-                height: '100vh',
                 background: `linear-gradient(
                     to bottom,
                     ${theme.palette.grey[600]} 0%,
