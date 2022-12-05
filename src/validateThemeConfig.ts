@@ -15,13 +15,13 @@ export const DOCUPOTAMUS_DEFAULT_CONFIG: DocupotamusThemeConfig = {
 export const ThemeConfigSchema = Joi.object<ThemeConfig>({
     docupotamus: Joi.object({
         readTime: Joi.object({
-            contentRootSelector: Joi
+            workbenchIsOpen: Joi
                 .boolean()
                 .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.workbenchIsOpen),
         })
             .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime),
     })
-        .default(DOCUPOTAMUS_DEFAULT_CONFIG),
+        .default(DOCUPOTAMUS_DEFAULT_CONFIG)
 });
 
 export function validateThemeConfig({
