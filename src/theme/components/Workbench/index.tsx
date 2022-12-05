@@ -36,6 +36,7 @@ export default function Workbench(
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
+                height: '100vh',
                 background: `linear-gradient(
                     to bottom,
                     ${theme.palette.grey[600]} 0%,
