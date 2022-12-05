@@ -7,12 +7,12 @@ const COLOR_GREY_600: string = '#2e4561';  // blueish
 const COLOR_GREY_700: string = '#363732';
 
 const theme = createTheme({
-    // breakpoints: {
-    //     values: {
-    //         // See: https://docusaurus.io/docs/styling-layout#mobile-view
-    //         mobile: 996,
-    //     },
-    // },
+    breakpoints: {
+        values: {
+            // See: https://docusaurus.io/docs/styling-layout#mobile-view
+            mobile: 996,
+        },
+    },
     // palette: {
     //     primary: {
     //         main: COLOR_ACCENT_GREEN,
