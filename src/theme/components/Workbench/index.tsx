@@ -18,7 +18,7 @@ const fakeData: { targetId: string; readTime: number }[] = [
         targetId: 'xyz',
         readTime: 11,
     },
-]
+];
 
 interface Props { };
 
@@ -44,4 +44,4 @@ export default function Workbench(
             )}
         </Box>
     );
-}
+};
