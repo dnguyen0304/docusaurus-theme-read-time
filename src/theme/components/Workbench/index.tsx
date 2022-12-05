@@ -4,17 +4,20 @@ import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
 
 const KEY_PREFIX: string = 'workbenchCard';
-const fakeData: { targetId: string; readTime: number }[] = [
+const fakeData: { targetId: string; details: string; readTime: number }[] = [
     {
         targetId: 'abc',
+        details: 'islaskdjf',
         readTime: 8,
     },
     {
         targetId: 'ijk',
+        details: 'fskis',
         readTime: 3,
     },
     {
         targetId: 'xyz',
+        details: '123424zis',
         readTime: 11,
     },
 ];
@@ -64,6 +67,7 @@ export default function Workbench(
                 <Card
                     key={`${KEY_PREFIX}-${i}`}
                     targetId={data.targetId}
+                    details={data.details}
                     readTime={data.readTime}
                 />
             )}
