@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styles from './styles.module.css';
 
-type Props = Readonly<{
-    targetId: string;
-    readTime: number;
-}>;
+interface Props {
+    readonly targetId: string;
+    readonly readTime: number;
+};
 
 export default function Card(
     {

@@ -9,7 +9,6 @@ const DEFAULT_THEME_CONFIG: DocupotamusThemeConfig = {
     workbenchIsOpen: true,
 };
 
-// TODO(dnguyen0304): Fix incorrect ThemeConfig type.
 export const ThemeConfigSchema = Joi.object<ThemeConfig>({
     docupotamusReadTime: Joi.object({
         workbenchIsOpen: Joi

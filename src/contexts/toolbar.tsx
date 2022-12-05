@@ -2,10 +2,10 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
 import { ReactContextError } from './errors';
 
-type ContextValue = Readonly<{
+interface ContextValue {
     workbenchIsOpen: boolean;
     setWorkbenchIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}>;
+};
 
 const Context = React.createContext<ContextValue | undefined>(undefined);
 
@@ -31,9 +31,9 @@ function useContextValue(): ContextValue {
     );
 };
 
-type Props = Readonly<{
+interface Props {
     children: React.ReactNode;
-}>;
+};
 
 export function ToolbarProvider({ children }: Props): JSX.Element {
     const value = useContextValue();

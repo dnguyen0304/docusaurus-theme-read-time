@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
 
-type Props = Readonly<{}>;
+interface Props { };
 
 export default function Toolbar(
     {

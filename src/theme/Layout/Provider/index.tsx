@@ -6,6 +6,7 @@ import * as React from 'react';
 import { ToolbarProvider } from '../../../contexts/toolbar';
 import Workbench from '../../components/Workbench';
 
+// TODO(dnguyen0304): Migrate to interface for declaration merging.
 type Props = Readonly<WrapperProps<typeof LayoutProviderType>>;
 
 export default function LayoutProviderWrapper(props: Props): JSX.Element {

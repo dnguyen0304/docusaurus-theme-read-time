@@ -19,7 +19,7 @@ const fakeData: { targetId: string; readTime: number }[] = [
     },
 ]
 
-type Props = Readonly<{}>;
+interface Props { };
 
 // `${targetId}\n`
 // + `| visibleTime\n`
