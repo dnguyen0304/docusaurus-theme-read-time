@@ -25,4 +25,4 @@ export default function LayoutProviderWrapper(props: Props): JSX.Element {
             </Box>
         </ToolbarProvider>
     );
-}
+};
