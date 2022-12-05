@@ -1,10 +1,8 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 
+// TODO(dnguyen0304): Fix unused primary color for Root theme component.
 const COLOR_ACCENT_GREEN: string = '#64ffda';
-const COLOR_GREY_400: string = '#8996a5';
-const COLOR_GREY_600: string = '#2e4561';  // blueish
-const COLOR_GREY_700: string = '#363732';
 
 const theme = createTheme({
     breakpoints: {
@@ -13,12 +11,14 @@ const theme = createTheme({
             mobile: 996,
         },
     },
-    // palette: {
-    //     primary: {
-    //         main: COLOR_ACCENT_GREEN,
-    //         contrastText: COLOR_GREY_600,
-    //     },
-    // },
+    palette: {
+        grey: {
+            400: 'rgb(137, 150, 165)',  // #8996a5
+            600: 'rgb(46, 69, 97)',     // #2e4561  GRADIENT_STOP_TOP      blueish
+            700: 'rgb(39, 60, 85)',     // #273c55  GRADIENT_STOP_BOTTOM   blueish
+            800: 'rgb(54, 55, 50)',     // #363732
+        },
+    },
 });
 
 interface Props {
