@@ -2,7 +2,7 @@ import InsightsOutlinedIcon from '@mui/icons-material/InsightsOutlined';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
-import { useToolbar } from '../../contexts/toolbar';
+import { useToolbar } from '../../../contexts/toolbar';
 
 type Props = Readonly<{}>;
 
