@@ -44,10 +44,12 @@ export default function Workbench(
                     ${theme.palette.grey[600]} 0%,
                     ${theme.palette.grey[700]} 100%
                 )`,
+                // TODO(dnguyen0304): Increase box-shadow intensity.
                 boxShadow: `
                     0px 4px 5px 0px rgb(0 0 0 / 14%),
                     0px 1px 10px 0px rgb(0 0 0 / 12%),
                     0px 2px 4px -1px rgb(0 0 0 / 20%)`,
+                // TODO(dnguyen0304): Add responsive design.
                 padding: '1rem 0.7rem',
                 borderRadius: '0.6rem 0 0 0.6rem',
                 '& > *': {
