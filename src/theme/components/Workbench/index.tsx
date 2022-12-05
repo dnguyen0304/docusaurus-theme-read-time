@@ -4,6 +4,16 @@ import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
 import styles from './styles.module.css';
 
+// TODO(dnguyen0304): Extract to a centralized location to facilitate
+// maintenance.
+const GRADIENT_STOP_COLOR_TOP: string = 'rgb(46, 69, 97)';
+const GRADIENT_STOP_COLOR_BOTTOM: string = 'rgb(39, 60, 85)';
+const GRADIENT = `linear-gradient(
+    to bottom,
+    ${GRADIENT_STOP_COLOR_TOP} 0%,
+    ${GRADIENT_STOP_COLOR_BOTTOM} 100%
+)`;
+
 const KEY_PREFIX: string = 'workbenchCard';
 const fakeData: { targetId: string; readTime: number }[] = [
     {
@@ -36,8 +46,7 @@ export default function Workbench(
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                // TODO(dnguyen0304): Add real background-color implementation.
-                backgroundColor: 'red',
+                background: GRADIENT,
                 boxShadow: `
                     0px 4px 5px 0px rgb(0 0 0 / 14%),
                     0px 1px 10px 0px rgb(0 0 0 / 12%),
