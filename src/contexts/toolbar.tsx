@@ -1,6 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import * as React from 'react';
-import type { DocupotamusThemeConfig } from '../../../docusaurus-theme-read-time';
 import { ReactContextError } from './errors';
 
 type ContextValue = Readonly<{
@@ -12,11 +11,10 @@ const Context = React.createContext<ContextValue | undefined>(undefined);
 
 function useContextValue(): ContextValue {
     const {
-        workbenchIsOpen: workbenchIsOpenDefault,
-    } = useDocusaurusContext()
-        .siteConfig
-        .themeConfig
-        .docupotamusReadTime as DocupotamusThemeConfig;
+        docupotamusReadTime: {
+            workbenchIsOpen: workbenchIsOpenDefault,
+        },
+    } = useDocusaurusContext().siteConfig.themeConfig;
 
     const [workbenchIsOpen, setWorkbenchIsOpen] =
         React.useState<boolean>(workbenchIsOpenDefault);

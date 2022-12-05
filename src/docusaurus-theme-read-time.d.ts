@@ -1,6 +1,12 @@
 // TODO(dnguyen0304): Investigate referencing @docusaurus/module-type-aliases.
 /// <reference types="@docusaurus/theme-classic" />
 
+declare module '@docusaurus/types' {
+    interface ThemeConfig {
+        docupotamusReadTime: DocupotamusThemeConfig;
+    }
+}
+
 declare module '@theme-init/DocPage/Layout/Main' {
     import DocPageLayoutMain from '@theme/DocPage/Layout/Main';
 
