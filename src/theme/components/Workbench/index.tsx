@@ -38,6 +38,16 @@ export default function Workbench(
                 alignItems: 'center',
                 // TODO(dnguyen0304): Add real background-color implementation.
                 backgroundColor: 'red',
+                boxShadow: `
+                    0px 4px 5px 0px rgb(0 0 0 / 14%),
+                    0px 1px 10px 0px rgb(0 0 0 / 12%),
+                    0px 2px 4px -1px rgb(0 0 0 / 20%)`,
+                '& > *': {
+                    marginBottom: '1rem',
+                },
+                '& > *:last-child': {
+                    marginBottom: 0,
+                },
             }}
         >
             {fakeData.map((data, i) =>
