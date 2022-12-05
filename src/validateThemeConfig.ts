@@ -5,23 +5,18 @@ import type {
 import { Joi } from '@docusaurus/utils-validation';
 import type { DocupotamusThemeConfig } from './docusaurus-theme-read-time';
 
-export const DOCUPOTAMUS_DEFAULT_CONFIG: DocupotamusThemeConfig = {
-    readTime: {
-        workbenchIsOpen: true,
-    },
+const DEFAULT_THEME_CONFIG: DocupotamusThemeConfig = {
+    workbenchIsOpen: true,
 };
 
 // TODO(dnguyen0304): Fix incorrect ThemeConfig type.
 export const ThemeConfigSchema = Joi.object<ThemeConfig>({
-    docupotamus: Joi.object({
-        readTime: Joi.object({
-            workbenchIsOpen: Joi
-                .boolean()
-                .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime.workbenchIsOpen),
-        })
-            .default(DOCUPOTAMUS_DEFAULT_CONFIG.readTime),
+    docupotamusReadTime: Joi.object({
+        workbenchIsOpen: Joi
+            .boolean()
+            .default(DEFAULT_THEME_CONFIG.workbenchIsOpen),
     })
-        .default(DOCUPOTAMUS_DEFAULT_CONFIG)
+        .default(DEFAULT_THEME_CONFIG),
 });
 
 export function validateThemeConfig({

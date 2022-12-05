@@ -14,7 +14,5 @@ declare module '@theme-init/Layout/Provider' {
 }
 
 export type DocupotamusThemeConfig = {
-    readTime: {
-        workbenchIsOpen: boolean;
-    };
+    workbenchIsOpen: boolean;
 };
