@@ -19,9 +19,10 @@ export default function Toolbar(
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                width: '110px',
                 borderLeft: '1px solid var(--ifm-toc-border-color)',
                 paddingTop: '1rem',
+                // TODO(dnguyen0304): Fix missing responsive design.
+                width: '110px',
             }}
         >
             <IconButton onClick={() => { setWorkbenchIsOpen(prev => !prev) }}>
