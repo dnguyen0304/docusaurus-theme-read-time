@@ -4,6 +4,7 @@ import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
 import styles from './styles.module.css';
 
+const KEY_PREFIX: string = 'workbenchCard';
 const fakeData: { targetId: string; readTime: number }[] = [
     {
         targetId: 'abc',
@@ -21,10 +22,6 @@ const fakeData: { targetId: string; readTime: number }[] = [
 
 interface Props { };
 
-// `${targetId}\n`
-// + `| visibleTime\n`
-// + `| ${runningTotal.visibleTimeMilli / 1000}`);
-
 export default function Workbench(
     {
     }: Props
@@ -38,8 +35,9 @@ export default function Workbench(
                 display: workbenchIsOpen ? 'block' : 'none',
             }}
         >
-            {fakeData.map(data =>
+            {fakeData.map((data, i) =>
                 <Card
+                    key={`${KEY_PREFIX}-${i}`}
                     targetId={data.targetId}
                     readTime={data.readTime}
                 />
