@@ -36,3 +36,9 @@ declare module '@theme-init/Layout/Provider' {
 export type DocupotamusThemeConfig = {
     workbenchIsOpen: boolean;
 };
+
+export interface CardViewModel {
+    readonly targetId: string;
+    readonly details: string;
+    readonly readTime: number;
+}

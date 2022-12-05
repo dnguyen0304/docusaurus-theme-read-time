@@ -1,24 +1,21 @@
 import * as React from 'react';
+import type { CardViewModel } from '../../../../docusaurus-theme-read-time';
 import styles from './styles.module.css';
 
 interface Props {
-    readonly targetId: string;
-    readonly details: string;
-    readonly readTime: number;
+    readonly card: CardViewModel;
 };
 
 export default function Card(
     {
-        targetId,
-        details,
-        readTime,
+        card,
     }: Props
 ): JSX.Element {
     return (
         <div className={styles.Card_container}>
-            <span>{targetId}</span>
-            <span>{details}</span>
-            <span>{readTime}</span>
+            <span>{card.targetId}</span>
+            <span>{card.details}</span>
+            <span>{card.readTime}</span>
         </div>
     );
 };
