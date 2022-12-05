@@ -1,10 +1,5 @@
 .Workbench_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     width: 100px;
-    background-color: red;
 
     box-shadow:
         0px 4px 5px 0px rgb(0 0 0 / 14%),

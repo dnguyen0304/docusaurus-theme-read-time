@@ -32,7 +32,12 @@ export default function Workbench(
         <Box
             className={styles.Workbench_container}
             sx={{
-                display: workbenchIsOpen ? 'block' : 'none',
+                display: workbenchIsOpen ? 'flex' : 'none',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                // TODO(dnguyen0304): Add real background-color implementation.
+                backgroundColor: 'red',
             }}
         >
             {fakeData.map((data, i) =>
