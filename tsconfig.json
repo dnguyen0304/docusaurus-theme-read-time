@@ -3,8 +3,6 @@
         /* Emit */
         "target": "es2022",
         "module": "commonjs",
-        // Allow files outside the theme directory.
-        "moduleResolution": "node16",
         "lib": [
             "ESNext",
             "DOM"
