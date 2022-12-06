@@ -9,6 +9,6 @@ export default function themeReadTime(): Plugin<undefined> {
             return './theme';
         },
     };
-}
+};
 
 export { validateThemeConfig } from './validateThemeConfig';
