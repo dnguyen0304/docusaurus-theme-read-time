@@ -63,12 +63,10 @@ export default function Workbench(
                 },
             })}
         >
-            {fakeData.map((data, i) =>
+            {fakeData.map((card, i) =>
                 <Card
                     key={`${KEY_PREFIX}-${i}`}
-                    targetId={data.targetId}
-                    details={data.details}
-                    readTime={data.readTime}
+                    card={card}
                 />
             )}
         </Box>
