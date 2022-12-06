@@ -33,9 +33,9 @@ declare module '@theme-init/Layout/Provider' {
     }
 }
 
-export type DocupotamusThemeConfig = {
+export interface DocupotamusThemeConfig {
     workbenchIsOpen: boolean;
-};
+}
 
 export interface CardViewModel {
     readonly targetId: string;
