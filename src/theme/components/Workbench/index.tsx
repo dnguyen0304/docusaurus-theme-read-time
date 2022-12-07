@@ -4,6 +4,7 @@ import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
 
 const KEY_PREFIX: string = 'workbenchCard';
+const BOX_SHADOW_WIDTH_PX: number = 15;
 const fakeData: { targetId: string; details: string; readTime: number }[] = [
     {
         targetId: 'abc',
@@ -55,15 +56,15 @@ export default function Workbench(
                 '&::before': {
                     'content': '""',
                     'position': 'absolute',
-                    'width': '6px',
+                    'width': `${BOX_SHADOW_WIDTH_PX}px`,
                     'height': '100vh',
                     'top': '0',
-                    'left': '-6px',
+                    'left': `-${BOX_SHADOW_WIDTH_PX}px`,
                     'background': `linear-gradient(
                         to right,
                         transparent,
-                        rgba(60, 64, 67, 0.1) 70%,
-                        rgba(60, 64, 67, 0.2) 100%)`,
+                        rgba(60, 64, 67, 0.15) 70%,
+                        rgba(60, 64, 67, 0.4) 100%)`,
                 },
                 '& > *': {
                     marginBottom: '1rem',
