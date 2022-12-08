@@ -43,8 +43,6 @@ const StyledBox = styled(Box, {
 })<StyledBoxProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
     position: 'sticky',
     top: 0,
-    // TODO(dnguyen0304): Fix missing responsive design.
-    width: '300px',
     height: '100vh',
     display: workbenchIsOpen ? 'flex' : 'none',
     flexDirection: 'column',
