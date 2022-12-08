@@ -1,25 +1,35 @@
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
+import { CardViewModel } from '../../../docusaurus-theme-read-time';
 import Card from './Card';
 
 const KEY_PREFIX: string = 'workbenchCard';
 const BOX_SHADOW_WIDTH: string = 'var(--space-xs)';
-const fakeData: { targetId: string; details: string; readTime: number }[] = [
+const fakeData: CardViewModel[] = [
     {
-        targetId: 'abc',
-        details: 'islaskdjf',
-        readTime: 8,
+        targetId: 'ABC',
+        details: 'Setting up your environment',
+        readTime: {
+            minute: 61,
+            second: 87,
+        },
     },
     {
-        targetId: 'ijk',
-        details: 'fskis',
-        readTime: 3,
+        targetId: 'IJK',
+        details: 'Database backup',
+        readTime: {
+            minute: 11,
+            second: 32,
+        },
     },
     {
-        targetId: 'xyz',
-        details: '123424zis',
-        readTime: 11,
+        targetId: 'XYZ',
+        details: 'It is important to...',
+        readTime: {
+            minute: 130,
+            second: 49,
+        },
     },
 ];
 

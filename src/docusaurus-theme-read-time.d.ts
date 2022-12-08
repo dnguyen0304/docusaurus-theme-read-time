@@ -40,5 +40,8 @@ export interface DocupotamusThemeConfig {
 export interface CardViewModel {
     readonly targetId: string;
     readonly details: string;
-    readonly readTime: number;
+    readonly readTime: {
+        minute: number;
+        second: number;
+    };
 }

@@ -31,7 +31,7 @@ export default function Card(
         }}>
             <span>{card.targetId}</span>
             <span>{card.details}</span>
-            <span>{card.readTime}</span>
+            <span>{`${card.readTime.minute}:${card.readTime.second}`}</span>
         </Box>
     );
 };
