@@ -11,6 +11,7 @@
 
     background-color: rgb(48, 56, 70);
     color: white;
+    font-size: var(--font-size--0);
 }
 
 .Card_container:hover {
