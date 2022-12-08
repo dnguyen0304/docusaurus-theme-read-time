@@ -38,7 +38,7 @@ export default function Card(
                     {card.details}
                 </div>
             </div>
-            <span>{`${card.readTime.minute}:${card.readTime.second}`}</span>
+            <span>{`${card.readTime.minute}m:${card.readTime.second}s`}</span>
         </StyledBox>
     );
 };
