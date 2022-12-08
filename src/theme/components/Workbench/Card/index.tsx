@@ -18,13 +18,13 @@ export default function Card(
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
-            padding: 'var(--space-2xs)',
-            borderRadius: 'var(--space-2xs)',
             backgroundColor: 'rgb(48, 56, 70)',
+            borderRadius: 'var(--space-2xs)',
             color: 'white',
             fontSize: 'var(--font-size--0)',
+            padding: 'var(--space-2xs)',
             '&:hover': {
-                'boxShadow': `
+                boxShadow: `
                     white 0 0 0rem 0.3rem,
                     rgb(100, 255, 218) 0 0 0rem 0.5rem`,
             },
