@@ -20,7 +20,7 @@ export default function Toolbar(
                 flexDirection: 'column',
                 alignItems: 'center',
                 borderLeft: '1px solid var(--ifm-toc-border-color)',
-                paddingTop: '1rem',
+                paddingTop: 'var(--space-s)',
                 // TODO(dnguyen0304): Fix missing responsive design.
                 width: '110px',
             }}
