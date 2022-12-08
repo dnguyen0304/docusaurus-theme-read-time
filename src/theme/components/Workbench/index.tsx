@@ -6,7 +6,6 @@ import { CardViewModel } from '../../../docusaurus-theme-read-time';
 import Card from './Card';
 
 const KEY_PREFIX: string = 'workbenchCard';
-const BOX_SHADOW_WIDTH: string = 'var(--space-xs)';
 const fakeData: CardViewModel[] = [
     {
         targetId: 'ABC',
@@ -36,11 +35,12 @@ const fakeData: CardViewModel[] = [
 
 interface StyledBoxProps {
     readonly workbenchIsOpen: boolean;
+    readonly boxShadowWidth: string;
 }
 
 const StyledBox = styled(Box, {
-    shouldForwardProp: (prop) => prop !== 'workbenchIsOpen',
-})<StyledBoxProps>(({ theme, workbenchIsOpen }) => ({
+    shouldForwardProp: (prop) => prop !== 'workbenchIsOpen' && prop !== 'boxShadowWidth',
+})<StyledBoxProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
     position: 'sticky',
     top: 0,
     // TODO(dnguyen0304): Fix missing responsive design.
@@ -61,10 +61,10 @@ const StyledBox = styled(Box, {
     '&::before': {
         content: '""',
         position: 'absolute',
-        width: BOX_SHADOW_WIDTH,
+        width: boxShadowWidth,
         height: '100vh',
         top: '0',
-        left: `calc(-1 * ${BOX_SHADOW_WIDTH})`,
+        left: `calc(-1 * ${boxShadowWidth})`,
         background: `linear-gradient(
             to right,
             transparent,
@@ -88,7 +88,10 @@ export default function Workbench(
     const { workbenchIsOpen } = useToolbar();
 
     return (
-        <StyledBox workbenchIsOpen={workbenchIsOpen}>
+        <StyledBox
+            workbenchIsOpen={workbenchIsOpen}
+            boxShadowWidth={'var(--space-xs)'}
+        >
             {fakeData.map((card, i) =>
                 <Card
                     key={`${KEY_PREFIX}-${i}`}
