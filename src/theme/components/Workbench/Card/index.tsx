@@ -16,8 +16,8 @@ const StyledBox = styled(Box)({
     padding: 'var(--space-2xs)',
     '&:hover': {
         boxShadow: `
-                white 0 0 0rem 0.3rem,
-                rgb(100, 255, 218) 0 0 0rem 0.5rem`,
+                white 0 0 0 0.3rem,
+                rgb(100, 255, 218) 0 0 0 0.5rem`,
     },
 });
 
