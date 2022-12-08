@@ -4,7 +4,7 @@ import { useToolbar } from '../../../contexts/toolbar';
 import Card from './Card';
 
 const KEY_PREFIX: string = 'workbenchCard';
-const BOX_SHADOW_WIDTH_PX: number = 15;
+const BOX_SHADOW_WIDTH: string = 'var(--space-xs)';
 const fakeData: { targetId: string; details: string; readTime: number }[] = [
     {
         targetId: 'abc',
@@ -36,7 +36,7 @@ export default function Workbench(
             sx={theme => ({
                 position: 'sticky',
                 top: 0,
-                // TODO(dnguyen0304): Add responsive design.
+                // TODO(dnguyen0304): Fix missing responsive design.
                 width: '300px',
                 height: '100vh',
                 display: workbenchIsOpen ? 'flex' : 'none',
@@ -48,18 +48,17 @@ export default function Workbench(
                     ${theme.palette.grey[600]} 0%,
                     ${theme.palette.grey[700]} 100%
                 )`,
-                borderTopLeftRadius: '0.6rem',
-                // TODO(dnguyen0304): Add responsive design.
-                padding: '1rem 0.7rem',
+                borderTopLeftRadius: 'var(--space-2xs)',
+                padding: 'var(--space-xs) var(--space-2xs)',
                 // TODO(dnguyen0304): Investigate refactoring to box-shadow
                 // style to reduce complexity.
                 '&::before': {
                     'content': '""',
                     'position': 'absolute',
-                    'width': `${BOX_SHADOW_WIDTH_PX}px`,
+                    'width': BOX_SHADOW_WIDTH,
                     'height': '100vh',
                     'top': '0',
-                    'left': `-${BOX_SHADOW_WIDTH_PX}px`,
+                    'left': `calc(-1 * ${BOX_SHADOW_WIDTH})`,
                     'background': `linear-gradient(
                         to right,
                         transparent,
@@ -67,7 +66,7 @@ export default function Workbench(
                         rgba(60, 64, 67, 0.4) 100%)`,
                 },
                 '& > *': {
-                    marginBottom: '1rem',
+                    marginBottom: 'var(--space-xs)',
                 },
                 '& > *:last-child': {
                     marginBottom: 0,
