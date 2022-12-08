@@ -23,6 +23,7 @@
     /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
     --space-3xs: clamp(0.31rem, calc(0.31rem + 0.00vw), 0.31rem);
     --space-2xs: clamp(0.56rem, calc(0.54rem + 0.11vw), 0.63rem);
+    /* This is closest to 1rem. */
     --space-xs: clamp(0.88rem, calc(0.85rem + 0.11vw), 0.94rem);
     --space-s: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
     --space-m: clamp(1.69rem, calc(1.62rem + 0.33vw), 1.88rem);
