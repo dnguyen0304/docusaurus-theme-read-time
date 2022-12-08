@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
 import { CardViewModel } from '../../../docusaurus-theme-read-time';
@@ -33,6 +34,51 @@ const fakeData: CardViewModel[] = [
     },
 ];
 
+interface StyledBoxProps {
+    readonly workbenchIsOpen: boolean;
+}
+
+const StyledBox = styled(Box, {
+    shouldForwardProp: (prop) => prop !== 'workbenchIsOpen',
+})<StyledBoxProps>(({ theme, workbenchIsOpen }) => ({
+    position: 'sticky',
+    top: 0,
+    // TODO(dnguyen0304): Fix missing responsive design.
+    width: '300px',
+    height: '100vh',
+    display: workbenchIsOpen ? 'flex' : 'none',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    background: `linear-gradient(
+        to bottom,
+        ${theme.palette.grey[600]} 0%,
+        ${theme.palette.grey[700]} 100%)`,
+    borderTopLeftRadius: 'var(--space-2xs)',
+    padding: 'var(--space-xs) var(--space-2xs)',
+    // TODO(dnguyen0304): Investigate refactoring to box-shadow
+    // style to reduce complexity.
+    '&::before': {
+        content: '""',
+        position: 'absolute',
+        width: BOX_SHADOW_WIDTH,
+        height: '100vh',
+        top: '0',
+        left: `calc(-1 * ${BOX_SHADOW_WIDTH})`,
+        background: `linear-gradient(
+            to right,
+            transparent,
+            rgba(60, 64, 67, 0.15) 70%,
+            rgba(60, 64, 67, 0.4) 100%)`,
+    },
+    '& > *': {
+        marginBottom: 'var(--space-xs)',
+    },
+    '& > *:last-child': {
+        marginBottom: 0,
+    },
+}));
+
 interface Props { };
 
 export default function Workbench(
@@ -42,53 +88,13 @@ export default function Workbench(
     const { workbenchIsOpen } = useToolbar();
 
     return (
-        <Box
-            sx={theme => ({
-                position: 'sticky',
-                top: 0,
-                // TODO(dnguyen0304): Fix missing responsive design.
-                width: '300px',
-                height: '100vh',
-                display: workbenchIsOpen ? 'flex' : 'none',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                background: `linear-gradient(
-                    to bottom,
-                    ${theme.palette.grey[600]} 0%,
-                    ${theme.palette.grey[700]} 100%
-                )`,
-                borderTopLeftRadius: 'var(--space-2xs)',
-                padding: 'var(--space-xs) var(--space-2xs)',
-                // TODO(dnguyen0304): Investigate refactoring to box-shadow
-                // style to reduce complexity.
-                '&::before': {
-                    'content': '""',
-                    'position': 'absolute',
-                    'width': BOX_SHADOW_WIDTH,
-                    'height': '100vh',
-                    'top': '0',
-                    'left': `calc(-1 * ${BOX_SHADOW_WIDTH})`,
-                    'background': `linear-gradient(
-                        to right,
-                        transparent,
-                        rgba(60, 64, 67, 0.15) 70%,
-                        rgba(60, 64, 67, 0.4) 100%)`,
-                },
-                '& > *': {
-                    marginBottom: 'var(--space-xs)',
-                },
-                '& > *:last-child': {
-                    marginBottom: 0,
-                },
-            })}
-        >
+        <StyledBox workbenchIsOpen={workbenchIsOpen}>
             {fakeData.map((card, i) =>
                 <Card
                     key={`${KEY_PREFIX}-${i}`}
                     card={card}
                 />
             )}
-        </Box>
+        </StyledBox>
     );
 };
