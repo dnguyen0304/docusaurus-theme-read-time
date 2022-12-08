@@ -11,7 +11,7 @@
     --step-5: clamp(2.80rem, calc(1.94rem + 4.28vw), 5.26rem);
 
     --font-size--2: var(--step--2);
-    --font-size--1: var(--step--1);
+    /* --font-size--1 is not responsive, so this is closest to 1rem. */
     --font-size-0: var(--step-0);
     --font-size-1: var(--step-1);
     --font-size-2: var(--step-2);
