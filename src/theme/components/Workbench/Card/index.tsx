@@ -22,7 +22,7 @@ export default function Card(
             borderRadius: 'var(--space-2xs)',
             backgroundColor: 'rgb(48, 56, 70)',
             color: 'white',
-            fontSize: 'var(--font-size--0);           ',
+            fontSize: 'var(--font-size--0)',
             '&:hover': {
                 'boxShadow': `
                     white 0 0 0rem 0.3rem,
