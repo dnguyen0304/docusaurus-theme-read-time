@@ -61,10 +61,10 @@ const StyledBox = styled(Box, {
     '&::before': {
         content: '""',
         position: 'absolute',
-        width: boxShadowWidth,
-        height: '100vh',
         top: '0',
         left: `calc(-1 * ${boxShadowWidth})`,
+        width: boxShadowWidth,
+        height: '100vh',
         background: `linear-gradient(
             to right,
             transparent,
