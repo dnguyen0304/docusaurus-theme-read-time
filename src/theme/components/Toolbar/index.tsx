@@ -7,8 +7,11 @@ import { useToolbar } from '../../../contexts/toolbar';
 
 // TODO(dnguyen0304): Add paddingRight for the scrollbar.
 const StyledBox = styled(Box)({
-    // TODO(dnguyen0304): Fix missing responsive design.
+    position: 'sticky',
+    top: 'var(--ifm-navbar-height)',
+    // TODO(dnguyen0304): Fix missing responsive layout.
     width: '110px',
+    height: 'calc(100vh - var(--ifm-navbar-height))',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
