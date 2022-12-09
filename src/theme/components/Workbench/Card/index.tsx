@@ -32,13 +32,15 @@ export default function Card(
 ): JSX.Element {
     return (
         <StyledBox>
-            <div>
-                <div>{card.targetId}</div>
-                <div style={{ fontSize: 'var(--font-size--3)' }}>
+            <Box>
+                <Box>{card.targetId}</Box>
+                <Box style={{ fontSize: 'var(--font-size--3)' }}>
                     {card.details}
-                </div>
-            </div>
-            <span>{`${card.readTime.minute}m:${card.readTime.second}s`}</span>
+                </Box>
+            </Box>
+            <Box component='span'>
+                {`${card.readTime.minute}m:${card.readTime.second}s`}
+            </Box>
         </StyledBox>
     );
 };
