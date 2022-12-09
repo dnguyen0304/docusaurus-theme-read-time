@@ -23,7 +23,7 @@
     --font-size-5: var(--step-5);
 
     /* DO NOT EDIT: Spacing custom variables are auto-generated. */
-    /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+    /* @link https://utopia.fyi/space/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,l,xl,12 */
     --space-3xs: clamp(0.31rem, calc(0.31rem + 0.00vw), 0.31rem);
     --space-2xs: clamp(0.56rem, calc(0.54rem + 0.11vw), 0.63rem);
     /* This is closest to 1rem. */
@@ -44,7 +44,4 @@
     --space-l-xl: clamp(2.25rem, calc(1.73rem + 2.61vw), 3.75rem);
     --space-xl-2xl: clamp(3.38rem, calc(2.81rem + 2.83vw), 5.00rem);
     --space-2xl-3xl: clamp(4.50rem, calc(3.46rem + 5.22vw), 7.50rem);
-
-    /* Custom pairs */
-    --space-s-l: clamp(1.13rem, calc(0.65rem + 2.39vw), 2.50rem);
 }
