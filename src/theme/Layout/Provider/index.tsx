@@ -9,11 +9,12 @@ import Workbench from '../../components/Workbench';
 
 const StyledLayout = styled(Box)({
     display: 'grid',
+    gridAutoFlow: 'column',
     // TODO(dnguyen0304): Fix pre elements not overflowing at smaller screen
     //   sizes. See: https://css-tricks.com/preventing-a-grid-blowout/
     // TODO(dnguyen0304): Change to use fit-content for the sidebar so the text
     //   does not overflow at smaller screen sizes.
-    gridTemplateColumns: `
+    gridAutoColumns: `
         minmax(0, 1fr)
         minmax(auto, 20vw)`,
 });
