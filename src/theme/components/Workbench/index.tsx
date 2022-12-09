@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
@@ -32,14 +33,14 @@ const fakeData: CardViewModel[] = [
     },
 ];
 
-interface StyledOrderedListProps {
+interface StyledBoxProps {
     readonly workbenchIsOpen: boolean;
     readonly boxShadowWidth: string;
 }
 
-const StyledOrderedList = styled('ol', {
+const StyledBox = styled(Box, {
     shouldForwardProp: (prop) => prop !== 'workbenchIsOpen' && prop !== 'boxShadowWidth',
-})<StyledOrderedListProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
+})<StyledBoxProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
     position: 'sticky',
     top: 0,
     height: '100vh',
@@ -68,13 +69,19 @@ const StyledOrderedList = styled('ol', {
             rgba(60, 64, 67, 0.15) 70%,
             rgba(60, 64, 67, 0.4) 100%)`,
     },
+}));
+
+const StyledOrderedList = styled('ol')({
+    width: '100%',
+    margin: 0,
+    padding: 0,
     '& > *': {
         marginBottom: 'var(--space-xs)',
     },
     '& > *:last-child': {
         marginBottom: 0,
     },
-}));
+});
 
 interface Props { };
 
@@ -87,16 +94,18 @@ export default function Workbench(
     return (
         // TODO(dnguyen0304): Migrate to use MUI List.
         //   See: https://mui.com/material-ui/react-list/
-        <StyledOrderedList
+        <StyledBox
             workbenchIsOpen={workbenchIsOpen}
             boxShadowWidth={'var(--space-xs)'}
         >
-            {fakeData.map((card, i) =>
-                <Card
-                    key={`${KEY_PREFIX}-${i}`}
-                    card={card}
-                />
-            )}
-        </StyledOrderedList>
+            <StyledOrderedList>
+                {fakeData.map((card, i) =>
+                    <Card
+                        key={`${KEY_PREFIX}-${i}`}
+                        card={card}
+                    />
+                )}
+            </StyledOrderedList>
+        </StyledBox>
     );
 };
