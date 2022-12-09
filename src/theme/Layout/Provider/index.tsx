@@ -9,6 +9,8 @@ import Workbench from '../../components/Workbench';
 
 const StyledLayout = styled(Box)({
     display: 'grid',
+    // TODO(dnguyen0304): Change to use fit-content for the sidebar so the text
+    // does not overflow at smaller screen sizes.
     gridTemplateColumns: `
         minmax(0, 1fr)
         minmax(auto, 20vw)`,
