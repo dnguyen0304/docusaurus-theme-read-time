@@ -33,13 +33,11 @@ export default function Card(
     return (
         <StyledBox>
             <div>
-                {/* TODO(dnguyen0304): Fix missing responsive typography. */}
                 <div>{card.targetId}</div>
                 <div style={{ fontSize: 'var(--font-size--3)' }}>
                     {card.details}
                 </div>
             </div>
-            {/* TODO(dnguyen0304): Fix missing responsive typography. */}
             <span>{`${card.readTime.minute}m:${card.readTime.second}s`}</span>
         </StyledBox>
     );
