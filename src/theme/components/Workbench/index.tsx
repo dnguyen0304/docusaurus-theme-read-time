@@ -53,6 +53,7 @@ const StyledBox = styled(Box, {
         ${theme.palette.grey[600]} 0%,
         ${theme.palette.grey[700]} 100%)`,
     borderTopLeftRadius: 'var(--space-2xs)',
+    overflow: 'hidden',
     padding: 'var(--space-xs) var(--space-2xs)',
     // TODO(dnguyen0304): Investigate refactoring to box-shadow
     // style to reduce complexity.
@@ -75,6 +76,7 @@ const StyledOrderedList = styled('ol')({
     width: '100%',
     margin: 0,
     padding: 0,
+    overflow: 'auto',
     '& > *': {
         marginBottom: 'var(--space-xs)',
     },
