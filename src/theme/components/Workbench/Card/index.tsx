@@ -12,7 +12,7 @@ const StyledBox = styled(Box)({
     backgroundColor: 'rgb(48, 56, 70)',
     borderRadius: 'var(--space-2xs)',
     color: 'white',
-    fontSize: 'var(--font-size--0)',
+    fontSize: 'var(--font-size--2)',
     padding: 'var(--space-2xs)',
     '&:hover': {
         boxShadow: `
@@ -35,7 +35,7 @@ export default function Card(
             <div>
                 {/* TODO(dnguyen0304): Fix missing responsive typography. */}
                 <div>{card.targetId}</div>
-                <div style={{ fontSize: 'var(--font-size--2)' }}>
+                <div style={{ fontSize: 'var(--font-size--3)' }}>
                     {card.details}
                 </div>
             </div>
