@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import type { CardViewModel } from '../../../../docusaurus-theme-read-time';
 
-const StyledBox = styled(Box)({
+const StyledList = styled('li')({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -31,7 +31,7 @@ export default function Card(
     }: Props
 ): JSX.Element {
     return (
-        <StyledBox>
+        <StyledList>
             <Box>
                 <Box>{card.targetId}</Box>
                 <Box style={{ fontSize: 'var(--font-size--3)' }}>
@@ -41,6 +41,6 @@ export default function Card(
             <Box component='span'>
                 {`${card.readTime.minute}m:${card.readTime.second}s`}
             </Box>
-        </StyledBox>
+        </StyledList>
     );
 };

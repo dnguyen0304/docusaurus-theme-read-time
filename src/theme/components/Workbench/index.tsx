@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { useToolbar } from '../../../contexts/toolbar';
@@ -33,14 +32,14 @@ const fakeData: CardViewModel[] = [
     },
 ];
 
-interface StyledBoxProps {
+interface StyledOrderedListProps {
     readonly workbenchIsOpen: boolean;
     readonly boxShadowWidth: string;
 }
 
-const StyledBox = styled(Box, {
+const StyledOrderedList = styled('ol', {
     shouldForwardProp: (prop) => prop !== 'workbenchIsOpen' && prop !== 'boxShadowWidth',
-})<StyledBoxProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
+})<StyledOrderedListProps>(({ theme, workbenchIsOpen, boxShadowWidth }) => ({
     position: 'sticky',
     top: 0,
     height: '100vh',
@@ -86,7 +85,9 @@ export default function Workbench(
     const { workbenchIsOpen } = useToolbar();
 
     return (
-        <StyledBox
+        // TODO(dnguyen0304): Migrate to use MUI List.
+        //   See: https://mui.com/material-ui/react-list/
+        <StyledOrderedList
             workbenchIsOpen={workbenchIsOpen}
             boxShadowWidth={'var(--space-xs)'}
         >
@@ -96,6 +97,6 @@ export default function Workbench(
                     card={card}
                 />
             )}
-        </StyledBox>
+        </StyledOrderedList>
     );
 };
