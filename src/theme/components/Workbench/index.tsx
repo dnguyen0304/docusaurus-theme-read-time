@@ -53,7 +53,9 @@ const StyledBox = styled(Box, {
         ${theme.palette.grey[600]} 0%,
         ${theme.palette.grey[700]} 100%)`,
     borderTopLeftRadius: 'var(--space-2xs)',
-    overflow: 'hidden',
+    // TODO(dnguyen0304): Add overflow to scroll through cards. However, this
+    // breaks the box-shadow.
+    // overflow: 'scroll',
     padding: 'var(--space-xs) var(--space-2xs)',
     // TODO(dnguyen0304): Investigate refactoring to box-shadow
     // style to reduce complexity.
